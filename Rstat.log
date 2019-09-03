@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/W32TeX) (preloaded format=xelatex 2019.3.22)  3 SEP 2019 23:54
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/W32TeX) (preloaded format=xelatex 2019.3.22)  4 SEP 2019 00:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1510,46 +1510,95 @@ Missing character: There is no 값 in font [lmroman10-regular]:mapping=tex-text;
 Missing character: There is no 출 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 력 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 값 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 으 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 로 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 구 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 성 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 시 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 작 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 전 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 항 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 상 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 작 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 업 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 디 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 렉 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 토 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 리 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 설 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 정 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 예 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 를 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 들 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 어 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 아 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 래 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 새 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 로 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 운 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 디 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 렉 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 토 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 리 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 을 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 만 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 들 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 고 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 를 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 작 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 업 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 공 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 간 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 으 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 로 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 설 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 개 in font [lmromanslant10-regular]:mapping=tex-t
 ext;!
 Missing character: There is no 요 in font [lmromanslant10-regular]:mapping=tex-t
 ext;!
 [14]
-Chapter 3.
-
-LaTeX Warning: Reference `intro' on page 15 undefined on input line 358.
-
-
-LaTeX Warning: Reference `methods' on page 15 undefined on input line 358.
-
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 364.
-File: Rstat_files/figure-latex/nice-fig-1.pdf Graphic file (type pdf)
-<use Rstat_files/figure-latex/nice-fig-1.pdf>
-(./Rstat.bbl [15
-
-] [16])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 429.
-[17
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 376.
+[15]
+Missing character: There is no 개 in font [lmromanslant10-regular]:mapping=tex-t
+ext;!
+Missing character: There is no 요 in font [lmromanslant10-regular]:mapping=tex-t
+ext;!
+[16
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 429.
+Chapter 3.
+
+LaTeX Warning: Reference `intro' on page 17 undefined on input line 387.
+
+
+LaTeX Warning: Reference `methods' on page 17 undefined on input line 387.
+
+File: Rstat_files/figure-latex/nice-fig-1.pdf Graphic file (type pdf)
+<use Rstat_files/figure-latex/nice-fig-1.pdf>
+(./Rstat.bbl [17] [18])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 458.
+[19
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 458.
 (./Rstat.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 429.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 429.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 458.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 458.
 Package rerunfilecheck Info: File `Rstat.out' has not changed.
-(rerunfilecheck)             Checksum: 06E3CF358DEABF14B58B5D627F2BF419.
+(rerunfilecheck)             Checksum: 4D3CA2106E4FAD44C29D9B9FF35C1F6C.
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 23144 strings out of 494921
- 431457 string characters out of 6176182
- 531287 words of memory out of 5000000
- 26835 multiletter control sequences out of 15000+600000
+ 23145 strings out of 494921
+ 431474 string characters out of 6176182
+ 531406 words of memory out of 5000000
+ 26836 multiletter control sequences out of 15000+600000
  545065 words of font info for 55 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  45i,8n,68p,802b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Rstat.pdf (17 pages).
+Output written on Rstat.pdf (19 pages).
