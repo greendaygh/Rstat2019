@@ -71,3 +71,16 @@ description: "이 강의는 2019년 2학기 UST에서 진행하는 일반강의 
  - https://bookdown.org/
 
 
+
+# Introductin 개요  
+
+## What is R / Rstudio 
+
+- R is a programming language that runs computations 
+- RStudio is an integrated development environment (IDE) that provides an interface for the programming 
+
+
+
+
+
+
