@@ -1,3 +1,7 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "[Get Started](https://bookdown.org/yihui/bookdown/get-started.html)" at https://bookdown.org/yihui/bookdown/ for how to compile this example into HTML. You may generate a copy of the book in `bookdown::pdf_book` format by calling `bookdown::render_book('index.Rmd', 'bookdown::pdf_book')`. More detailed instructions are available here https://bookdown.org/yihui/bookdown/build-the-book.html.
+# R로 배우는 기초통계 
 
-You can find the preview of this example at https://bookdown.org/yihui/bookdown-demo/.
+이 사이트는 2019년 UST 대학원 일반강의 "R로 배우는 기초통계" 수업을 위한 사이트 입니다. 
+
+강의 관련 내용은 다음 사이트를 이용해 주세요
+
+https://greendaygh.github.io/Rstat2019/ 
