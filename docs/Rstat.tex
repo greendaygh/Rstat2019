@@ -285,14 +285,61 @@
 \section{What is R / Rstudio}\label{what-is-r-rstudio}}
 
 \includegraphics{images/r.jpg}
-- R is a programming language that runs computations (\url{https://www.r-project.org/})
-- RStudio is an integrated development environment (IDE) that provides an interface for the programming (\url{https://www.rstudio.com/})
+
+\begin{itemize}
+\tightlist
+\item
+  R is a programming language that runs computations (\url{https://www.r-project.org/})
+\item
+  RStudio is an integrated development environment (IDE) that provides an interface for the programming (\url{https://www.rstudio.com/})
+\end{itemize}
 
 \hypertarget{r-rstudio-installation}{%
 \section{R / Rstudio installation}\label{r-rstudio-installation}}
 
 \begin{itemize}
 \item
+  Install R first and then install RStudio second
+\item
+  R
+  \includegraphics{images/01-01.PNG}\\
+  \includegraphics{images/01-02.PNG}\\
+  \includegraphics{images/01-03.PNG}\\
+  \includegraphics{images/01-04.PNG}\\
+  \includegraphics{images/01-05.PNG}
+\item
+  Rstudio
+  \includegraphics{images/01-06.PNG}\\
+  \includegraphics{images/01-07.PNG}\\
+  \includegraphics{images/01-08.PNG}\\
+  \includegraphics{images/01-09.PNG}\\
+  \includegraphics{images/01-10.PNG}
+\end{itemize}
+
+\hypertarget{rstudio-interface}{%
+\section{Rstudio interface}\label{rstudio-interface}}
+
+\includegraphics{images/01-11.PNG}
+
+\hypertarget{r-code-basics}{%
+\section{R code basics}\label{r-code-basics}}
+
+\begin{itemize}
+\tightlist
+\item
+  Basics:
+  Console: Where you enter in commands.
+  Running code: The act of telling R to perform an act by giving it commands in the console.
+  Objects: Where values are saved in R. We'll show you how to assign values to objects and how to display the contents of objects.
+  Data types: Integers, doubles/numerics, logicals, and characters.
+  Vectors: A series of values. These are created using the c() function, where c() stands for ``combine'' or ``concatenate.'' For example: c(6, 11, 13, 31, 90, 92).
+  Factors: Categorical data are represented in R as factors.
+  Data frames: Data frames are like rectangular spreadsheets: they are representations of datasets in R where the rows correspond to observations and the columns correspond to variables that describe the observations. We'll cover data frames later in Section 1.4.
+  Conditionals:
+  Testing for equality in R using == (and not = which is typically used for assignment). Ex: 2 + 1 == 3 compares 2 + 1 to 3 and is correct R code, while 2 + 1 = 3 will return an error.
+  Boolean algebra: TRUE/FALSE statements and mathematical operators such as \textless{} (less than), \textless{}= (less than or equal), and != (not equal to).
+  Logical operators: \& representing ``and'' as well as \textbar{} representing ``or.'' Ex: (2 + 1 == 3) \& (2 + 1 == 4) returns FALSE since both clauses are not TRUE (only the first clause is TRUE). On the other hand, (2 + 1 == 3) \textbar{} (2 + 1 == 4) returns TRUE since at least one of the two clauses is TRUE.
+  Functions, also called commands: Functions perform tasks in R. They take in inputs called arguments and return outputs. You can either manually specify a function's arguments or use the function's default values.
 \end{itemize}
 
 \hypertarget{introduction-of-data}{%
