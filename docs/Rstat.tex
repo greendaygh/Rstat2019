@@ -25,7 +25,7 @@
 \usepackage{hyperref}
 \hypersetup{unicode=true,
             pdftitle={R로 배우는 기초통계},
-            pdfauthor={김하성},
+            pdfauthor={한국생명공학연구원 김하성},
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
@@ -120,7 +120,7 @@
   \title{R로 배우는 기초통계}
     \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
-    \author{김하성}
+    \author{한국생명공학연구원 김하성}
     \preauthor{\centering\large\emph}
   \postauthor{\par}
       \predate{\centering\large\emph}
@@ -143,24 +143,136 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{prerequisites}{%
-\chapter{Prerequisites}\label{prerequisites}}
+\hypertarget{lecture-}{%
+\chapter{Lecture 개요}\label{lecture-}}
 
-This is a \emph{sample} book written in \textbf{Markdown}. You can use anything that Pandoc's Markdown supports, e.g., a math equation \(a^2 + b^2 = c^2\).
+\begin{itemize}
+\tightlist
+\item
+  장소: 한국생명공학연구원 연구동 세미나실 1213호 (매주수요일 13:00\textasciitilde{}16:00)
+\item
+  강사: 한국생명공학연구원 바이오합성연구센터 김하성
+\item
+  연락처: 042-860-4372, \href{mailto:haseong@kribb.re.kr}{\nolinkurl{haseong@kribb.re.kr}} (생명연 연구동 1143)
+\item
+  강의site: \url{https://greendaygh.github.io/Rstat2019/}
+\end{itemize}
 
-The \textbf{bookdown} package can be installed from CRAN or Github:
+\hypertarget{goal--}{%
+\section{Goal 강의 목표}\label{goal--}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{)}
-\CommentTok{# or the development version}
-\CommentTok{# devtools::install_github("rstudio/bookdown")}
-\end{Highlighting}
-\end{Shaded}
+\begin{itemize}
+\tightlist
+\item
+  이공계열 대학원생이 보다 쉽게 통계 이론을 습득하고 활용하는 능력을 배양하는데 주요 목적이 있음. 특히 데이터 분석용 프로그래밍언어인 R을 기반으로 한 실습을 통하여 프로그래밍 기술 습득과 함께 데이터를 다루는 능력을 배움으로써 이공계 연구에 있어서 필수인 통계적 사고의 기초를 다지는데 그 목적이 있음.
+\end{itemize}
 
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading \texttt{\#}.
+\hypertarget{references--}{%
+\section{References 참고 자료}\label{references--}}
 
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): \url{https://yihui.name/tinytex/}.
+\begin{itemize}
+\tightlist
+\item
+  Using R for Introductory Statistics by John Verzani
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Free version of 1st Edition
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \url{https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf}
+    \item
+      \url{http://cbb.sjtu.edu.cn/~mywu/bi217/usingR.pdf}
+    \end{itemize}
+  \item
+    Second edition
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \url{https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731}
+    \end{itemize}
+  \end{itemize}
+\item
+  R for Data Science (\url{https://r4ds.had.co.nz}, \url{https://github.com/hadley})
+\item
+  \url{https://resources.rstudio.com/}
+\item
+  일반통계학 (영지문화사, 김우철 외)
+\end{itemize}
+
+\hypertarget{evaluation---}{%
+\section{Evaluation 평가 세부 항목}\label{evaluation---}}
+
+\begin{itemize}
+\tightlist
+\item
+  출석 50\% / 과제 50\% / 80점 이상 S, 80점 미만 U 부여
+\end{itemize}
+
+\hypertarget{schedule--}{%
+\section{Schedule 강의 계획}\label{schedule--}}
+
+\begin{itemize}
+\item
+  1주차- R basics / introduction of data
+\item
+  2주차 - Univariate data -- Summary statistics 일변량자료 (범주형, 수치형, 분포)
+\item
+  3주차 - Bivariate data -- Correlation / Independence 이변량자료 (자료비교, 수치자료의 관계, 단순선형회귀)
+\item
+  4주차 - Multivariate data -- R data structure 다변량자료 (다변량, R자료형, R그래픽)
+\item
+  5주차 - Populations -- Families of distributions 모집단과 분포
+\item
+  6주차 - Sampling -- Distribution and CLT 시뮬레이션, 샘플링
+\item
+  7주차 - Statistical inference 통계적 추론
+\item
+  8주차 - Confidence intervals 신뢰구간
+\item
+  9주차 - Significance test - parameteric 유의성 검정 (모수)
+\item
+  10주차 - Significance test -- non parametric 유의성 검정 (비모수)
+\item
+  11주차 - Goodness of fit - parametric 적합도 검정 (모수)
+\item
+  12주차 - Goodness of fit -- non parametirc 적합도 검정 (비모수)
+\item
+  13주차 - Linear regression -- basics \& simple LR 단순회귀모형
+\item
+  14주차 - Multiple linear regression 다중회귀모형
+\item
+  15주차 - Analysis of variance 분산분석
+\item
+  16주차 - Logistic / Non-linear regression 로지스틱/비선형회귀모형
+\item
+  9/25 휴강 (강사 해외 출장)
+\end{itemize}
+
+\hypertarget{references---1}{%
+\section{References 참고 자료}\label{references---1}}
+
+\begin{itemize}
+\tightlist
+\item
+  R 홈페이지 \url{https://www.r-project.org/}
+\item
+  Rstudio 홈페이지 \url{https://www.rstudio.com/}
+\item
+  Packages for biologists \url{https://www.bioconductor.org/}
+\item
+  R 기본 문서들 (소개, 사용, 설치, 운영)
+\item
+  \url{https://cran.r-project.org/doc/manuals/r-release/R-intro.html}
+\item
+  \url{https://cran.r-project.org/doc/manuals/r-release/R-data.html}
+\item
+  \url{https://cran.r-project.org/doc/manuals/r-release/R-admin.html}
+\end{itemize}
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
