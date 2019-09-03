@@ -1,4 +1,4 @@
-rmd_files: ["index.Rmd"]
+rmd_files: ["index.Rmd", "lecture02.Rmd"]
 repo: https://github.com/greendaygh/Rprog2019/
 book_filename: "Rstat"
 output_dir: docs
