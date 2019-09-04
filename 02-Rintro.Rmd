@@ -229,4 +229,66 @@ help(package="MASS")
 ```
 
 
+## RStudio workspace
+
+![](images/01-17.PNG)
+![](images/rstudio-ide-1.png)
+![](images/rstudio-ide-2.png)
+
+
+## R packages
+
+- R comes ready loaded with various libraries of functions called packages
+ + ex) sum() is in the “base” package and sd() in the “stats” package
+- The packages can be found in numerous server locations on the web called repositories
+ + The Comprehensive R Archive Network (CRAN) http://cran.r-project.org/web/views/
+ + Bioconductor specialised in genomics http://www.bioconductor.org/packages/release/bioc/
+ 
+
+![](images/01-18.png)
+
+- UsingR package installation
+
+![](images/01-19.png)
+
+- UsingR package loading
+
+```{r, eval=F}
+library(UsingR)
+```
+
+- R 설치 디렉토리
+- R 패키지 설치 디렉토리
+
+```{r, eval=F}
+.libPaths()
+path.package()
+```
+
+
+![](images/01-20.png)
+
+## Data sets
+
+- Packages include accompanying data sets
+- R has a datasets package that is loaded automatically
+- The data function  produces a copy of dataset in user’s workspace
+
+```{r, eval=F}
+head(rivers)
+length(rivers)
+class(rivers)
+data(rivers)
+data(package="UsingR")
+library(HistData)
+head(Cavendish)
+str(Cavendish)
+head(Cavendish$density2)
+```
+
+
+## Cheatsheet
+
+![](images/base-r_1.png)
+![](images/base-r_2.png)
 

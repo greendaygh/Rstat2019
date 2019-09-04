@@ -170,7 +170,7 @@
 \hypertarget{references--}{%
 \section{References 참고 자료}\label{references--}}
 
--{[}{]} \includegraphics{images/01-15.PNG}
+\includegraphics{images/01-15.PNG}
 
 \begin{itemize}
 \tightlist
@@ -268,20 +268,37 @@
   Packages for biologists \url{https://www.bioconductor.org/}
 \item
   R 기본 문서들 (소개, 사용, 설치, 운영)
-\item
-  \url{https://cran.r-project.org/doc/manuals/r-release/R-intro.html}
-\item
-  \url{https://cran.r-project.org/doc/manuals/r-release/R-data.html}
-\item
-  \url{https://cran.r-project.org/doc/manuals/r-release/R-admin.html}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \url{https://cran.r-project.org/doc/manuals/r-release/R-intro.html}
+  \item
+    \url{https://cran.r-project.org/doc/manuals/r-release/R-data.html}
+  \item
+    \url{https://cran.r-project.org/doc/manuals/r-release/R-admin.html}
+  \end{itemize}
 \item
   R ebooks
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \url{https://bookdown.org/}
+  \end{itemize}
 \item
-  \url{https://bookdown.org/}
+  Cheat Sheets
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \url{https://www.rstudio.com/resources/cheatsheets/}
+    \includegraphics{images/01-16.PNG}
+  \end{itemize}
 \end{itemize}
 
-\hypertarget{r-introductin}{%
-\chapter{R Introductin}\label{r-introductin}}
+\hypertarget{r-basics}{%
+\chapter{R basics}\label{r-basics}}
 
 \hypertarget{what-is-r-rstudio}{%
 \section{What is R / Rstudio}\label{what-is-r-rstudio}}
@@ -652,6 +669,122 @@
 \NormalTok{x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{help}{%
+\section{Help}\label{help}}
+
+\begin{itemize}
+\tightlist
+\item
+  R의 장점 중 하나 (예제 포함)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?}
+\NormalTok{?mean}
+\KeywordTok{help}\NormalTok{(}\StringTok{"mean"}\NormalTok{)}
+\KeywordTok{example}\NormalTok{(}\StringTok{"mean"}\NormalTok{)}
+\KeywordTok{help.search}\NormalTok{(}\StringTok{"mean"}\NormalTok{)}
+\KeywordTok{help}\NormalTok{(}\DataTypeTok{package=}\StringTok{"MASS"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rstudio-workspace}{%
+\section{RStudio workspace}\label{rstudio-workspace}}
+
+\includegraphics{images/01-17.PNG}
+\includegraphics{images/rstudio-ide-1.png}
+\includegraphics{images/rstudio-ide-2.png}
+
+\hypertarget{r-packages}{%
+\section{R packages}\label{r-packages}}
+
+\begin{itemize}
+\tightlist
+\item
+  R comes ready loaded with various libraries of functions called packages
+\item
+  ex) sum() is in the ``base'' package and sd() in the ``stats'' package
+\item
+  The packages can be found in numerous server locations on the web called repositories
+\item
+  The Comprehensive R Archive Network (CRAN) \url{http://cran.r-project.org/web/views/}
+\item
+  Bioconductor specialised in genomics \url{http://www.bioconductor.org/packages/release/bioc/}
+\end{itemize}
+
+\includegraphics{images/01-18.png}
+
+\begin{itemize}
+\tightlist
+\item
+  UsingR package installation
+\end{itemize}
+
+\includegraphics{images/01-19.png}
+
+\begin{itemize}
+\tightlist
+\item
+  UsingR package loading
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(UsingR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  R 설치 디렉토리
+\item
+  R 패키지 설치 디렉토리
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{.libPaths}\NormalTok{()}
+\KeywordTok{path.package}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{images/01-20.png}
+
+\hypertarget{data-sets}{%
+\section{Data sets}\label{data-sets}}
+
+\begin{itemize}
+\tightlist
+\item
+  Packages include accompanying data sets
+\item
+  R has a datasets package that is loaded automatically
+\item
+  The data function produces a copy of dataset in user's workspace
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(rivers)}
+\KeywordTok{length}\NormalTok{(rivers)}
+\KeywordTok{class}\NormalTok{(rivers)}
+\KeywordTok{data}\NormalTok{(rivers)}
+\KeywordTok{data}\NormalTok{(}\DataTypeTok{package=}\StringTok{"UsingR"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(HistData)}
+\KeywordTok{head}\NormalTok{(Cavendish)}
+\KeywordTok{str}\NormalTok{(Cavendish)}
+\KeywordTok{head}\NormalTok{(Cavendish}\OperatorTok{$}\NormalTok{density2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{cheatsheet}{%
+\section{Cheatsheet}\label{cheatsheet}}
+
+\includegraphics{images/base-r_1.png}
+\includegraphics{images/base-r_2.png}
 
 \bibliography{book.bib,packages.bib}
 

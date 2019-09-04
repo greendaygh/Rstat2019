@@ -25,7 +25,7 @@ description: "이 강의는 2019년 2학기 UST에서 진행하는 일반강의 
 
 ## References 참고 자료
 <center>
--[] ![](images/01-15.PNG)
+![](images/01-15.PNG)
 </center>
 
 - Using R for Introductory Statistics by John Verzani
@@ -68,12 +68,14 @@ description: "이 강의는 2019년 2학기 UST에서 진행하는 일반강의 
 - Rstudio 홈페이지 https://www.rstudio.com/
 - Packages for biologists https://www.bioconductor.org/
 - R 기본 문서들 (소개, 사용, 설치, 운영)
- - https://cran.r-project.org/doc/manuals/r-release/R-intro.html
- - https://cran.r-project.org/doc/manuals/r-release/R-data.html
- - https://cran.r-project.org/doc/manuals/r-release/R-admin.html
+  + https://cran.r-project.org/doc/manuals/r-release/R-intro.html
+  + https://cran.r-project.org/doc/manuals/r-release/R-data.html
+  + https://cran.r-project.org/doc/manuals/r-release/R-admin.html
 - R ebooks 
- - https://bookdown.org/
-
+  + https://bookdown.org/
+- Cheat Sheets
+  + https://www.rstudio.com/resources/cheatsheets/ 
+    ![](images/01-16.PNG)
 
 
 
