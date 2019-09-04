@@ -143,8 +143,8 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{lecture-}{%
-\chapter{Lecture 개요}\label{lecture-}}
+\hypertarget{introduction--}{%
+\chapter{Introduction 강의 개요}\label{introduction--}}
 
 \begin{itemize}
 \tightlist
@@ -169,6 +169,8 @@
 
 \hypertarget{references--}{%
 \section{References 참고 자료}\label{references--}}
+
+-{[}{]} \includegraphics{images/01-15.PNG}
 
 \begin{itemize}
 \tightlist
@@ -278,8 +280,8 @@
   \url{https://bookdown.org/}
 \end{itemize}
 
-\hypertarget{introductin-}{%
-\chapter{Introductin 개요}\label{introductin-}}
+\hypertarget{r-introductin}{%
+\chapter{R Introductin}\label{r-introductin}}
 
 \hypertarget{what-is-r-rstudio}{%
 \section{What is R / Rstudio}\label{what-is-r-rstudio}}
@@ -321,6 +323,61 @@
 
 \includegraphics{images/01-11.PNG}
 
+\hypertarget{keyboard-shortcuts}{%
+\section{Keyboard shortcuts}\label{keyboard-shortcuts}}
+
+\begin{itemize}
+\item
+  참고사이트
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \url{https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts}
+  \item
+    Tools --\textgreater{} Keyboard shortcut Quick Reference (Alt + Shift + K)
+  \end{itemize}
+\item
+  코드편집창 이동 (Ctrl+1) 콘솔창 이동(Ctrl+2)
+\item
+  한 줄 실행 (Ctrl+Enter)
+\item
+  주석처리 (Ctrl + Shift + C)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Starting with a hashmark (`\#'), everything to the end of the line is a comment
+  \end{itemize}
+\item
+  실습
+
+  \begin{itemize}
+  \tightlist
+  \item
+    코드편집창에서 다음 입력
+  \item
+    \includegraphics{images/01-14.PNG}\\
+  \item
+    단축키 Ctrl + enter로 코드 실행
+  \item
+    단축키 Ctrl + 2로 커서 콘솔창으로 이동
+  \item
+    x값 x+y값 확인
+  \item
+    단축키 Ctrl + 1로 코드편집창 이동
+  \item
+    단축키 Ctrl + Shift + C 사용
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# x <- 10}
+\CommentTok{# y <- 20}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{r-programming-basics-and-terminology}{%
 \section{R programming basics and terminology}\label{r-programming-basics-and-terminology}}
 
@@ -335,7 +392,7 @@
 \item
   Data types: Integers, doubles/numerics, logicals, and characters.
 \item
-  Object types:
+  Object (Variable) types:
 
   \begin{itemize}
   \tightlist
@@ -419,21 +476,17 @@
 \item
   R is a programming language
 \item
-  Assignment operator ( \textless{}- OR = )
+  Assignment operator ( \texttt{\textless{}-} OR \texttt{=} )
 
   \begin{itemize}
   \tightlist
   \item
-    Valid object name \textless{}- value
+    Valid object name \texttt{\textless{}-} value
+  \item
+    단축키: \texttt{Alt\ +\ -} (the minus sign)
   \end{itemize}
 \item
-  변수이름 작명법
-\item
-  자동 완성 기능 (Tab completion) in RStudio
-\item
   내장 변수 Built-in variables
-\item
-  단축키: Alt + - (the minus sign)
 \end{itemize}
 
 \begin{Shaded}
@@ -443,89 +496,162 @@
 \NormalTok{y}
 \NormalTok{x <-}\StringTok{ "two"}  
 \NormalTok{some_data <-}\StringTok{ }\FloatTok{9.8}
-\NormalTok{X <-}\StringTok{ }\DecValTok{2}
 \NormalTok{pi}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  변수이름 작명법
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Characters (letters), numbers, ``\_'', ``.''
+  \item
+    A and a are different symbols
+  \item
+    Names are effectively unlimited in length
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i_use_snake_case <-}\StringTok{ }\DecValTok{1}
+\NormalTok{otherPeopleUseCamelCase <-}\StringTok{ }\DecValTok{2}
+\NormalTok{some.people.use.periods <-}\StringTok{ }\DecValTok{3}
+\NormalTok{And_aFew.People_RENOUNCEconvention <-}\StringTok{ }\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  자동 완성 기능 (Tab completion) in RStudio
+\end{itemize}
 
 \hypertarget{variable-type-of-storage-mode}{%
 \section{Variable type of (storage) mode}\label{variable-type-of-storage-mode}}
 
 \includegraphics{images/01-13.PNG}
 
+\hypertarget{variable---vectors}{%
+\section{Variable - Vectors}\label{variable---vectors}}
+
+\begin{itemize}
+\tightlist
+\item
+  Combine function \texttt{c()}: Concatenating elements end to end
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{10.4}\NormalTok{, }\FloatTok{5.6}\NormalTok{, }\FloatTok{3.1}\NormalTok{, }\FloatTok{6.4}\NormalTok{, }\FloatTok{21.7}\NormalTok{) }
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X1"}\NormalTok{, }\StringTok{"Y2"}\NormalTok{,  }\StringTok{"X3"}\NormalTok{,  }\StringTok{"Y4"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  인덱싱: Subsets of the elements of a vector
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[}\DecValTok{1}\NormalTok{]}
+\NormalTok{x[}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\NormalTok{x[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{)]}
+\NormalTok{y[}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{functions}{%
 \section{Functions}\label{functions}}
 
-\hypertarget{introduction-of-data}{%
-\chapter{introduction of data}\label{introduction-of-data}}
-
-You can label chapter and section titles using \texttt{\{\#label\}} after them, e.g., we can reference Chapter \ref{intro}. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \ref{methods}.
-
-Figures and tables with captions will be placed in \texttt{figure} and \texttt{table} environments, respectively.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{))}
-\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{'b'}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{Rstat_files/figure-latex/nice-fig-1} 
-
-}
-
-\caption{Here is a nice figure!}\label{fig:nice-fig}
-\end{figure}
-
-Reference a figure by its code chunk label with the \texttt{fig:} prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can reference tables generated from \texttt{knitr::kable()}, e.g., see Table \ref{tab:nice-tab}.
+\begin{itemize}
+\tightlist
+\item
+  Function define
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
-  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{'Here is a nice table!'}\NormalTok{,}
-  \DataTypeTok{booktabs =} \OtherTok{TRUE}
-\NormalTok{)}
+\NormalTok{my_sine <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{    y <-}\StringTok{ }\KeywordTok{sin}\NormalTok{(x)}
+    \KeywordTok{return}\NormalTok{(y)}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}[t]
+\begin{itemize}
+\tightlist
+\item
+  Usage
+\end{itemize}
 
-\caption{\label{tab:nice-tab}Here is a nice table!}
-\centering
-\begin{tabular}{rrrrl}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
-\midrule
-5.1 & 3.5 & 1.4 & 0.2 & setosa\\
-4.9 & 3.0 & 1.4 & 0.2 & setosa\\
-4.7 & 3.2 & 1.3 & 0.2 & setosa\\
-4.6 & 3.1 & 1.5 & 0.2 & setosa\\
-5.0 & 3.6 & 1.4 & 0.2 & setosa\\
-\addlinespace
-5.4 & 3.9 & 1.7 & 0.4 & setosa\\
-4.6 & 3.4 & 1.4 & 0.3 & setosa\\
-5.0 & 3.4 & 1.5 & 0.2 & setosa\\
-4.4 & 2.9 & 1.4 & 0.2 & setosa\\
-4.9 & 3.1 & 1.5 & 0.1 & setosa\\
-\addlinespace
-5.4 & 3.7 & 1.5 & 0.2 & setosa\\
-4.8 & 3.4 & 1.6 & 0.2 & setosa\\
-4.8 & 3.0 & 1.4 & 0.1 & setosa\\
-4.3 & 3.0 & 1.1 & 0.1 & setosa\\
-5.8 & 4.0 & 1.2 & 0.2 & setosa\\
-\addlinespace
-5.7 & 4.4 & 1.5 & 0.4 & setosa\\
-5.4 & 3.9 & 1.3 & 0.4 & setosa\\
-5.1 & 3.5 & 1.4 & 0.3 & setosa\\
-5.7 & 3.8 & 1.7 & 0.3 & setosa\\
-5.1 & 3.8 & 1.5 & 0.3 & setosa\\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{my_sine}\NormalTok{(pi)}
+\end{Highlighting}
+\end{Shaded}
 
-You can write citations, too. For example, we are using the \textbf{bookdown} package \citep{R-bookdown} in this sample book, which was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
+\begin{itemize}
+\tightlist
+\item
+  Terminology
+
+  \begin{itemize}
+  \tightlist
+  \item
+    function name: \texttt{my\_sine}
+  \item
+    parameter: \texttt{x}
+  \item
+    argument: \texttt{pi}
+  \item
+    return value: \texttt{y}
+  \end{itemize}
+\item
+  Built-in functions
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Arguments separated by commas
+  \item
+    Tab completion
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{pi}
+\KeywordTok{sin}\NormalTok{(x)}
+\KeywordTok{sqrt}\NormalTok{(x)}
+\KeywordTok{log}\NormalTok{(x)}
+\KeywordTok{log}\NormalTok{(x, }\DecValTok{10}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{x}
+\KeywordTok{mean}\NormalTok{(x)}
+\KeywordTok{sum}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{vectorized-functions}{%
+\section{Vectorized functions}\label{vectorized-functions}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{x}
+\KeywordTok{sqrt}\NormalTok{(x)}
+\KeywordTok{sin}\NormalTok{(x)}
+\KeywordTok{log}\NormalTok{(x)}
+\NormalTok{x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
 \bibliography{book.bib,packages.bib}
 

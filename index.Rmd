@@ -13,7 +13,7 @@ description: "이 강의는 2019년 2학기 UST에서 진행하는 일반강의 
 ---
 
 
-# Lecture 개요 
+# Introduction 강의 개요 
 - 장소: 한국생명공학연구원 연구동 세미나실 1213호 (매주수요일 13:00~16:00)
 - 강사: 한국생명공학연구원 바이오합성연구센터 김하성
 - 연락처: 042-860-4372, haseong@kribb.re.kr (생명연 연구동 1143)
@@ -24,6 +24,10 @@ description: "이 강의는 2019년 2학기 UST에서 진행하는 일반강의 
 
 
 ## References 참고 자료
+<center>
+-[] ![](images/01-15.PNG)
+</center>
+
 - Using R for Introductory Statistics by John Verzani
   - Free version of 1st Edition 
     - https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf
@@ -72,107 +76,6 @@ description: "이 강의는 2019년 2학기 UST에서 진행하는 일반강의 
 
 
 
-# Introductin 개요  
-
-## What is R / Rstudio 
-
-![](images/r.jpg)
-
-- R is a programming language that runs computations (https://www.r-project.org/)
-- RStudio is an integrated development environment (IDE) that provides an interface for the programming (https://www.rstudio.com/)
-
-
-## R / Rstudio installation
-
-- Install R first and then install RStudio second
-- R 
-![](images/01-01.PNG)  
-![](images/01-02.PNG)  
-![](images/01-03.PNG)  
-![](images/01-04.PNG)  
-![](images/01-05.PNG)  
- 
-- Rstudio
-![](images/01-06.PNG)  
-![](images/01-07.PNG)  
-![](images/01-08.PNG)  
-![](images/01-09.PNG)  
-![](images/01-10.PNG)  
-
-
-## Rstudio interface
-
-![](images/01-11.PNG)
-
-
-## R programming basics and terminology
-
-- Console: 명령어 입력하는 창 
-- Code: R 프로그래밍 변수/제어문 모음   
-- Objects (개체, variable): 값이 (데이터) 저장되는 장소 
-- Data types: Integers, doubles/numerics, logicals, and characters.
-- Object types:
-  - Vectors: 값들의 모임 combine function c() EX: c(6, 11, 13, 31, 90, 92)
-  - Factors: 범주형 데이터 저장 장소
-  - Data frames: 2D matrix 형태 데이터 자장 장소 
-- Conditionals (조건, 제어):
-  - if: ==, & (AND), | (OR) Ex: (2 + 1 == 3) & (2 + 1 == 4) 
-  - for, while: 반복 수
-- Functions (함수, commands): 특정 일 수행, 함수이름 - 입력값 (arguments) - 출력값 (output) 으로 구성 
-
-## Set working directory  
-
-- 시작 전 항상 작업 디렉토리 설정 
-- 예를 들어 c:\ 아래 새로운 디렉토리 rstat01 을 만들고 작업공간으로 설정  
-```{r, eval=FALSE}
-getwd()
-dir()
-setwd("C:\\rstat01")
-getwd()
-dir()
-```
-
-- 또는 아래와 같이 RStudio 메뉴 에서 설정 
-![](images/01-12.PNG)  
-
-
-## R coding practice 
-
-- 콘솔 계산기 
-```{r, eval=FALSE}
-2 + 2
-((2 – 1)^2 + (1 – 3)^2 )^(1/2)
-2 + 2; 2 - 2
-```
-- 이전 명령: 콘솔에서 위 아래 화살표  
-
-
-## Variables and values 
-
-- R is a programming language 
-- Assignment operator ( <- OR = )
-  - Valid object name <- value 
-- 변수이름 작명법 
-- 자동 완성 기능 (Tab completion) in RStudio
-- 내장 변수 Built-in variables
-- 단축키: Alt + - (the minus sign)
-
-```{r, eval=FALSE}
-x <- 2
-y <- x^2 – 2*x + 1
-y
-x <- "two"  
-some_data <- 9.8
-X <- 2
-pi
-```
-
-
-## Variable type of (storage) mode
-
-![](images/01-13.PNG)
-
-## Functions
 
 
 
