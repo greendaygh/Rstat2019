@@ -133,7 +133,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="2.2" data-path="introductin-.html"><a href="introductin-.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio installation</a></li>
 <li class="chapter" data-level="2.3" data-path="introductin-.html"><a href="introductin-.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a></li>
 <li class="chapter" data-level="2.4" data-path="introductin-.html"><a href="introductin-.html#r-programming-basics-and-terminology"><i class="fa fa-check"></i><b>2.4</b> R programming basics and terminology</a></li>
-<li class="chapter" data-level="2.5" data-path="introductin-.html"><a href="introductin-.html#practice-coding"><i class="fa fa-check"></i><b>2.5</b> Practice coding</a></li>
+<li class="chapter" data-level="2.5" data-path="introductin-.html"><a href="introductin-.html#set-working-directory"><i class="fa fa-check"></i><b>2.5</b> Set working directory</a></li>
+<li class="chapter" data-level="2.6" data-path="introductin-.html"><a href="introductin-.html#r-coding-practice"><i class="fa fa-check"></i><b>2.6</b> R coding practice</a></li>
+<li class="chapter" data-level="2.7" data-path="introductin-.html"><a href="introductin-.html#variables-and-values"><i class="fa fa-check"></i><b>2.7</b> Variables and values</a></li>
+<li class="chapter" data-level="2.8" data-path="introductin-.html"><a href="introductin-.html#variable-type-of-storage-mode"><i class="fa fa-check"></i><b>2.8</b> Variable type of (storage) mode</a></li>
+<li class="chapter" data-level="2.9" data-path="introductin-.html"><a href="introductin-.html#functions"><i class="fa fa-check"></i><b>2.9</b> Functions</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="introduction-of-data.html"><a href="introduction-of-data.html"><i class="fa fa-check"></i><b>3</b> introduction of data</a></li>
 <li class="divider"></li>
@@ -160,8 +164,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h1><span class="header-section-number">Chapter 3</span> introduction of data</h1>
 <p>You can label chapter and section titles using <code>{#label}</code> after them, e.g., we can reference Chapter <a href="#intro"><strong>??</strong></a>. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter <a href="#methods"><strong>??</strong></a>.</p>
 <p>Figures and tables with captions will be placed in <code>figure</code> and <code>table</code> environments, respectively.</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">plot</span>(pressure, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">plot</span>(pressure, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</a></code></pre>
 <div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
 <img src="Rstat_files/figure-html/nice-fig-1.png" alt="Here is a nice figure!" width="80%" />
 <p class="caption">
@@ -169,10 +173,10 @@ FIGURE3.1: Here is a nice figure!
 </p>
 </div>
 <p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure <a href="introduction-of-data.html#fig:nice-fig">3.1</a>. Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table <a href="introduction-of-data.html#tab:nice-tab">3.1</a>.</p>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">kable</span>(</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">)</a></code></pre>
+<pre class="sourceCode r" id="cb5"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">kable</span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">)</a></code></pre>
 <table>
 <caption><span id="tab:nice-tab">TABLE3.1: </span>Here is a nice table!</caption>
 <thead>

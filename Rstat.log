@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/W32TeX) (preloaded format=xelatex 2019.3.22)  4 SEP 2019 00:04
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/W32TeX) (preloaded format=xelatex 2019.3.22)  4 SEP 2019 10:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1450,11 +1450,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 332--334
 
 Missing character: There is no 개 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 체 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 값 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 데 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 터 in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no 값 in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 저 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 장 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 되 in font [lmroman10-regular]:mapping=tex-text;!
@@ -1497,7 +1497,6 @@ Missing character: There is no 수 in font [lmroman10-regular]:mapping=tex-text;
 Missing character: There is no 특 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 정 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 일 in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no 을 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 수 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 행 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 함 in font [lmroman10-regular]:mapping=tex-text;!
@@ -1544,8 +1543,6 @@ Missing character: There is no 을 in font [lmroman10-regular]:mapping=tex-text;
 Missing character: There is no 만 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 들 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 고 in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no 를 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 작 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 업 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 공 in font [lmroman10-regular]:mapping=tex-text;!
@@ -1553,6 +1550,7 @@ Missing character: There is no 간 in font [lmroman10-regular]:mapping=tex-text;
 Missing character: There is no 으 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 로 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 설 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 정 in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 개 in font [lmromanslant10-regular]:mapping=tex-t
 ext;!
 Missing character: There is no 요 in font [lmromanslant10-regular]:mapping=tex-t
@@ -1560,43 +1558,104 @@ ext;!
 [14]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 376.
+Missing character: There is no 또 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 는 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 아 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 래 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 와 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 같 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 메 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 뉴 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 에 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 서 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 설 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 정 in font [lmroman10-regular]:mapping=tex-text;!
+File: images/01-12.PNG Graphic file (type bmp)
+<images/01-12.PNG>
+
+Overfull \hbox (87.65498pt too wide) in paragraph at lines 387--389
+[]\TU/lmr/m/n/10 또는 아래와 같이 RStudio 메뉴 에서 설정 [] 
+ []
+
+Missing character: There is no 콘 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 솔 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 계 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 산 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 기 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 전 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 명 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 령 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 콘 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 솔 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 에 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 서 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 위 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 아 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 래 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 화 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 살 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 표 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 변 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 수 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 이 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 름 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 작 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 명 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 법 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 자 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 동 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 완 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 성 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 기 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 능 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 내 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 장 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 변 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 수 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 단 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 축 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 키 in font [lmroman10-regular]:mapping=tex-text;!
 [15]
+File: images/01-13.PNG Graphic file (type bmp)
+<images/01-13.PNG>
 Missing character: There is no 개 in font [lmromanslant10-regular]:mapping=tex-t
 ext;!
 Missing character: There is no 요 in font [lmromanslant10-regular]:mapping=tex-t
 ext;!
-[16
-
-]
+[16]
 Chapter 3.
 
-LaTeX Warning: Reference `intro' on page 17 undefined on input line 387.
+LaTeX Warning: Reference `intro' on page 17 undefined on input line 462.
 
 
-LaTeX Warning: Reference `methods' on page 17 undefined on input line 387.
+LaTeX Warning: Reference `methods' on page 17 undefined on input line 462.
 
 File: Rstat_files/figure-latex/nice-fig-1.pdf Graphic file (type pdf)
 <use Rstat_files/figure-latex/nice-fig-1.pdf>
-(./Rstat.bbl [17] [18])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 458.
+(./Rstat.bbl [17
+
+] [18])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 533.
 [19
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 458.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 533.
 (./Rstat.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 458.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 458.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 533.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 533.
 Package rerunfilecheck Info: File `Rstat.out' has not changed.
-(rerunfilecheck)             Checksum: 4D3CA2106E4FAD44C29D9B9FF35C1F6C.
+(rerunfilecheck)             Checksum: 6596E8108480A1B23F53C75BD0B02935.
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 23145 strings out of 494921
- 431474 string characters out of 6176182
- 531406 words of memory out of 5000000
- 26836 multiletter control sequences out of 15000+600000
+ 23157 strings out of 494921
+ 431703 string characters out of 6176182
+ 531945 words of memory out of 5000000
+ 26846 multiletter control sequences out of 15000+600000
  545065 words of font info for 55 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  45i,8n,68p,802b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
