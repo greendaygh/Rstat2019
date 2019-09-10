@@ -4,6 +4,7 @@ author: "한국생명공학연구원 김하성"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
+mainfont: Nanum Myeongjo
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
