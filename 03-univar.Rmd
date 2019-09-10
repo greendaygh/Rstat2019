@@ -236,13 +236,15 @@ month(current_time)
 ```
 
 
-### [Problem] Recoding values
+\begin{examples} 
+
+Recoding values
 다음은 신생아들의 키를 나타내는 data set 이다. 오류 값을 찾아내고 이들 값을 `NA`로 바꾼 후 평균 값을 구하라. 
 ```{r, eval=F}
 x <- babies$dwt
 x
 ```
-
+\end{examples}
 
 ### [Problem] Average distance from center
 

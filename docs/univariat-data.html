@@ -151,8 +151,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="3.1" data-path="univariat-data.html"><a href="univariat-data.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
 <li class="chapter" data-level="3.2" data-path="univariat-data.html"><a href="univariat-data.html#data-vectors"><i class="fa fa-check"></i><b>3.2</b> Data vectors</a></li>
 <li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#problem-recoding-values"><i class="fa fa-check"></i><b>3.3.1</b> [Problem] Recoding values</a></li>
-<li class="chapter" data-level="3.3.2" data-path="univariat-data.html"><a href="univariat-data.html#problem-average-distance-from-center"><i class="fa fa-check"></i><b>3.3.2</b> [Problem] Average distance from center</a></li>
+<li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#problem-average-distance-from-center"><i class="fa fa-check"></i><b>3.3.1</b> [Problem] Average distance from center</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -394,14 +393,14 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">as.numeric</span>(current_time)</a>
 <a class="sourceLine" id="cb35-4" data-line-number="4"><span class="kw">as.numeric</span>(<span class="kw">now</span>())</a>
 <a class="sourceLine" id="cb35-5" data-line-number="5"><span class="kw">month</span>(current_time)</a></code></pre>
-<div id="problem-recoding-values" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> [Problem] Recoding values</h3>
-<p>다음은 신생아들의 키를 나타내는 data set 이다. 오류 값을 찾아내고 이들 값을 <code>NA</code>로 바꾼 후 평균 값을 구하라.</p>
+<p>\begin{examples}</p>
+<p>Recoding values
+다음은 신생아들의 키를 나타내는 data set 이다. 오류 값을 찾아내고 이들 값을 <code>NA</code>로 바꾼 후 평균 값을 구하라.</p>
 <pre class="sourceCode r" id="cb36"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">x &lt;-<span class="st"> </span>babies<span class="op">$</span>dwt</a>
 <a class="sourceLine" id="cb36-2" data-line-number="2">x</a></code></pre>
-</div>
+<p>\end{examples}</p>
 <div id="problem-average-distance-from-center" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> [Problem] Average distance from center</h3>
+<h3><span class="header-section-number">3.3.1</span> [Problem] Average distance from center</h3>
 <p><img src="images/02/02.png" /></p>
 <span class="math display">\[\begin{equation}
 (| x_1 - \bar{x} | + |x_2 - \bar{x}| + ... + |x_n - \bar{x}| )/n
