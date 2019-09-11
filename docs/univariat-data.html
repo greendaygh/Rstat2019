@@ -151,9 +151,18 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="3.1" data-path="univariat-data.html"><a href="univariat-data.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
 <li class="chapter" data-level="3.2" data-path="univariat-data.html"><a href="univariat-data.html#data-vectors"><i class="fa fa-check"></i><b>3.2</b> Data vectors</a></li>
 <li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#example-02-1"><i class="fa fa-check"></i><b>3.3.1</b> Example 02-1</a></li>
-<li class="chapter" data-level="3.3.2" data-path="univariat-data.html"><a href="univariat-data.html#example-02-2"><i class="fa fa-check"></i><b>3.3.2</b> Example 02-2</a></li>
+<li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#example---recoding-values"><i class="fa fa-check"></i><b>3.3.1</b> Example - Recoding values</a></li>
+<li class="chapter" data-level="3.3.2" data-path="univariat-data.html"><a href="univariat-data.html#example---average-distance-from-center"><i class="fa fa-check"></i><b>3.3.2</b> Example - Average distance from center</a></li>
 </ul></li>
+<li class="chapter" data-level="3.4" data-path="univariat-data.html"><a href="univariat-data.html#functions-1"><i class="fa fa-check"></i><b>3.4</b> Functions</a></li>
+<li class="chapter" data-level="3.5" data-path="univariat-data.html"><a href="univariat-data.html#numeric-summaries"><i class="fa fa-check"></i><b>3.5</b> Numeric summaries</a></li>
+<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="univariat-data.html"><a href="univariat-data.html#sample-mean"><i class="fa fa-check"></i><b>3.6.1</b> Sample mean</a></li>
+<li class="chapter" data-level="3.6.2" data-path="univariat-data.html"><a href="univariat-data.html#measure-of-position"><i class="fa fa-check"></i><b>3.6.2</b> Measure of Position</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="univariat-data.html"><a href="univariat-data.html#spread"><i class="fa fa-check"></i><b>3.7</b> Spread</a></li>
+<li class="chapter" data-level="3.8" data-path="univariat-data.html"><a href="univariat-data.html#shape"><i class="fa fa-check"></i><b>3.8</b> Shape</a></li>
+<li class="chapter" data-level="3.9" data-path="univariat-data.html"><a href="univariat-data.html#viewing-the-shape"><i class="fa fa-check"></i><b>3.9</b> Viewing the shape</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -180,6 +189,21 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">3.1</span> Introduction</h2>
 <ul>
+<li>Statistics
+<ul>
+<li>데이터 분석을 통한 예측 - 데이터를 수집, 정리하여 이로부터 미지의 사실에 대한 신빙성 있는 추론을 수행하는 과정</li>
+</ul></li>
+</ul>
+<p><img src="04.png" /></p>
+<ul>
+<li>Data - 사실을 나타내는 수치</li>
+<li>맥도너 정보경제학 (1963)
+<ul>
+<li>지혜 (wisdom) : 패턴화된 지식</li>
+<li>지식 (knowledge) : 가치있는 정보</li>
+<li>정보 (information) : 의미있는 데이터</li>
+<li>데이터 (data) : 단순한 사실의 나열</li>
+</ul></li>
 <li>Univariate: Single variable</li>
 <li>Data collection process
 <ul>
@@ -394,22 +418,261 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">as.numeric</span>(current_time)</a>
 <a class="sourceLine" id="cb35-4" data-line-number="4"><span class="kw">as.numeric</span>(<span class="kw">now</span>())</a>
 <a class="sourceLine" id="cb35-5" data-line-number="5"><span class="kw">month</span>(current_time)</a></code></pre>
-<div id="example-02-1" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Example 02-1</h3>
-<p>Recoding values<br />
-다음은 신생아들의 키를 나타내는 data set 이다. 오류 값을 찾아내고 이들 값을 <code>NA</code>로 바꾼 후 평균 값을 구하라.</p>
+<div id="example---recoding-values" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Example - Recoding values</h3>
+<p>다음은 신생아들의 키를 나타내는 data set 이다. 오류 값을 찾아내고 이들 값을 <code>NA</code>로 바꾼 후 평균 값을 구하라.</p>
 <pre class="sourceCode r" id="cb36"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">x &lt;-<span class="st"> </span>babies<span class="op">$</span>dwt</a>
 <a class="sourceLine" id="cb36-2" data-line-number="2">x</a></code></pre>
 </div>
-<div id="example-02-2" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> Example 02-2</h3>
-<p>Average distance from center</p>
+<div id="example---average-distance-from-center" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Example - Average distance from center</h3>
 <p><img src="images/02/02.png" /></p>
 <span class="math display">\[\begin{equation}
 (| x_1 - \bar{x} | + |x_2 - \bar{x}| + ... + |x_n - \bar{x}| )/n
 \end{equation}\]</span>
-
+<pre class="sourceCode r" id="cb37"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">x &lt;-<span class="st"> </span>rivers</a></code></pre>
 </div>
+</div>
+<div id="functions-1" class="section level2">
+<h2><span class="header-section-number">3.4</span> Functions</h2>
+<ul>
+<li>Define a function</li>
+</ul>
+<pre class="sourceCode r" id="cb38"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">my_mean &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">    total &lt;-<span class="st"> </span><span class="kw">sum</span>(x)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3">    n &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">    <span class="kw">return</span>(total<span class="op">/</span>n)</a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">}</a></code></pre>
+<ul>
+<li>Write a function named <code>get_dist</code> for the example 3.3.2, and use it for the <code>rivers</code> data</li>
+</ul>
+<pre class="sourceCode r" id="cb39"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">get_dist &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">    <span class="kw">return</span>()</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">}</a></code></pre>
+</div>
+<div id="numeric-summaries" class="section level2">
+<h2><span class="header-section-number">3.5</span> Numeric summaries</h2>
+<center>
+<img src="images/02/05.png" />
+<img src="images/02/04.png" />
+<br>
+<br>
+<img src="images/02/06.png" />
+</center>
+<ul>
+<li>대푯값</li>
+<li>Center – commonly known as “average” or “mean” but not the only one.
+<ul>
+<li>median, mode, etc</li>
+</ul></li>
+<li>Spread – Variability of a data set.
+<ul>
+<li>No variability – mean is everything</li>
+<li>Large variability – mean informs much less</li>
+<li>confidence of interpretation from knowing center</li>
+<li>Distance from center</li>
+</ul></li>
+<li>Shape – Degree of interpretation from knowing center and spread.
+<ul>
+<li>eg. bell shape – two sides are equally likely, large values are rather unlikely and values tend to cluster near the center.</li>
+</ul></li>
+</ul>
+</div>
+<div id="center" class="section level2">
+<h2><span class="header-section-number">3.6</span> Center</h2>
+<center>
+<img src="images/02/07.png" />
+</center>
+<div id="sample-mean" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Sample mean</h3>
+<p><span class="math display">\[ \bar{x} = \frac{1}{n} (x_1 + x_2 + ... + x_n) = \frac{1}{n}\sum_i{x_i} \]</span></p>
+<pre class="sourceCode r" id="cb40"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">head</span>(kid.weights)</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw">str</span>(kid.weights)</a>
+<a class="sourceLine" id="cb40-3" data-line-number="3">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="kw">length</span>(wts)</a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="kw">plot</span>(wts)</a>
+<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="kw">mean</span>(wts)</a>
+<a class="sourceLine" id="cb40-7" data-line-number="7">devs &lt;-<span class="st"> </span>wts – <span class="kw">mean</span>(wts) <span class="co"># deviation, centering</span></a>
+<a class="sourceLine" id="cb40-8" data-line-number="8"><span class="kw">plot</span>(wts)</a>
+<a class="sourceLine" id="cb40-9" data-line-number="9"><span class="kw">mean</span>(wts)</a></code></pre>
+<ul>
+<li>Trimmed mean</li>
+</ul>
+<pre class="sourceCode r" id="cb41"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">mean</span>(wts)</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">wts[wts<span class="op">&lt;</span><span class="dv">120</span>]</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="kw">mean</span>(wts[wts<span class="op">&lt;=</span><span class="dv">120</span>])</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="kw">mean</span>(wts, <span class="dt">trim=</span><span class="fl">0.8</span>)</a></code></pre>
+</div>
+<div id="measure-of-position" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> Measure of Position</h3>
+<ul>
+<li>_p_th Quantile - 특정 값으로 이 값보다 작은 데이터의 비율이 100∙p 퍼센트, 큰 데이터의 비율은 100∙(1- p) 퍼센트</li>
+<li>Median - Splits the data in half <em>p</em>=0.5</li>
+<li>Percentiles - The same as quantile but its scale is 0 to 100</li>
+</ul>
+<pre class="sourceCode r" id="cb42"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="kw">quantile</span>(x, <span class="fl">0.25</span>)</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="kw">median</span>(x)</a>
+<a class="sourceLine" id="cb42-5" data-line-number="5"><span class="kw">quantile</span>(x, <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by=</span><span class="fl">0.2</span>))</a>
+<a class="sourceLine" id="cb42-6" data-line-number="6"><span class="kw">quantile</span>(x)</a></code></pre>
+<ul>
+<li>Robustness</li>
+</ul>
+<pre class="sourceCode r" id="cb43"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">mean</span>(wts)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">median</span>(wts)</a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw">plot</span>(wts)</a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">mean</span>(wts), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">median</span>(wts), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb43-6" data-line-number="6">wts2 &lt;-<span class="st"> </span>wts[wts<span class="op">&lt;</span><span class="dv">120</span>]</a>
+<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">mean</span>(wts2), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
+<ul>
+<li>Boxplot</li>
+</ul>
+<pre class="sourceCode r" id="cb44"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="kw">quantile</span>(x)</a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="kw">boxplot</span>(x)</a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="kw">text</span>(<span class="dt">x=</span><span class="fl">1.3</span>, <span class="dt">y=</span><span class="kw">quantile</span>(x, <span class="fl">0.25</span>), <span class="dt">labels =</span> <span class="st">&quot;1사분위수&quot;</span>)</a>
+<a class="sourceLine" id="cb44-5" data-line-number="5"><span class="kw">text</span>(<span class="dt">x=</span><span class="fl">1.3</span>, <span class="dt">y=</span><span class="kw">quantile</span>(x, <span class="fl">0.5</span>), <span class="dt">labels =</span> <span class="st">&quot;2사분위수&quot;</span>)</a>
+<a class="sourceLine" id="cb44-6" data-line-number="6"><span class="kw">text</span>(<span class="dt">x=</span><span class="fl">1.3</span>, <span class="dt">y=</span><span class="kw">quantile</span>(x, <span class="fl">0.75</span>), <span class="dt">labels =</span> <span class="st">&quot;3사분위수&quot;</span>)</a></code></pre>
+<p><img src="images/02/03.png" /></p>
+</div>
+</div>
+<div id="spread" class="section level2">
+<h2><span class="header-section-number">3.7</span> Spread</h2>
+<center>
+<img src="images/02/08.png" />
+</center>
+<ul>
+<li>Range - the distance between the smallest and largest values</li>
+<li>Sample variance
+<ul>
+<li>Distance - <span class="math display">\[ d_i = x_i - \bar{x} \]</span></li>
+</ul></li>
+</ul>
+<span class="math display">\[\begin{equation}
+ s^2 = \frac{1}{n-1}\sum_i(x_i - \bar{x})^2
+\end{equation}\]</span>
+<ul>
+<li>Sample standard deviation
+<ul>
+<li>측정값들이 평균에서 떨어진 정도
+<span class="math display">\[\begin{equation}
+ \sqrt{s^2} = sqrt{ \frac{1}{n-1}\sum_i(x_i - \bar{x})^2 }
+\end{equation}\]</span></li>
+</ul></li>
+</ul>
+<pre class="sourceCode r" id="cb45"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="kw">var</span>(wts)</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">sd</span>(wts)</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="kw">plot</span>(wts)</a>
+<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="kw">boxplot</span>(wts)</a>
+<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="kw">hist</span>(wts)</a>
+<a class="sourceLine" id="cb45-8" data-line-number="8"><span class="kw">hist</span>(wts, <span class="dt">breaks =</span> <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb45-9" data-line-number="9"><span class="kw">hist</span>(wts, <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb45-10" data-line-number="10"><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(wts), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
+<ul>
+<li>z-score
+<ul>
+<li>How big (small) is the value relative to the others</li>
+<li><span class="math inline">\(z=3\)</span> 이 값은 평균에 비해 3 표준편차만큼 크다</li>
+</ul></li>
+</ul>
+<span class="math display">\[\begin{equation}
+ z_i = \frac{x_i - \bar{x}}{s}
+\end{equation}\]</span>
+<ul>
+<li>Example - z score
+wts의 z 값을 구하는 함수를 만들고 histogram을 그리시오</li>
+</ul>
+<pre class="sourceCode r" id="cb46"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a></code></pre>
+<ul>
+<li>Interquartile range (IQR)
+<ul>
+<li>Middle 50% of the data</li>
+<li>Difference between Q3 and Q1</li>
+</ul></li>
+</ul>
+<center>
+<img src="images/02/10.png" />
+</center>
+<ul>
+<li>Example - IQR<br />
+wts 변수 값들의 IQR 을 구하시오</li>
+</ul>
+<pre class="sourceCode r" id="cb47"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a></code></pre>
+</div>
+<div id="shape" class="section level2">
+<h2><span class="header-section-number">3.8</span> Shape</h2>
+<center>
+<img src="images/02/09.png" />
+</center>
+<ul>
+<li>Symmetry and skew</li>
+</ul>
+<span class="math display">\[\begin{equation}
+ sample skewness = \sqrt{n} \frac{\sum{(x_i - \bar{x})^2}}{(\sum{(x_i - \bar{x})^2)^{3/2}}} = \frac{1}{n}\sum{z_i^3}
+\end{equation}\]</span>
+<pre class="sourceCode r" id="cb48"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">myskew &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2">  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">  z &lt;-<span class="st"> </span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb48-4" data-line-number="4">  <span class="kw">return</span>(<span class="kw">sum</span>(z<span class="op">^</span><span class="dv">3</span>)<span class="op">/</span>n)</a>
+<a class="sourceLine" id="cb48-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb48-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb48-7" data-line-number="7">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a>
+<a class="sourceLine" id="cb48-8" data-line-number="8"><span class="kw">hist</span>(wts, <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb48-9" data-line-number="9"><span class="kw">myskew</span>(wts)</a>
+<a class="sourceLine" id="cb48-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb48-11" data-line-number="11">z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(wts))</a>
+<a class="sourceLine" id="cb48-12" data-line-number="12"><span class="kw">hist</span>(z, <span class="dt">br=</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb48-13" data-line-number="13"><span class="kw">myskew</span>(z)</a></code></pre>
+<ul>
+<li>Sample excess kurtosis
+<ul>
+<li>Measure of tails</li>
+</ul></li>
+</ul>
+<span class="math display">\[\begin{equation}
+ sample excess kurtosis = n \frac{\sum{(x_i - \bar{x})^4}}{(\sum{(x_i - \bar{x})^2)^2}} -3 = \frac{1}{n}\sum{z_i^4} - 3
+\end{equation}\]</span>
+<pre class="sourceCode r" id="cb49"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">mykurtosis &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">  z &lt;-<span class="st"> </span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">  <span class="kw">return</span>(<span class="kw">sum</span>(z<span class="op">^</span><span class="dv">4</span>)<span class="op">/</span>n <span class="op">-</span><span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb49-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb49-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb49-7" data-line-number="7">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a>
+<a class="sourceLine" id="cb49-8" data-line-number="8"><span class="kw">hist</span>(wts, <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb49-9" data-line-number="9"><span class="kw">mykurtosis</span>(wts)</a>
+<a class="sourceLine" id="cb49-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb49-11" data-line-number="11">z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(wts))</a>
+<a class="sourceLine" id="cb49-12" data-line-number="12"><span class="kw">hist</span>(z, <span class="dt">br=</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb49-13" data-line-number="13"><span class="kw">mykurtosis</span>(z)</a></code></pre>
+</div>
+<div id="viewing-the-shape" class="section level2">
+<h2><span class="header-section-number">3.9</span> Viewing the shape</h2>
+<ul>
+<li>Dot plots – Trouble with repeated values, only used for small data sets</li>
+<li>Stem and leaf plot – Shows range, median, shape. But only for small data sets. trouble with clustered data. Rounding</li>
+<li>Histogram – Break up an interval, for each subinterval the number of data points are counted</li>
+<li>Density plots</li>
+</ul>
+<pre class="sourceCode r" id="cb50"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">wts &lt;-<span class="st"> </span>kid.weights<span class="op">$</span>weight</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2">xrange &lt;-<span class="st"> </span><span class="kw">range</span>(wts)</a>
+<a class="sourceLine" id="cb50-3" data-line-number="3">den &lt;-<span class="st"> </span><span class="kw">density</span>(wts)</a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="kw">plot</span>(den, <span class="dt">xlim=</span>xrange, <span class="dt">xlab=</span><span class="st">&quot;densities&quot;</span>, <span class="dt">main=</span><span class="st">&quot;&quot;</span>)</a></code></pre>
+<p><img src="images/02/11.png" /></p>
+<ul>
+<li>Boxplots
+<ul>
+<li>It shows center, spread, shape</li>
+<li>Five-number summary of a univariate data set: min, max, Q1, Q3, and median</li>
+<li>These are good summary of even very large data sets.</li>
+<li>Outliers – 1.5 x IQR</li>
+</ul></li>
+</ul>
+
 </div>
 </div>
             </section>
