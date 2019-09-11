@@ -5,7 +5,7 @@
 - Statistics 
   + 데이터 분석을 통한 예측 - 데이터를 수집, 정리하여 이로부터 미지의 사실에 대한 신빙성 있는 추론을 수행하는 과정
 
-![](04.png)
+![](images/02/04.png)
 
 - Data - 사실을 나타내는 수치 
 - 맥도너 정보경제학 (1963)
@@ -74,7 +74,7 @@ sqrt(whale)
 
 - Adding values to a vector variable
 
-```{r}
+```{r, eval=F}
 x <- 1
 x <- c(x, 2)
 x
