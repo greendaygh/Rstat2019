@@ -531,3 +531,24 @@ plot(den, xlim=xrange, xlab="densities", main="")
   + These are good summary of even very large data sets. 
   + Outliers – 1.5 x IQR 
 
+
+## Categorical data
+
+- Tabulating data
+
+```{r, eval=F}
+
+x <- babies$smoke
+x <- factor(x, labels=c("never", "now", "until current", "once, quit", "unknown"))
+table(x)
+out <- table(x)
+prop <- 100*out/sum(out)
+round(prop, digits=2)
+barplot(out)
+barplot(prop)
+dotplot(out)
+dotplot(prop)
+pie(out)
+
+```
+
