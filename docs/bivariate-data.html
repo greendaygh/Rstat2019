@@ -493,7 +493,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><p>앞서 상관계수는 두 (연속형) 변수간의 관계를 나타내는 척도라고 설명을 했습니다. 하나의 변수는 연속형이고 다른 변수가 범주형 변수일 경우에도 각 범주형 변수의 그룹이 값는 평균값을 비교하여 관계를 유추할 수 있습니다. 즉, 각 그룹의 평균값들을 선으로 연결하였을 때 그 기울기가 일정하면 그룹의 변화에 따른 반응값이 선형적으로 일정한 관계에 있다고 해석할 수 있습니다.</p></li>
 <li><p>선형적 트렌드는 다음과 같은 모형으로 나타낼 수 있습니다.</p></li>
 </ul>
-<p><span class="math display">\[ \mu_{y|x} = \beta_0 + \beta_1 x \]</span> where $ _{y|x} $ 는 설명변수 <span class="math inline">\(x\)</span> 가 주어진 상태에서 반응변수의 평균으로 볼 수 있습니다. 각 데이터포인트의 경우 <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \e_i\]</span> 이며 <span class="math inline">\(\e_i\)</span>는 에러를 나타냅니다. <span class="math inline">\(\beta\)</span> 값들은 알 수 없지만 0일 경우 <span class="math inline">\(y\)</span> 값은 항상 일정하고 에러의 평균은 0이 됨을 가정하고 있습니다.</p>
+<p><span class="math display">\[ \mu_{y|x} = \beta_0 + \beta_1 x \]</span></p>
+<p>여기서 <span class="math inline">\(\mu_{y|x}\)</span> 는 설명변수 <span class="math inline">\(x\)</span> 가 주어진 상태에서 반응변수의 평균으로 볼 수 있습니다. 각 데이터포인트의 경우 <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + e_i\]</span> 이며 <span class="math inline">\(e_i\)</span>는 에러를 나타냅니다. <span class="math inline">\(\beta\)</span> 값들은 계산을 해야 알 수 있지만 0일 경우 <span class="math inline">\(y\)</span> 값은 항상 일정하고 에러의 평균은 0이 됨을 가정하고 있습니다.</p>
 <ul>
 <li>이제 <span class="math inline">\(\beta\)</span>가 0인지 아닌지를 계산하면 두 변수가 연관이 있는지에 대한 판단을 할 수 있습니다. <span class="math inline">\(\beta\)</span>를 구하기 전에 우선 <code>error</code>, <code>residual</code>, 그리고 <code>bias</code> 에 대한 념을 정확히 알아두는 것이 좋습니다.</li>
 </ul>
@@ -506,16 +507,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul>
 <p><span class="math display">\[ \hat{y}_i = b_0 + b_1 x_i \]</span>
 <span class="math display">\[ residual = y_i - \hat{y}_i \]</span>
-- <span class="math display">\[\beta\]</span> 값은 최소제곱추정법이라는 방법으로 구할 수 있는데 이 방법은 각 점에서의 잔차를 최소화 하는 선분을 (회귀선) 구하는 과정이며 <span class="math display">\[\beta\]</span>는 해당 선분의 기울이로 볼 수 있습니다. 즉, 추정에 의해서 구해진 회귀선은 squared residual을 최소화 하는 선분이라고 해석할 수 있습니다.</p>
+- <span class="math inline">\(\beta\)</span> 값은 최소제곱추정법이라는 방법으로 구할 수 있는데 이 방법은 각 점에서의 잔차를 최소화 하는 선분을 (회귀선) 구하는 과정이며 <span class="math inline">\(\beta\)</span>는 해당 선분의 기울기로 볼 수 있습니다. 즉, 추정에 의해서 구해진 회귀선은 <code>squared residual</code>을 최소화 하는 선분이라고 해석할 수 있습니다.</p>
 <p><img src="images/03/10.PNG" /></p>
 <ul>
-<li>선분 <span class="math display">\[ \hat{y} = \hat{beta}_0 + \hat{\beta}_1 x \]</span>의 최소 제곱법에 의한 <span class="math display">\[\beta_0\]</span>와 <span class="math display">\[\beta_1\]</span>의 추정값 <span class="math display">\[\hat{beta}_0\]</span>와 <span class="math display">\[\hat{beta}_1\]</span>은 다음과 같이 정의 됩니다.</li>
+<li>선분 <span class="math inline">\(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\)</span>의 최소 제곱법에 의한 <span class="math inline">\(\beta_0\)</span>와 <span class="math inline">\(\beta_1\)</span>의 추정값 <span class="math inline">\(\hat{\beta}_0\)</span>와 <span class="math inline">\(\hat{\beta}_1\)</span>은 다음과 같이 정의 됩니다.</li>
 </ul>
 <p><span class="math display">\[ \hat{\beta}_1 = \frac{\sum(x_i - \bar{x})(y_i-\bar{y})}{\sum(x_i - \bar{x})^2} = cor(x,y)\frac{s_y}{s_x}\]</span></p>
 <p><span class="math display">\[ \hat{\beta}_0 = \hat{y} - \hat{\beta}_1 x \]</span></p>
 <ul>
-<li><p>위 두 식에서 회귀선분의 기울기인 <span class="math inline">\(\hat{\beta}_1\)</span>은 상관계수에 <span class="math inline">\(\frac{s_y}{s_x}\)</span>를 곱한 수로 1만큼 x 축으로 변할 때 변화하는 y 값의 평균 변화량으로 해석하면 되겠습니다. 또한 상관계수와는 달리 설명변수와 반응변수 x, y가 바뀔경우 값이 달라지며 여전히 잔차의 합은 0가 됩니다.</p></li>
-<li><p>R에서는 다음과 같이 lm 함수를 사용하며 이 함수에 대한 더 자세한 내용은 11장에서 다시 배우게 되겠습니다.</p></li>
+<li><p>위 두 식에서 회귀선분의 기울기인 <span class="math inline">\(\hat{\beta}_1\)</span>은 상관계수에 <span class="math inline">\(s_y / s_x\)</span>를 곱한 수로 1만큼 x 축으로 변할 때 변화하는 y 값의 평균 변화량으로 해석하면 되겠습니다. 또한 상관계수와는 달리 설명변수와 반응변수인 <span class="math inline">\(x\)</span>와 <span class="math inline">\(y\)</span>가 바뀔경우 값이 달라지며 여전히 잔차의 합은 0가 됩니다.</p></li>
+<li><p>R에서는 다음과 같이 <code>lm</code> 함수를 사용하며 이 함수에 대한 더 자세한 내용은 11장에서 다시 배우게 되겠습니다.</p></li>
 </ul>
 <pre class="sourceCode r" id="cb67"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">?lm</a>
 <a class="sourceLine" id="cb67-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">lm</span>(maxrate <span class="op">~</span><span class="st"> </span>age, <span class="dt">data=</span>heartrate)</a>
@@ -540,7 +541,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb67-21" data-line-number="21"><span class="kw">head</span>(heartrate)</a>
 <a class="sourceLine" id="cb67-22" data-line-number="22"><span class="kw">predict</span>(out, <span class="kw">data.frame</span>(<span class="dt">age=</span><span class="dv">30</span>))</a></code></pre>
 <ul>
-<li>Example: fit 데이터에서 abdomen 과 wrist의 산점도를 그리고 선형모형을 적합한 후 추세선을 그리시오. 17cm wrist 크기를 갖는 사람은 얼마의 abdomen의 값을 가질지 예측하시오.</li>
+<li><p>Example: fit 데이터에서 abdomen 과 wrist의 산점도를 그리고 선형모형을 적합한 후 추세선을 그리시오. 17cm wrist 크기를 갖는 사람은 얼마의 abdomen의 값을 가질지 예측하시오.</p></li>
+<li><p>correlation vs. association vs. relation</p></li>
 </ul>
 <div class="figure">
 <img src="images/03/13.PNG" alt="https://stats.stackexchange.com/questions/371747/association-relationship-and-correlation" />
@@ -551,14 +553,10 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </div>
 <div id="bivariate-categorical-data" class="section level2">
 <h2><span class="header-section-number">4.4</span> Bivariate categorical data</h2>
-<ul>
-<li>이번 단원에서는 두 종류의 짝데이터가 모두 범주형일 경우에 그 연관성을 정량화하는 방법에 대해서 알아보겠습니다.</li>
-</ul>
+<p>이번 단원에서는 두 종류의 짝데이터가 모두 범주형일 경우에 그 연관성을 정량화하는 방법에 대해서 알아보겠습니다.</p>
 <div id="contingency-tables" class="section level3">
 <h3><span class="header-section-number">4.4.1</span> Contingency tables</h3>
-<ul>
-<li>일반적으로 범주형 데이터는 각 샘플의 그룹 정보를 표시하여 나타내며 분석을 위해서는 이러한 그룹 정보를 기준으로 각 그룹에 해당하는 샘플의 갯수를 카운팅하여 contingency table로 변환하여 분석을 수행하게 됩니다. 두 범주형 변수의 경우는 two-way contingency table로 나타낼 수 있습니다.</li>
-</ul>
+<p>일반적으로 범주형 데이터는 각 샘플의 그룹 정보를 표시하여 나타내며 분석을 위해서는 이러한 그룹 정보를 기준으로 각 그룹에 해당하는 샘플의 갯수를 카운팅하여 contingency table로 변환하여 분석을 수행하게 됩니다. 두 범주형 변수의 경우는 two-way contingency table로 나타낼 수 있습니다.</p>
 <p><img src="images/03/11.PNG" /></p>
 <ul>
 <li>R에서는 다음과 같은 다양한 방법으로 테이블을 만듭니다.</li>
