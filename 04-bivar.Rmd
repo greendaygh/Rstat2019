@@ -402,7 +402,8 @@ predict(out, data.frame(age=30))
 ![](images/03/11.PNG)
 
 
-- R에서는 다음과 같은 다양한 방법으로 테이블을 만듭니다. 
+R에서는 다음과 같은 다양한 방법으로 테이블을 만듭니다. 
+
 
 ```{r, eval=F}
 rbind(c(56,8), c(2,16))
@@ -447,7 +448,7 @@ margin.table(mytbl, margin=2)
 
 ### Conditional distributions
 
-- 조건부 확률은 위 분할표 (contingency table)의 하나의 row에 대해서 다른 row와 비교하는 경우를 생각하면 됩니다. 즉 위 안전벨트 데이터에서 부모가 벨트를 맬 경우와 매지 않을 경우 각각에 대한 아이들의 벨트 착용 비율을 말합니다. 
+- 조건부 분포는 위 분할표 (contingency table)의 하나의 row에 대해서 다른 row와 비교하는 경우를 생각하면 됩니다. 즉 위 안전벨트 데이터에서 부모가 벨트를 맬 경우와 매지 않을 경우 각각에 대한 아이들의 벨트 착용 비율을 말합니다. 
 
 $$ p(C=b|P=b) = \frac{p(C=b, P=b)}{p(P=b)} $$
 
@@ -522,16 +523,18 @@ mosaicplot(xtabs(Freq ~ Class + Survived, data=titanic))
 ```
 
 
-- Kendal tau correlation은 concordant/discordant pair를 이용한 정량적 연관성 측정값으로 다음과 같이 계산 할 수 있습니다. 특정 관측 데이터 pair (x1, y1)과 (x2, y2)가 있을 때 x1과 y1이 x2, y2에 비해서 둘 다 높은 (또는 낮은) rank에 위치할 경우 concordant 하다고 하며 반대로 x2 또는 y2 둘 중 하나는 높으나 다른 하나는 낮은 또는 그 반대인 경우 discordant 한 것으로 정의 됩니다. 피어슨 상관성과 같은 -1부터 1사이의 값을 가지며 0은 연관이 전혀 없는 경우를 말합니다. 
+- Kendal tau correlation은 concordant/discordant pair를 이용한 정량적 연관성 측정값으로 다음과 같이 계산 할 수 있습니다. 특정 관측 데이터 pair (x1, y1)과 (x2, y2)가 있을 때 x1과 y1이 x2, y2에 비해서 둘 다 높은 (또는 낮은) rank에 위치할 경우 concordant 하다고 하며 반대로 x2 또는 y2 둘 중 하나는 높으나 다른 하나는 낮은 또는 그 반대인 경우 discordant 한 것으로 정의 됩니다. 피어슨 상관성과 같은 -1부터 1사이의 값을 가지며 0은 연관이 전혀 없는 경우를 말합니다.
 
-$$ \tau = \frac{# of concordant pair - # of discordant pair}{n(n-1)/2} $$
+
+$$ \tau = \frac{Number ~ of ~ concordant ~ pair - Number ~ of ~ discordant ~ pair}{n(n-1)/2} $$
+
 
 
 - The chi-squared statistics 는 가장 널리 쓰이는 범주형 자료의 연관성 척도로 다음과 같이 정의됩니다. 수식의 "o"와 "e"는 각각 관측값과 예측값을 나타냅니다. 이 값이 클 경우 연관이 크다는 것이고 크고 작음에 대한 검증은 10장에서 다시 다루기로 합니다. 
 
-$$ chi-squared statistic = \sum \frac{(f_o - f_e)^2}{f_e} $$
+$$ chi-squared ~ statistic = \sum \frac{(f_o - f_e)^2}{f_e} $$
 
-- 다음 seatbelt 데이터에서 괄호를 채우시오. hint: 만약 부모와 아이들의 안전벨트를 매는 두 사건 (변수)가 독립이라면 $p(C, P) == p(C)p(P)$ 즉, 결합확률이 각 확률을 곱한 것과 같고 기대값은 확률 x 전체 사건의 수 이므로 다시 적으면 $N p(C,P) == N p(C)p(P)$ 이고 여기서 $N p(C,P)$는 우리가 관측한 값으로 볼 수 있고 $N p(C) p(P)$는 독립을 가정한 상태에서 기대값이라고 볼 수 있음. 
+- Example. 다음 seatbelt 데이터에서 괄호를 채우시오. hint: 만약 부모와 아이들의 안전벨트를 매는 두 사건 (변수)가 독립이라면 $p(C, P) == p(C)p(P)$ 즉, 결합확률이 각 확률을 곱한 것과 같고 기대값은 확률 x 전체 사건의 수($N$) 이므로 다시 적으면 $N p(C,P) == N p(C)p(P)$임. 여기서 $N p(C,P)$는 우리가 관측한 값으로 볼 수 있고 $N p(C) p(P)$는 독립을 가정한 상태에서 기대값이라고 볼 수 있음. 
 
 
 ![](images/03/15.PNG)

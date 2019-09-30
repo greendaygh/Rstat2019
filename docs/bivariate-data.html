@@ -558,9 +558,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h3><span class="header-section-number">4.4.1</span> Contingency tables</h3>
 <p>일반적으로 범주형 데이터는 각 샘플의 그룹 정보를 표시하여 나타내며 분석을 위해서는 이러한 그룹 정보를 기준으로 각 그룹에 해당하는 샘플의 갯수를 카운팅하여 contingency table로 변환하여 분석을 수행하게 됩니다. 두 범주형 변수의 경우는 two-way contingency table로 나타낼 수 있습니다.</p>
 <p><img src="images/03/11.PNG" /></p>
-<ul>
-<li>R에서는 다음과 같은 다양한 방법으로 테이블을 만듭니다.</li>
-</ul>
+<p>R에서는 다음과 같은 다양한 방법으로 테이블을 만듭니다.</p>
 <pre class="sourceCode r" id="cb68"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">56</span>,<span class="dv">8</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">16</span>))</a>
 <a class="sourceLine" id="cb68-2" data-line-number="2"><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">56</span>,<span class="dv">2</span>), <span class="kw">c</span>(<span class="dv">8</span>,<span class="dv">16</span>))</a>
 <a class="sourceLine" id="cb68-3" data-line-number="3"></a>
@@ -596,7 +594,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="conditional-distributions" class="section level3">
 <h3><span class="header-section-number">4.4.3</span> Conditional distributions</h3>
 <ul>
-<li>조건부 확률은 위 분할표 (contingency table)의 하나의 row에 대해서 다른 row와 비교하는 경우를 생각하면 됩니다. 즉 위 안전벨트 데이터에서 부모가 벨트를 맬 경우와 매지 않을 경우 각각에 대한 아이들의 벨트 착용 비율을 말합니다.</li>
+<li>조건부 분포는 위 분할표 (contingency table)의 하나의 row에 대해서 다른 row와 비교하는 경우를 생각하면 됩니다. 즉 위 안전벨트 데이터에서 부모가 벨트를 맬 경우와 매지 않을 경우 각각에 대한 아이들의 벨트 착용 비율을 말합니다.</li>
 </ul>
 <p><span class="math display">\[ p(C=b|P=b) = \frac{p(C=b, P=b)}{p(P=b)} \]</span></p>
 <ul>
@@ -656,13 +654,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ul>
 <li>Kendal tau correlation은 concordant/discordant pair를 이용한 정량적 연관성 측정값으로 다음과 같이 계산 할 수 있습니다. 특정 관측 데이터 pair (x1, y1)과 (x2, y2)가 있을 때 x1과 y1이 x2, y2에 비해서 둘 다 높은 (또는 낮은) rank에 위치할 경우 concordant 하다고 하며 반대로 x2 또는 y2 둘 중 하나는 높으나 다른 하나는 낮은 또는 그 반대인 경우 discordant 한 것으로 정의 됩니다. 피어슨 상관성과 같은 -1부터 1사이의 값을 가지며 0은 연관이 전혀 없는 경우를 말합니다.</li>
 </ul>
-<p><span class="math display">\[ \tau = \frac{# of concordant pair - # of discordant pair}{n(n-1)/2} \]</span></p>
+<p><span class="math display">\[ \tau = \frac{Number ~ of ~ concordant ~ pair - Number ~ of ~ discordant ~ pair}{n(n-1)/2} \]</span></p>
 <ul>
 <li>The chi-squared statistics 는 가장 널리 쓰이는 범주형 자료의 연관성 척도로 다음과 같이 정의됩니다. 수식의 “o”와 “e”는 각각 관측값과 예측값을 나타냅니다. 이 값이 클 경우 연관이 크다는 것이고 크고 작음에 대한 검증은 10장에서 다시 다루기로 합니다.</li>
 </ul>
-<p><span class="math display">\[ chi-squared statistic = \sum \frac{(f_o - f_e)^2}{f_e} \]</span></p>
+<p><span class="math display">\[ chi-squared ~ statistic = \sum \frac{(f_o - f_e)^2}{f_e} \]</span></p>
 <ul>
-<li>다음 seatbelt 데이터에서 괄호를 채우시오. hint: 만약 부모와 아이들의 안전벨트를 매는 두 사건 (변수)가 독립이라면 <span class="math inline">\(p(C, P) == p(C)p(P)\)</span> 즉, 결합확률이 각 확률을 곱한 것과 같고 기대값은 확률 x 전체 사건의 수 이므로 다시 적으면 <span class="math inline">\(N p(C,P) == N p(C)p(P)\)</span> 이고 여기서 <span class="math inline">\(N p(C,P)\)</span>는 우리가 관측한 값으로 볼 수 있고 <span class="math inline">\(N p(C) p(P)\)</span>는 독립을 가정한 상태에서 기대값이라고 볼 수 있음.</li>
+<li>Example. 다음 seatbelt 데이터에서 괄호를 채우시오. hint: 만약 부모와 아이들의 안전벨트를 매는 두 사건 (변수)가 독립이라면 <span class="math inline">\(p(C, P) == p(C)p(P)\)</span> 즉, 결합확률이 각 확률을 곱한 것과 같고 기대값은 확률 x 전체 사건의 수(<span class="math inline">\(N\)</span>) 이므로 다시 적으면 <span class="math inline">\(N p(C,P) == N p(C)p(P)\)</span>임. 여기서 <span class="math inline">\(N p(C,P)\)</span>는 우리가 관측한 값으로 볼 수 있고 <span class="math inline">\(N p(C) p(P)\)</span>는 독립을 가정한 상태에서 기대값이라고 볼 수 있음.</li>
 </ul>
 <p><img src="images/03/15.png" /></p>
 <pre class="sourceCode r" id="cb76"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">fo &lt;-<span class="st"> </span>tbl</a>
