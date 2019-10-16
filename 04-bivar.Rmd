@@ -663,9 +663,15 @@ UScereal$mfr
 ```{r, eval=F}
 tbl <- as.matrix(table(UScereal$mfr, UScereal$shelf))
 barplot(tbl, beside=T)
-colSums(tbl)/sum(tbl)
-rowSums(tbl)/sum(tbl)
-tbl
+colvals <- colSums(tbl)/sum(tbl)
+rowvals <- rowSums(tbl)/sum(tbl)
+fl1_exp <- rowvals * colvals[1] * sum(tbl)
+fl2_exp <- rowvals * colvals[2] * sum(tbl)
+fl3_exp <- rowvals * colvals[3] * sum(tbl)
+tbl_exp <- data.frame(fl1_exp, fl2_exp, fl3_exp)
+chisq_val <- sum(((tbl-tbl_exp)^2)/tbl_exp)
+chsq <- chisq.test(tbl)
+c(computed=chisq_val, chsq$statistic)
 ```
 
 

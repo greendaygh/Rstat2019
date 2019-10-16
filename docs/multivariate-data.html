@@ -242,7 +242,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h1><span class="header-section-number">Chapter 5</span> Multivariate data</h1>
 <div id="introduction-2" class="section level2">
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
-<p>앞서 장에서는 기본적인 변수에 대한 대표값들과 두 개 이상의 변수가 주어졌을 경우 그 관계를 정량화 하는 과정을 학습했습니다. 그러나 일반적인 데이터 분석은 두 개 이상의 변수와 샘플들에 대해서 정제, 변환, 가시화, 대표값 비교 및 모델링으로 이어지는 단계로 이루어질 수 있습니다. 본 장에서는 R을 사용해서 위 데이터 분석 과정을 수행하기 위해 필요한 프로그래밍 기술을 습득하기 위해 최근 대표적으로 사용되는 dplyr 패키지와 가시화를 위한 ggplot2 package 사용에 대한 학습을 목표로 합니다.</p>
+<p>앞서 장에서는 기본적인 변수에 대한 대표값들과 두 개 이상의 변수가 주어졌을 경우 그 관계를 정량화 하는 과정을 학습했습니다. 그러나 일반적인 데이터 분석은 두 개 이상의 변수와 샘플들에 대해서 정제, 변환, 가시화, 대표값 비교 및 모델링으로 이어지는 단계로 이루어질 수 있습니다. 본 장에서는 R을 사용해서 위 데이터 분석 과정을 수행하기 위해 필요한 프로그래밍 기술을 습득하기 위해 최근 대표적으로 사용되는 apply 함수들과 dplyr 패키지 사용에 대한 학습을 목표로 합니다.</p>
 </div>
 <div id="data-structures-in-r" class="section level2">
 <h2><span class="header-section-number">5.2</span> Data structures in R</h2>
@@ -269,20 +269,20 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </div>
 <div id="data.frame" class="section level3">
 <h3><span class="header-section-number">5.2.4</span> data.frame</h3>
-<p>data.frame은 변수들의 집합으로 <code>list</code>형과 비슷하지만 각 변수 element들이 똑같은 길이를 가지고 matrix 형태로 표현되는 것이 다릅니다. 변수들의 이름을 이용하여 <code>$</code> 기호로 각 변수들의 데이터에 접근 할 수 있고 matrix와 같이 <code>[i,j]</code> 형태의 인덱싱도 가능합니다.</p>
+<p>data frame은 변수들의 집합으로 <code>list</code>형과 비슷하지만 각 변수 element들이 똑같은 길이를 가지고 matrix 형태로 표현되는 것이 다릅니다. 변수들의 이름을 이용하여 <code>$</code> 기호로 각 변수들의 데이터에 접근 할 수 있고 matrix와 같이 <code>[i,j]</code> 형태의 인덱싱도 가능합니다.</p>
 </div>
 </div>
 <div id="working-with-data-frame-i" class="section level2">
 <h2><span class="header-section-number">5.3</span> Working with data frame I</h2>
-<p>앞서 잠깐 소개한 것과같이 일반적인 데이터 분석은 데이터 클리닝, 변환, 가시화, 대표값비교, 모델링의 형태로 진행될 수 있습니다. 특히 R에서는 data frame 형태로 대부분의 분석이 진행되므로 data frame 기반의 다양한 데이터 오퍼레이션 기법을 익혀야 합니다.</p>
+<p>앞서 잠깐 소개한 것과같이 일반적인 데이터 분석은 데이터 클리닝, 변환, 가시화, 대표값비교, 모델링의 반복적인 수행으로 진행될 수 있습니다. 특히 R에서는 data frame 타입의 데이터로 대부분의 분석이 진행되므로 data frame 기반의 다양한 기법을 익혀야 합니다.</p>
 <div id="some-exercises" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> some exercises</h3>
-<p><code>state.x77</code> 데이터셋에서 population과 Life Exp, 그리고 Murder 변수만을 이용한 새로운 matrix를 만드시오.</p>
+<p><strong>EXERCISE</strong> <code>state.x77</code> 데이터셋에서 population과 Life Exp, 그리고 Murder 변수만을 이용한 새로운 matrix를 만드시오.</p>
 <pre class="sourceCode r" id="cb85"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw">str</span>(state.x77)</a>
 <a class="sourceLine" id="cb85-2" data-line-number="2">newstate &lt;-<span class="st"> </span>state.x77[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>)]</a>
 <a class="sourceLine" id="cb85-3" data-line-number="3"><span class="kw">class</span>(newstate)</a>
 <a class="sourceLine" id="cb85-4" data-line-number="4"><span class="kw">str</span>(newstate)</a></code></pre>
-<p>위 matrix에 각 주의 이름을 값으로 갖는 새로운 변수 state_name을 추가해 보시오</p>
+<p><strong>EXERCISE</strong> 위 matrix에 각 주의 이름을 값으로 갖는 새로운 변수 state_name을 추가해 보시오</p>
 <pre class="sourceCode r" id="cb86"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">rownames</span>(state.x77)</a>
 <a class="sourceLine" id="cb86-2" data-line-number="2"><span class="kw">head</span>(state.x77)</a>
 <a class="sourceLine" id="cb86-3" data-line-number="3">state_names &lt;-<span class="st"> </span><span class="kw">rownames</span>(state.x77)</a>
@@ -291,7 +291,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb86-6" data-line-number="6"><span class="kw">str</span>(newstate)</a>
 <a class="sourceLine" id="cb86-7" data-line-number="7">newstate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(state_names, state.x77[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>)], <span class="dt">stringsAsFactors =</span> F)</a>
 <a class="sourceLine" id="cb86-8" data-line-number="8"><span class="kw">str</span>(newstate)</a></code></pre>
-<p>newstate data frame의 population과 Life Exp, Murder 변수들의 분포를 boxplot을 이용하여 비교하고 표준화 후 분포가 어떻게 변하는지 설명하시오</p>
+<p><strong>EXERCISE</strong> newstate data frame의 population과 Life Exp, Murder 변수들의 분포를 boxplot을 이용하여 비교하고 표준화 후 분포가 어떻게 변하는지 설명하시오</p>
 <pre class="sourceCode r" id="cb87"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">boxplot</span>(newstate[,<span class="op">-</span><span class="dv">1</span>])</a>
 <a class="sourceLine" id="cb87-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb87-3" data-line-number="3">newstate<span class="op">$</span>popstd &lt;-<span class="st"> </span>(newstate<span class="op">$</span>Population <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(newstate<span class="op">$</span>Population))<span class="op">/</span><span class="kw">sd</span>(newstate<span class="op">$</span>Population)</a>
@@ -300,8 +300,10 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb87-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb87-7" data-line-number="7"><span class="kw">boxplot</span>(newstate<span class="op">$</span>popstd, newstate<span class="op">$</span>lifexpstd, newstate<span class="op">$</span>murderstd)</a>
 <a class="sourceLine" id="cb87-8" data-line-number="8"><span class="kw">boxplot</span>(<span class="kw">data.frame</span>(newstate<span class="op">$</span>popstd, newstate<span class="op">$</span>lifexpstd, newstate<span class="op">$</span>murderstd))</a>
-<a class="sourceLine" id="cb87-9" data-line-number="9"><span class="kw">boxplot</span>(<span class="kw">c</span>(newstate<span class="op">$</span>popstd, newstate<span class="op">$</span>lifexpstd, newstate<span class="op">$</span>murderstd))</a></code></pre>
-<p>세 변수간 상관계수를 구하고 관계를 그래프로 나타내시오.</p>
+<a class="sourceLine" id="cb87-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb87-10" data-line-number="10">## one vector, No use &quot;c&quot;</a>
+<a class="sourceLine" id="cb87-11" data-line-number="11"><span class="kw">boxplot</span>(<span class="kw">c</span>(newstate<span class="op">$</span>popstd, newstate<span class="op">$</span>lifexpstd, newstate<span class="op">$</span>murderstd)) </a></code></pre>
+<p><strong>EXERCISE</strong> 세 변수간 상관계수를 구하고 관계를 그래프로 나타내시오.</p>
 <pre class="sourceCode r" id="cb88"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw">cor</span>(newstate<span class="op">$</span>Population, newstate<span class="op">$</span>Life.Exp)</a>
 <a class="sourceLine" id="cb88-2" data-line-number="2"><span class="kw">cor</span>(newstate<span class="op">$</span>Population, newstate<span class="op">$</span>Murder)</a>
 <a class="sourceLine" id="cb88-3" data-line-number="3"><span class="kw">cor</span>(newstate<span class="op">$</span>Life.Exp, newstate<span class="op">$</span>Murder)</a>
@@ -338,7 +340,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb91-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb91-9" data-line-number="9">ds2 &lt;-<span class="st"> </span><span class="kw">filter</span>(d, (<span class="op">!</span><span class="kw">is.na</span>(d<span class="op">$</span>Ozone) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(d<span class="op">$</span>Solar.R)))</a>
 <a class="sourceLine" id="cb91-10" data-line-number="10">ds2 &lt;-<span class="st"> </span><span class="kw">filter</span>(d, <span class="kw">complete.cases</span>(d))</a></code></pre>
-<p>subset을 사용해서 Temp와 Month 변수만을 선택 후 새로운 data.frame ds3를 만드세요</p>
+<p><strong>EXERCISE</strong> subset을 사용해서 Temp와 Month 변수만을 선택 후 새로운 data.frame ds3를 만드세요</p>
 <pre class="sourceCode r" id="cb92"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">head</span>(d)</a>
 <a class="sourceLine" id="cb92-2" data-line-number="2">d[,<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>)]</a>
 <a class="sourceLine" id="cb92-3" data-line-number="3">d[,<span class="kw">c</span>(<span class="st">&quot;Temp&quot;</span>, <span class="st">&quot;Month&quot;</span>)]</a>
@@ -354,7 +356,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb93-5" data-line-number="5">d2 &lt;-<span class="st"> </span><span class="kw">within</span>(d, {Hr2=Day<span class="op">*</span><span class="dv">24</span>})</a>
 <a class="sourceLine" id="cb93-6" data-line-number="6"><span class="co">#d3 &lt;- transform(d2, {Hr4 = Day*24})</span></a>
 <a class="sourceLine" id="cb93-7" data-line-number="7"><span class="co">#d3</span></a></code></pre>
-<p>d2 dataframe에서 Month를 day로 바꾸고 이를 다시 시간으로 바꾼 후 Hr2와 더한 새로운 Hr3 변수를 추가한 데이터프레임을 만드세요</p>
+<p><strong>EXERCISE</strong> d2 dataframe에서 Month를 day로 바꾸고 이를 다시 시간으로 바꾼 후 Hr2와 더한 새로운 Hr3 변수를 추가한 데이터프레임을 만드세요</p>
 <pre class="sourceCode r" id="cb94"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">head</span>(d2)</a>
 <a class="sourceLine" id="cb94-2" data-line-number="2">d3 &lt;-<span class="st"> </span><span class="kw">within</span>(d2, {</a>
 <a class="sourceLine" id="cb94-3" data-line-number="3">  Hr3 &lt;-<span class="st"> </span>Month<span class="op">*</span><span class="dv">30</span><span class="op">*</span><span class="dv">24</span> <span class="op">+</span><span class="st"> </span>Day<span class="op">*</span><span class="dv">24</span></a>
@@ -389,17 +391,19 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="merging-data" class="section level3">
 <h3><span class="header-section-number">5.3.5</span> merging data</h3>
 <p><code>merge</code> 함수는 두 개 이상의 데이터셋을 통합하는 기능을 수행하는 함수입니다. 이 외에도 <code>dplyr</code> 패키지의 <code>inner_join</code> 함수도 많이 쓰이나 이는 이 후 <code>dplyr</code> 패키지 사용에 대한 내용을 배울 예정입니다.</p>
-<p>UsingR 패키지의 babies 데이터셋에서 missing 값들에 대한 <code>NA</code> 처리 후 smoke 변수를 factor 형으로 변환한 데이터셋을 만들어 봅니다. 각 변수당 하나씩 처리를 해보고 <code>within</code> 함수도 사용해 보겠습니다 .</p>
+<p><strong>EXERCISE</strong> 산모의 흡연 여부와 신생아 몸무게의 관계를 알아보는 데이터 분석입니다. UsingR 패키지의 babies 데이터셋에서 missing 값들에 대한 <code>NA</code> 처리 후 smoke 변수를 factor 형으로 변환한 데이터셋을 만들어 봅니다. 각 변수당 하나씩 처리를 해보고 <code>within</code> 함수도 사용해 보겠습니다 .</p>
 <pre class="sourceCode r" id="cb97"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
 <a class="sourceLine" id="cb97-2" data-line-number="2"><span class="kw">head</span>(babies)</a></code></pre>
 <pre class="sourceCode r" id="cb98"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">plot</span>(babies<span class="op">$</span>gestation)</a>
 <a class="sourceLine" id="cb98-2" data-line-number="2">babies<span class="op">$</span>gestation[babies<span class="op">$</span>gestation<span class="op">&gt;</span><span class="dv">900</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a></code></pre>
+<p>직관적으로 위와 같이 수행할 수 있으나 <code>babies$</code> 를 반복해서 입력해주는 불편함이 있습니다.</p>
 <pre class="sourceCode r" id="cb99"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">within</span>(babies, {</a>
 <a class="sourceLine" id="cb99-2" data-line-number="2">  gestation[gestation<span class="op">==</span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb99-3" data-line-number="3">  wt[wt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb99-4" data-line-number="4">})</a>
 <a class="sourceLine" id="cb99-5" data-line-number="5"><span class="kw">head</span>(b)</a>
 <a class="sourceLine" id="cb99-6" data-line-number="6"><span class="kw">str</span>(b)</a></code></pre>
+<p>또한 smoke 변수는 흡연 여부를 나타내는 범주형 변수로 0, 1, 2, 3 값은 의미가 없습니다. 사람이 읽을 수 있는 label을 붙인 factor 형 변수로 변환하겠습니다.</p>
 <pre class="sourceCode r" id="cb100"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">babies<span class="op">$</span>smoke</a>
 <a class="sourceLine" id="cb100-2" data-line-number="2">b2 &lt;-<span class="st"> </span><span class="kw">within</span>(b, {</a>
 <a class="sourceLine" id="cb100-3" data-line-number="3">  smoke =<span class="st"> </span><span class="kw">factor</span>(smoke)</a>
@@ -410,6 +414,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb100-8" data-line-number="8">    <span class="st">&quot;once did, not now&quot;</span> =<span class="st"> </span><span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb100-9" data-line-number="9">  })</a>
 <a class="sourceLine" id="cb100-10" data-line-number="10"><span class="kw">head</span>(b2)</a></code></pre>
+<p>본격적인 통계 분석을 아직 배우진 않았으나 처음 가설에 대한 간단한 결과를 보면 현재 흡연중인 산모는 임신기간과 신생아 몸무게와 음의 상관 관계가 있음을 알 수 있습니다.</p>
 <pre class="sourceCode r" id="cb101"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">dim</span>(b2)</a>
 <a class="sourceLine" id="cb101-2" data-line-number="2">fit &lt;-<span class="st"> </span><span class="kw">lm</span>(gestation<span class="op">~</span>smoke, b2)</a>
 <a class="sourceLine" id="cb101-3" data-line-number="3"><span class="kw">summary</span>(fit)</a>
@@ -437,7 +442,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb103-5" data-line-number="5">l &lt;-<span class="st"> </span><span class="kw">split</span>(airquality, g)</a>
 <a class="sourceLine" id="cb103-6" data-line-number="6"><span class="kw">length</span>(l)</a>
 <a class="sourceLine" id="cb103-7" data-line-number="7"><span class="kw">boxplot</span>(l[[<span class="dv">1</span>]]<span class="op">$</span>Ozone)</a></code></pre>
-<p>airquality 데이터의 Month에 따른 Ozone 의 분포를 boxplot을 이용해서 비교하시오. (subset??)을 이용하여 Month에 따른 각각의 Ozone의 값들로 새로운 변수들 v5, v6, v7, v8, v9을 만들고 이들을 하나의 data frame으로 만드시오</p>
+<p><strong>EXERCISE</strong> airquality 데이터의 Month에 따른 Ozone 의 분포를 boxplot을 이용해서 비교하시오. (subset??)을 이용하여 Month에 따른 각각의 Ozone의 값들로 새로운 변수들 v5, v6, v7, v8, v9을 만들고 이들을 하나의 data frame으로 만드시오</p>
 <pre class="sourceCode r" id="cb104"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">head</span>(airquality)</a></code></pre>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
@@ -449,6 +454,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <pre class="sourceCode r" id="cb106"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1"><span class="kw">boxplot</span>(<span class="dt">formula=</span>Ozone<span class="op">~</span>Month, <span class="dt">data=</span>airquality)</a>
 <a class="sourceLine" id="cb106-2" data-line-number="2"><span class="kw">boxplot</span>(airquality<span class="op">$</span>Ozone<span class="op">~</span>airquality<span class="op">$</span>Month)</a></code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<p><strong>EXERCISE</strong> 가장 직관적으로 먼저 필요한 기능을 하나의 데이터 엘리먼트에 대해서 수행하는 스크립트를 먼저 작성해 보고 필요한 index를 붙이거나 for 문을 활용해서 원하는 형태의 데이터 변환을 완료하시오</p>
 <pre class="sourceCode r" id="cb107"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">oz &lt;-<span class="st"> </span><span class="kw">data.frame</span>(airquality<span class="op">$</span>Ozone[airquality<span class="op">$</span>Month<span class="op">==</span><span class="dv">5</span>],</a>
 <a class="sourceLine" id="cb107-2" data-line-number="2">airquality<span class="op">$</span>Ozone[airquality<span class="op">$</span>Month<span class="op">==</span><span class="dv">6</span>],</a>
 <a class="sourceLine" id="cb107-3" data-line-number="3">airquality<span class="op">$</span>Ozone[airquality<span class="op">$</span>Month<span class="op">==</span><span class="dv">7</span>],</a>
@@ -478,6 +484,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb107-27" data-line-number="27">  soz[[i]] &lt;-<span class="st"> </span>(oz[[i]]<span class="op">-</span><span class="kw">mean</span>(oz[[i]], <span class="dt">na.rm=</span>T))<span class="op">/</span><span class="kw">sd</span>(oz[[i]], <span class="dt">na.rm=</span>T)</a>
 <a class="sourceLine" id="cb107-28" data-line-number="28">}</a>
 <a class="sourceLine" id="cb107-29" data-line-number="29"><span class="kw">boxplot</span>(soz)</a></code></pre>
+<p>반복적으로 수행하는 일들은 apply 계열 함수를 사용하면 쉽게 기능을 수행할 수 있습니다.</p>
 <pre class="sourceCode r" id="cb108"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">l1 &lt;-<span class="st"> </span><span class="kw">transform</span>(l[[<span class="dv">1</span>]], <span class="dt">ozz=</span><span class="kw">scale</span>(Ozone))</a>
 <a class="sourceLine" id="cb108-2" data-line-number="2">l1</a>
 <a class="sourceLine" id="cb108-3" data-line-number="3">l2 &lt;-<span class="st"> </span><span class="kw">transform</span>(l[[<span class="dv">2</span>]], <span class="dt">ozz=</span><span class="kw">scale</span>(Ozone))</a>
