@@ -666,9 +666,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb80-4" data-line-number="4"><span class="kw">var</span>(age)</a>
 <a class="sourceLine" id="cb80-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb80-6" data-line-number="6">zage &lt;-<span class="st"> </span>(age<span class="op">-</span><span class="kw">mean</span>(age))<span class="op">/</span><span class="kw">sd</span>(age)</a>
-<a class="sourceLine" id="cb80-7" data-line-number="7">tmpd &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(age, zage), <span class="dt">ncol=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb80-8" data-line-number="8"><span class="kw">barplot</span>(<span class="kw">t</span>(tmpd), <span class="dt">beside=</span>T)</a>
-<a class="sourceLine" id="cb80-9" data-line-number="9"><span class="kw">text</span>(<span class="fl">0.5</span>, <span class="dv">60</span>, <span class="st">&quot;test&quot;</span>)</a></code></pre>
+<a class="sourceLine" id="cb80-7" data-line-number="7">zage</a>
+<a class="sourceLine" id="cb80-8" data-line-number="8"><span class="kw">median</span>(age)</a>
+<a class="sourceLine" id="cb80-9" data-line-number="9"><span class="kw">median</span>(zage)</a>
+<a class="sourceLine" id="cb80-10" data-line-number="10"><span class="kw">boxplot</span>(<span class="kw">data.frame</span>(age, zage))</a>
+<a class="sourceLine" id="cb80-11" data-line-number="11"><span class="kw">text</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="kw">median</span>(age))</a>
+<a class="sourceLine" id="cb80-12" data-line-number="12"><span class="kw">text</span>(<span class="dv">2</span>, <span class="dv">50</span>, <span class="kw">round</span>(<span class="kw">median</span>(zage),<span class="dv">3</span>))</a></code></pre>
 </div>
 <div id="hw3-2" class="section level3">
 <h3><span class="header-section-number">4.5.2</span> HW3-2</h3>
@@ -687,7 +690,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <pre class="sourceCode r" id="cb82"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">table</span>(UScereal<span class="op">$</span>mfr, UScereal<span class="op">$</span>shelf))</a>
 <a class="sourceLine" id="cb82-2" data-line-number="2"><span class="kw">barplot</span>(tbl, <span class="dt">beside=</span>T)</a>
 <a class="sourceLine" id="cb82-3" data-line-number="3"><span class="kw">colSums</span>(tbl)<span class="op">/</span><span class="kw">sum</span>(tbl)</a>
-<a class="sourceLine" id="cb82-4" data-line-number="4"><span class="kw">rowSums</span>(tbl)<span class="op">/</span><span class="kw">sum</span>(tbl)</a></code></pre>
+<a class="sourceLine" id="cb82-4" data-line-number="4"><span class="kw">rowSums</span>(tbl)<span class="op">/</span><span class="kw">sum</span>(tbl)</a>
+<a class="sourceLine" id="cb82-5" data-line-number="5">tbl</a></code></pre>
 
 </div>
 </div>

@@ -635,9 +635,13 @@ median(age)
 var(age)
 
 zage <- (age-mean(age))/sd(age)
-tmpd <- matrix(c(age, zage), ncol=2)
-barplot(t(tmpd), beside=T)
-text(0.5, 60, "test")
+zage
+median(age)
+median(zage)
+boxplot(data.frame(age, zage))
+text(1, 50, median(age))
+text(2, 50, round(median(zage),3))
+
 ```
 
 
@@ -661,6 +665,7 @@ tbl <- as.matrix(table(UScereal$mfr, UScereal$shelf))
 barplot(tbl, beside=T)
 colSums(tbl)/sum(tbl)
 rowSums(tbl)/sum(tbl)
+tbl
 ```
 
 

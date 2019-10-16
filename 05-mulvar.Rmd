@@ -67,6 +67,7 @@ str(newstate)
 위 matrix에 각 주의 이름을 값으로 갖는 새로운 변수 state_name을 추가해 보시오 
 ```{r, eval=F}
 rownames(state.x77)
+head(state.x77)
 state_names <- rownames(state.x77)
 newstate <- data.frame(state_names, state.x77[,c(1,4,5)])
 head(newstate)
@@ -86,7 +87,8 @@ newstate$lifexpstd <- (newstate$Life.Exp - mean(newstate$Life.Exp))/sd(newstate$
 newstate$murderstd <- (newstate$Murder - mean(newstate$Murder))/sd(newstate$Murder)
 
 boxplot(newstate$popstd, newstate$lifexpstd, newstate$murderstd)
-
+boxplot(data.frame(newstate$popstd, newstate$lifexpstd, newstate$murderstd))
+boxplot(c(newstate$popstd, newstate$lifexpstd, newstate$murderstd))
 ```
 
 
@@ -96,6 +98,10 @@ boxplot(newstate$popstd, newstate$lifexpstd, newstate$murderstd)
 cor(newstate$Population, newstate$Life.Exp)
 cor(newstate$Population, newstate$Murder)
 cor(newstate$Life.Exp, newstate$Murder)
+
+plot(newstate$Population, newstate$Life.Exp)
+plot(newstate$Population, newstate$Murder)
+plot(newstate$Life.Exp, newstate$Murder)
 
 ```
 
@@ -114,6 +120,8 @@ d
 
 
 ```{r, eval=F}
+d[c(T,F,T,T),]
+d
 ds <- d[!is.na(d[,1]),]
 ds <- ds[!is.na(ds[,2]),]
 ds <- d[!is.na(d[,1]) & !is.na(d[,2]),]
@@ -122,7 +130,18 @@ ds <- subset(d, complete.cases(d))
 
 ds2 <- filter(d, (!is.na(d$Ozone) & !is.na(d$Solar.R)))
 ds2 <- filter(d, complete.cases(d))
+
 ```
+
+subset을 사용해서 Temp와 Month 변수만을 선택 후 새로운 data.frame ds3를 만드세요 
+
+```{r, eval=F}
+head(d)
+d[,c(4,5)]
+d[,c("Temp", "Month")]
+subset(d, select=c("Temp", "Month"))
+```
+
 
 
 ### transforming
@@ -131,12 +150,24 @@ ds2 <- filter(d, complete.cases(d))
 
 ```{r, eval=F}
 d <- airquality
+d
 d$Hr <- d$Day*24
 with(d, {Day<10})
-d <- within(d, {Hr2=Day*24})
-d <- transform(d, {Hr3 = Day*24})
+d2 <- within(d, {Hr2=Day*24})
+#d3 <- transform(d2, {Hr4 = Day*24})
+#d3
+
 ```
 
+d2 dataframe에서 Month를 day로 바꾸고 이를 다시 시간으로 바꾼 후 Hr2와 더한 새로운 Hr3 변수를 추가한 데이터프레임을 만드세요 
+
+```{r, eval=F}
+head(d2)
+d3 <- within(d2, {
+  Hr3 <- Month*30*24 + Day*24
+  })
+head(d3)
+```
 
 ### reshaping 
 
@@ -166,8 +197,9 @@ reshape(df, timevar = "visit", idvar = "id", direction = "wide")
 df3 <- data.frame(id = 1:4, age = c(40,50,60,50), dose1 = c(1,2,1,2),
                   dose2 = c(2,1,2,1), dose4 = c(3,3,3,3))
 df3
-reshape(df3, direction = "long", varying = 3:5, sep = "")
-
+df4 <- reshape(df3, direction = "long", varying = 3:5, sep = "")
+head(df4)
+summary(lm(age~dose, df4))
 ```
 
 
@@ -182,12 +214,25 @@ UsingR 패키지의 babies 데이터셋에서 missing 값들에 대한 ```NA``` 
 ```{r, eval=F}
 library(UsingR)
 head(babies)
+```
 
+```{r, eval=F}
+plot(babies$gestation)
+babies$gestation[babies$gestation>900] <- NA
+```
+
+
+
+```{r, eval=F}
 b <- within(babies, {
   gestation[gestation==999] <- NA
   wt[wt == 999] <- NA
 })
+head(b)
+str(b)
+```
 
+```{r, eval=F}
 babies$smoke
 b2 <- within(b, {
   smoke = factor(smoke)
@@ -197,10 +242,14 @@ b2 <- within(b, {
     "until current pregnancy" = 2,
     "once did, not now" = 3)
   })
+head(b2)
+```
 
+```{r, eval=F}
+dim(b2)
 fit <- lm(gestation~smoke, b2)
 summary(fit)
-boxplot(gestation~smoke, b2)
+boxplot(gestation~smoke, b2, ylim=c(250, 300))
 
 fit <- lm(wt~smoke, b2)
 summary(fit)
@@ -226,11 +275,68 @@ b.out <- merge(b3, b4, by.x="id", by.y="id", all=TRUE)
 
 ```{r, eval=F}
 g <- airquality$Month
+head(airquality)
+dim(airquality)
+table(g)
 l <- split(airquality, g)
+length(l)
+boxplot(l[[1]]$Ozone)
+```
+
+
+airquality 데이터의 Month에 따른 Ozone 의 분포를 boxplot을 이용해서 비교하시오. (subset??)을 이용하여 Month에 따른 각각의 Ozone의 값들로 새로운 변수들 v5, v6, v7, v8, v9을 만들고 이들을 하나의 data frame으로 만드시오 
+
+```{r}
+head(airquality)
+
+boxplot(formula=Ozone~Month, data=airquality)
+boxplot(airquality$Ozone~airquality$Month)
+```
+
+```{r, eval=F}
+oz <- data.frame(airquality$Ozone[airquality$Month==5],
+airquality$Ozone[airquality$Month==6],
+airquality$Ozone[airquality$Month==7],
+airquality$Ozone[airquality$Month==8],
+airquality$Ozone[airquality$Month==9])
+
+oz <- list(airquality$Ozone[airquality$Month==5],
+airquality$Ozone[airquality$Month==6],
+airquality$Ozone[airquality$Month==7],
+airquality$Ozone[airquality$Month==8],
+airquality$Ozone[airquality$Month==9])
+
+boxplot(oz)
+
+##
+soz <- list()
+soz[[1]] <- (oz[[1]]-mean(oz[[1]], na.rm=T))/sd(oz[[1]], na.rm=T)
+soz[[2]] <- (oz[[2]]-mean(oz[[2]], na.rm=T))/sd(oz[[2]], na.rm=T)
+soz[[3]] <- (oz[[3]]-mean(oz[[3]], na.rm=T))/sd(oz[[3]], na.rm=T)
+soz[[4]] <- (oz[[4]]-mean(oz[[4]], na.rm=T))/sd(oz[[4]], na.rm=T)
+soz[[5]] <- (oz[[5]]-mean(oz[[5]], na.rm=T))/sd(oz[[5]], na.rm=T)
+soz
+
+boxplot(soz)
+soz <- list()
+for(i in 1:5){
+  soz[[i]] <- (oz[[i]]-mean(oz[[i]], na.rm=T))/sd(oz[[i]], na.rm=T)
+}
+boxplot(soz)
+
+
+```
+
+
+
+```{r, eval=F}
 l1 <- transform(l[[1]], ozz=scale(Ozone))
 l1
 l2 <- transform(l[[2]], ozz=scale(Ozone))
 l2
+
+soz2 <- lapply(l, function(x){scale(x$Ozone)})
+boxplot(soz2)
 ```
 
 
