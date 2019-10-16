@@ -283,7 +283,7 @@ apply(m, 2, sd)
 
 ### map and apply function family 
 
-```{r}
+```{r, eval=F}
 # map
 collection <- c(4, 9, 16)
 Map(sqrt, collection)

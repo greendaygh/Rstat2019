@@ -180,7 +180,7 @@ Stack 함수는 관측 값을 하나의 벡터로 만들고 각 벡터의 라벨
 
 Split 함수의 경우 data를 정의된 그룹으로 나누고 list 타입으로 반환해줍니다. 그룹은 factor 형으로 정의된 변수에 저장되어 있어야 합니다. 
 
-```{r}
+```{r, eval=F}
 str(twins)
 boxplot(data.frame(twins$Foster, twins$Biological))
 ```
