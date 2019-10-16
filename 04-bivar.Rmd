@@ -44,7 +44,7 @@ dotchart(c(beets, no_beets), groups=factor(c(rep("beets", length(beets)), rep("n
 
 ```{r, eval=F}
 boxplot(beets, no_beets)
-boxplot(beets, no_beets, names=c("beets", "no_beets"))
+ boxplot(beets, no_beets, names=c("beets", "no_beets"))
 ```
 
 
@@ -52,6 +52,14 @@ boxplot(beets, no_beets, names=c("beets", "no_beets"))
 
 
 ```{r, eval=F}
+library(UsingR)
+head(michelson)
+?michelson
+str(michelson)
+speed <- michelson$Speed 
+expt <- michelson$Expt
+fourth <- speed[expt == 4]
+fifth <- speed[expt == 5]
 d4 <- density(fourth)
 d5 <- density(fifth)
 xrange <- range(c(d4$x, d5$x))
@@ -61,7 +69,12 @@ lines(d5, lty=2)
 legend(650, 0.008, legend=c("Fourth", "Fifth"), lty=c(1,2))
 ```
 
-QQplot은 두 변수가 갖는 데이터의 Quantile 값을 비교하는 그래프로 R의 `qqplot` 함수를 사용합니다. 
+```{r, eval=F}
+plot(fourth, fifth)
+```
+
+
+QQplot은 두 변수가 갖는 데이터의 Quantile 값을 비교하는 그래프로 R의 `qqplot` 함수를 사용합니다.
 
 ```{r, eval=F}
 qqplot(fourth, fifth)
@@ -70,6 +83,9 @@ x <- quantile(fourth, ps)
 y <- quantile(fifth, ps)
 plot(x, y)
 
+o <- order(fourth)
+fourth[o]
+fourth
 ```
 
 
@@ -105,6 +121,11 @@ name <- paste("Name", id, sep="")
 grade <- LETTERS[sample(1:5, size=length(id), replace=T)]
 student <- data.frame(id, name, grade)
 student
+
+student$id
+student[,1]
+class(student$name)
+str(student)
 
 class(id)
 class(name)
@@ -158,6 +179,12 @@ Stack 함수는 관측 값을 하나의 벡터로 만들고 각 벡터의 라벨
 
 
 Split 함수의 경우 data를 정의된 그룹으로 나누고 list 타입으로 반환해줍니다. 그룹은 factor 형으로 정의된 변수에 저장되어 있어야 합니다. 
+
+```{r}
+str(twins)
+boxplot(data.frame(twins$Foster, twins$Biological))
+```
+
 
 
 ```{r, eval=F}
@@ -600,6 +627,20 @@ sum((fo-fe)^2 / fe)
 - 위 age 데이터를 z-score로 변환 하고 zage 변수에 저장하시오
 - age와 zage  두 데이터셋에  대한 각각의 boxplot을 그리고 중간값을 출력하시오
 
+
+```{r, eval=F}
+age <- c(7,   9,   2,  64,  41,  60,  82,  31,  38,  25,  52,  68,  67)
+mean(age)
+median(age)
+var(age)
+
+zage <- (age-mean(age))/sd(age)
+tmpd <- matrix(c(age, zage), ncol=2)
+barplot(t(tmpd), beside=T)
+text(0.5, 60, "test")
+```
+
+
 ### HW3-2
 
 - UScereal 데이터셋은 미국 식료품점의 선반에 진열된 시리얼 제품의 정보에 대한 데이터임. 시리얼 생산 브랜드와 (UScereal$mfr) 디스플레이되는 floor 층 수 (UScereal$shelf) 관계를 나타내는 테이블을 구해서 `tbl` 변수에 저장하고 출력하시오
@@ -615,5 +656,11 @@ UScereal$mfr
 - 브랜드와 진열 층 수와의 관계를 barplot으로 표현하시오
 - 테이블의 각 cell 별 기대값을 구하고 chisqure  값을 구하시오
 
+```{r, eval=F}
+tbl <- as.matrix(table(UScereal$mfr, UScereal$shelf))
+barplot(tbl, beside=T)
+colSums(tbl)/sum(tbl)
+rowSums(tbl)/sum(tbl)
+```
 
 

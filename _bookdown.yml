@@ -1,4 +1,4 @@
-rmd_files: ["index.Rmd", "02-Rintro.Rmd", "03-univar.Rmd", "04-bivar.Rmd"]
+rmd_files: ["index.Rmd", "02-Rintro.Rmd", "03-univar.Rmd", "04-bivar.Rmd", "05-mulvar.Rmd"]
 repo: https://github.com/greendaygh/Rprog2019/
 book_filename: "Rstat"
 output_dir: docs
