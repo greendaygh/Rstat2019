@@ -1,0 +1,53 @@
+
+# Populations
+
+## Introduction
+
+강의를 처음 시작할 때 통계의 개념을 설명하면서 다음과 같은 그림을 설명했습니다. 모집단은 우리가 관측할 수 없는 전체집합이고 그 중 샘플링을 통해 샘플의 대표값을 구하고 이 대표값으로 모집단의 대표값이나 분포를 추정하는 것이 통계 입니다. 여기서 새로 등장하는 변수가 확률변수 (Random variable)  입니다. 본 장에서는 이 확률변수의 개념을 확실히 이해하고 이에 따라 확률과 분포의 개념도 정립하도록 합니다. 
+
+
+![](images/06/03.png)
+
+
+### Random variable
+
+확률변수는 변수와 같지만 데이터가 들어있지 않은 빈 공간으로 보면 되며 population의 데이터가 들어올 가능성만을 갖는 변수로 이해하면 되겠습니다. 즉, population의 어떤 데이터도 샘플링되어 들어갈 수 있지만 아직 들어가 있지 않은 상태이며 따라서 특정 값이 들어갈 수 있는 확률만이 존재해서 확률 변수라고 합니다. 확률의 정의는 아래와 같습니다.  이 때 모든 사건이 동일 확률로 일어나고 총 사건이 한정적이라고 가정합니다.  
+
+$$ P(E) = \frac{Number ~ of ~ events ~ in ~ E}{Number ~ of ~ events ~ in ~ total} $$  
+
+
+$$ P(E) > 0 $$  
+
+$$ \sum_{All} P(E) = 1$$  
+
+$$ P(A or B) = P(A) + P(B) - P(A ~ and ~ B) $$  
+
+
+
+**[EXERCISE]** 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오 
+
+```{r, eval=F}
+tbl <- xtabs(~Sex + Smoke, data=survey)
+tbl
+```
+
+
+위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다. 
+
+
+```{r, eval=F}
+smoke <- survey$Smoke
+smoke
+```
+
+survey의 smoke를 pupulation 데이터라고 가정하고 $X$를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) $X$ 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 $P()$를 사용하여 $P(X)$ 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다. 
+
+$$ P(X="Never") = $$
+$$ P(X="Heavy") = $$
+$$ P(X="Occas") = $$
+$$ P(X="Regul") = $$
+
+
+
+
+

@@ -325,7 +325,7 @@ get_dist <- function(x){
 </center>
 
 ### Sample mean
-$$ \bar{x} = \frac{1}{n} (x_1 + x_2 + ... + x_n) = \frac{1}{n}\sum_i{x_i} $$
+$$ \bar{x} = \frac{1}{n} (x_1 + x_2 + ... + x_n) = \frac{1}{n}\sum_i{x_i} $$ 
 
 ```{r, eval=F}
 head(kid.weights)

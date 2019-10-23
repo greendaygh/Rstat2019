@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-10-16" />
+<meta name="date" content="2019-10-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="bivariate-data.html"/>
-
+<link rel="next" href="populations.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -216,6 +216,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.4.2" data-path="multivariate-data.html"><a href="multivariate-data.html#map-and-apply-function-family"><i class="fa fa-check"></i><b>5.4.2</b> map and apply function family</a></li>
 <li class="chapter" data-level="5.4.3" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---pipe-operator"><i class="fa fa-check"></i><b>5.4.3</b> dplyr - pipe operator</a></li>
 <li class="chapter" data-level="5.4.4" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---important-functions"><i class="fa fa-check"></i><b>5.4.4</b> dplyr - Important functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
+<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="populations.html"><a href="populations.html#random-variable"><i class="fa fa-check"></i><b>6.1.1</b> Random variable</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -499,114 +504,204 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p>앞서 배운 일련의 작업들은 R에서 기본적으로 제공되는 함수를 사용한 경우입니다. 이 외에 R이 갖는 장점인 행렬, 벡터연산 기능을 최대한 활용할 수 있는 기능들에 대한 내용을 배워봅니다. dplyr, reshape2 등의 별도 패키지에대한 설치가 필요합니다.</p>
 <div id="apply" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> apply</h3>
-<p>데이터를 다룰 때 각 원소별, 그룹별, row, column 별로 다뤄야 할 경우가 많으며 apply 계열의 합수는 이러한 기능을 제공하는 함수로써 적절히 사용하면 효율성이나 편리성 뿐만 아니라 코드의 간결성 등 장점이 많은 기능입니다. colMean 과 같은 함수는 column 또는 row 단위로 해당하는 모든 값들에 대해 연산을 수행해주는 함수로 colMean은 평균을 계산하는 함수이고 일반적으로는 다음과 같이 apply 함수와 mean 함수를 이용해서 같은 기능을 수행할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb109"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">b5 &lt;-<span class="st"> </span>b3[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</a>
-<a class="sourceLine" id="cb109-2" data-line-number="2"><span class="kw">colMeans</span>(b5)</a>
-<a class="sourceLine" id="cb109-3" data-line-number="3"><span class="kw">colMeans</span>(b5, <span class="dt">na.rm=</span>T)</a>
-<a class="sourceLine" id="cb109-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb109-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb109-6" data-line-number="6"><span class="kw">apply</span>(b5, <span class="dv">1</span>, mean)</a>
-<a class="sourceLine" id="cb109-7" data-line-number="7"><span class="kw">apply</span>(b5, <span class="dv">2</span>, mean)</a>
-<a class="sourceLine" id="cb109-8" data-line-number="8"><span class="kw">apply</span>(b5, <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
-<a class="sourceLine" id="cb109-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb109-10" data-line-number="10"><span class="kw">apply</span>(b5, <span class="dv">2</span>, <span class="cf">function</span>(x){ </a>
-<a class="sourceLine" id="cb109-11" data-line-number="11">  xmean &lt;-<span class="st"> </span><span class="kw">mean</span>(x) </a>
-<a class="sourceLine" id="cb109-12" data-line-number="12">  <span class="kw">return</span>(xmean)</a>
-<a class="sourceLine" id="cb109-13" data-line-number="13">  })</a>
-<a class="sourceLine" id="cb109-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb109-15" data-line-number="15"><span class="kw">apply</span>(b5, <span class="dv">2</span>, sd)</a></code></pre>
+<p>데이터를 다룰 때 각 원소별, 그룹별, row, column 별로 다뤄야 할 경우가 많으며 apply 계열의 합수는 이러한 기능을 제공하는 함수로써 적절히 사용하면 효율성이나 편리성 뿐만 아니라 코드의 간결성 등 장점이 많은 기능입니다. colMean 과 같은 함수는 column 또는 row 단위로 해당하는 모든 값들에 대해 연산을 수행해주는 함수로 colMean은 평균을 계산하는 함수이고 일반적으로는 다음과 같이 apply 함수와 mean 함수를 이용해서 같은 기능을 수행할 수 있습니다. 아래는 앞서 <code>babies</code> 데이터셋 clearning 된 <code>b2</code> 데이터에 이어서 수행되는 내용입니다.</p>
+<pre class="sourceCode r" id="cb109"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
+<a class="sourceLine" id="cb109-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb109-3" data-line-number="3">b &lt;-<span class="st"> </span><span class="kw">within</span>(babies, {</a>
+<a class="sourceLine" id="cb109-4" data-line-number="4">  gestation[gestation<span class="op">==</span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb109-5" data-line-number="5">  wt[wt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb109-6" data-line-number="6">})</a>
+<a class="sourceLine" id="cb109-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb109-8" data-line-number="8">b2 &lt;-<span class="st"> </span><span class="kw">within</span>(b, {</a>
+<a class="sourceLine" id="cb109-9" data-line-number="9">  smoke =<span class="st"> </span><span class="kw">factor</span>(smoke)</a>
+<a class="sourceLine" id="cb109-10" data-line-number="10">  <span class="kw">levels</span>(smoke) =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb109-11" data-line-number="11">    <span class="st">&quot;never&quot;</span> =<span class="st"> </span><span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb109-12" data-line-number="12">    <span class="st">&quot;smoke now&quot;</span> =<span class="st"> </span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb109-13" data-line-number="13">    <span class="st">&quot;until current pregnancy&quot;</span> =<span class="st"> </span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb109-14" data-line-number="14">    <span class="st">&quot;once did, not now&quot;</span> =<span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb109-15" data-line-number="15">  })</a>
+<a class="sourceLine" id="cb109-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb109-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb109-18" data-line-number="18">b3 &lt;-<span class="st"> </span>b2[,<span class="kw">c</span>(<span class="st">&quot;gestation&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;dwt&quot;</span>)]</a>
+<a class="sourceLine" id="cb109-19" data-line-number="19"><span class="kw">colMeans</span>(b3)</a>
+<a class="sourceLine" id="cb109-20" data-line-number="20"><span class="kw">colMeans</span>(b3, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb109-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb109-22" data-line-number="22">b4 &lt;-<span class="st"> </span><span class="kw">within</span>(b3, dwt[dwt<span class="op">==</span><span class="dv">999</span>]&lt;-<span class="ot">NA</span>)</a></code></pre>
+<p>apply는 다음과 같이 작동을 합니다.</p>
+<p><img src="images/05/01.png" /></p>
+<pre class="sourceCode r" id="cb110"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">apply</span>(b4, <span class="dv">1</span>, mean)</a>
+<a class="sourceLine" id="cb110-2" data-line-number="2"><span class="kw">apply</span>(b4, <span class="dv">2</span>, mean)</a>
+<a class="sourceLine" id="cb110-3" data-line-number="3"><span class="kw">apply</span>(b4, <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb110-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb110-5" data-line-number="5"><span class="kw">apply</span>(b4, <span class="dv">2</span>, sd)</a>
+<a class="sourceLine" id="cb110-6" data-line-number="6"><span class="kw">apply</span>(b4, <span class="dv">2</span>, sd, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb110-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb110-8" data-line-number="8"><span class="kw">apply</span>(b4, <span class="dv">2</span>, <span class="cf">function</span>(x){ </a>
+<a class="sourceLine" id="cb110-9" data-line-number="9">  xmean &lt;-<span class="st"> </span><span class="kw">mean</span>(x, <span class="dt">na.rm=</span>T) </a>
+<a class="sourceLine" id="cb110-10" data-line-number="10">  <span class="kw">return</span>(xmean)</a>
+<a class="sourceLine" id="cb110-11" data-line-number="11">  })</a></code></pre>
 <p>임의의 함수를 만들어서 사용할 수도 있습니다. apply 함수를 사용할 경우 행렬이 커질수록 계산 시간도 빨라질 수 있습니다.</p>
-<pre class="sourceCode r" id="cb110"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb110-2" data-line-number="2">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="dt">ncol=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb110-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb110-4" data-line-number="4">mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb110-5" data-line-number="5">  xmean &lt;-<span class="st"> </span><span class="kw">sum</span>(x)<span class="op">/</span><span class="kw">length</span>(x)</a>
-<a class="sourceLine" id="cb110-6" data-line-number="6">  tmpdif &lt;-<span class="st"> </span>x<span class="op">-</span>xmean</a>
-<a class="sourceLine" id="cb110-7" data-line-number="7">  xvar &lt;-<span class="st"> </span><span class="kw">sum</span>(tmpdif<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>(<span class="kw">length</span>(x)<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb110-8" data-line-number="8">  xsd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(xvar)</a>
-<a class="sourceLine" id="cb110-9" data-line-number="9">  <span class="kw">return</span>(xsd)</a>
-<a class="sourceLine" id="cb110-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb110-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb110-12" data-line-number="12"><span class="kw">apply</span>(m, <span class="dv">2</span>, mysd)</a>
-<a class="sourceLine" id="cb110-13" data-line-number="13"><span class="kw">apply</span>(m, <span class="dv">2</span>, sd)</a></code></pre>
+<pre class="sourceCode r" id="cb111"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">40</span></a>
+<a class="sourceLine" id="cb111-2" data-line-number="2">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, n, <span class="dt">replace=</span>T), <span class="dt">ncol=</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb111-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb111-4" data-line-number="4">mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb111-5" data-line-number="5">  xmean &lt;-<span class="st"> </span><span class="kw">sum</span>(x)<span class="op">/</span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb111-6" data-line-number="6">  tmpdif &lt;-<span class="st"> </span>x<span class="op">-</span>xmean</a>
+<a class="sourceLine" id="cb111-7" data-line-number="7">  xvar &lt;-<span class="st"> </span><span class="kw">sum</span>(tmpdif<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>(<span class="kw">length</span>(x)<span class="op">-</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb111-8" data-line-number="8">  xsd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(xvar)</a>
+<a class="sourceLine" id="cb111-9" data-line-number="9">  <span class="kw">return</span>(xsd)</a>
+<a class="sourceLine" id="cb111-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb111-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb111-12" data-line-number="12"><span class="kw">apply</span>(m, <span class="dv">1</span>, mysd)</a>
+<a class="sourceLine" id="cb111-13" data-line-number="13"><span class="kw">apply</span>(m, <span class="dv">1</span>, sd)</a></code></pre>
+<p><strong>[EXERCISE]</strong> <code>for</code> 문과 mysd를 이용하여 위 행렬 <code>m</code>의 4개 컬럼에 대한 stadard deviation을 구하시오</p>
 </div>
 <div id="map-and-apply-function-family" class="section level3">
 <h3><span class="header-section-number">5.4.2</span> map and apply function family</h3>
-<pre class="sourceCode r" id="cb111"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="co"># map</span></a>
-<a class="sourceLine" id="cb111-2" data-line-number="2">collection &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">16</span>)</a>
-<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="kw">Map</span>(sqrt, collection)</a>
-<a class="sourceLine" id="cb111-4" data-line-number="4"><span class="kw">sqrt</span>(collection)</a>
-<a class="sourceLine" id="cb111-5" data-line-number="5"><span class="kw">sapply</span>(collection, sqrt)</a>
-<a class="sourceLine" id="cb111-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb111-7" data-line-number="7"><span class="co">#</span></a>
-<a class="sourceLine" id="cb111-8" data-line-number="8">lst &lt;-<span class="st"> </span><span class="kw">with</span>(ToothGrowth, <span class="kw">split</span>(len, supp))</a>
-<a class="sourceLine" id="cb111-9" data-line-number="9"><span class="kw">sapply</span>(lst, mean)</a>
-<a class="sourceLine" id="cb111-10" data-line-number="10"><span class="kw">sapply</span>(lst, median)</a>
-<a class="sourceLine" id="cb111-11" data-line-number="11"><span class="kw">Map</span>(median, lst)</a>
-<a class="sourceLine" id="cb111-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb111-13" data-line-number="13"><span class="kw">median</span>(lst)</a>
-<a class="sourceLine" id="cb111-14" data-line-number="14"><span class="kw">mean</span>(lst)</a>
-<a class="sourceLine" id="cb111-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb111-16" data-line-number="16"><span class="co"># mapply</span></a>
-<a class="sourceLine" id="cb111-17" data-line-number="17"><span class="kw">Map</span>(min, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb111-18" data-line-number="18"><span class="co">#simplification of output</span></a>
-<a class="sourceLine" id="cb111-19" data-line-number="19"><span class="kw">mapply</span>(min, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) </a></code></pre>
+<p><code>apply</code> 함수 외에도 <code>sapply</code>, <code>lapply</code>, <code>mapply</code> 등의 다양한 apply계열 함수가 쓰입니다.</p>
+<pre class="sourceCode r" id="cb112"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="co"># map</span></a>
+<a class="sourceLine" id="cb112-2" data-line-number="2">collection &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">16</span>)</a>
+<a class="sourceLine" id="cb112-3" data-line-number="3"><span class="kw">Map</span>(sqrt, collection)</a>
+<a class="sourceLine" id="cb112-4" data-line-number="4"><span class="kw">sqrt</span>(collection)</a>
+<a class="sourceLine" id="cb112-5" data-line-number="5"><span class="kw">sapply</span>(collection, sqrt)</a>
+<a class="sourceLine" id="cb112-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb112-7" data-line-number="7"><span class="co">#</span></a>
+<a class="sourceLine" id="cb112-8" data-line-number="8">lst &lt;-<span class="st"> </span><span class="kw">with</span>(ToothGrowth, <span class="kw">split</span>(len, supp))</a>
+<a class="sourceLine" id="cb112-9" data-line-number="9"><span class="kw">sapply</span>(lst, mean)</a>
+<a class="sourceLine" id="cb112-10" data-line-number="10"><span class="kw">sapply</span>(lst, median)</a>
+<a class="sourceLine" id="cb112-11" data-line-number="11"><span class="kw">Map</span>(median, lst)</a>
+<a class="sourceLine" id="cb112-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb112-13" data-line-number="13"><span class="kw">median</span>(lst)</a>
+<a class="sourceLine" id="cb112-14" data-line-number="14"><span class="kw">mean</span>(lst)</a>
+<a class="sourceLine" id="cb112-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb112-16" data-line-number="16"><span class="co"># mapply</span></a>
+<a class="sourceLine" id="cb112-17" data-line-number="17"><span class="kw">Map</span>(min, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb112-18" data-line-number="18"><span class="co">#simplification of output</span></a>
+<a class="sourceLine" id="cb112-19" data-line-number="19"><span class="kw">mapply</span>(min, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) </a></code></pre>
 </div>
 <div id="dplyr---pipe-operator" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> dplyr - pipe operator</h3>
-<p>dplyr은 테이블형 데이터를 다루기 위한 도구를 제공하는 매우 편리한 패키지 입니다. <code>%&gt;%</code> 파이프 오퍼레이터를 사용하여 여러 함수를 연속적으로 사용할 수 있으며 R의 장점 중 하나인 apply와 같은 행렬 연산 기능을 subset, split, group 와 같은 행렬 편집 기능과 더하여 만들어낸 도구라고 할 수 있습니다.</p>
-<p>먼저 파이프 오퍼레이터 <code>%&gt;%</code> 의 작동법은 간단히 <code>%&gt;%</code>의 왼쪽 코드의 결과를 출력으로 받아 오른쪽 코드의 입력 (첫번째 파라미터의 값)으로 받아들이는 작동을 합니다. 다음 예에서 보면 <code>sin(pi)</code> 와 같은 함수의 일반적인 사용법 대신 <code>pi %&gt;% sin</code> 처럼 사용해도 똑같은 결과를 보여줍니다. <code>cos(sin(pi))</code>와 같이 여러 합수를 중첩하여 사용할 경우에도 코드 디자인의 가독성이나 효율 측면에서 크게 향상된 방법을 제공해 줍니다.</p>
-<pre class="sourceCode r" id="cb112"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb112-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb112-3" data-line-number="3">pi <span class="op">%&gt;%</span><span class="st"> </span>sin</a>
-<a class="sourceLine" id="cb112-4" data-line-number="4"><span class="kw">sin</span>(pi)</a>
-<a class="sourceLine" id="cb112-5" data-line-number="5">pi <span class="op">%&gt;%</span><span class="st"> </span>sin <span class="op">%&gt;%</span><span class="st"> </span>cos</a>
-<a class="sourceLine" id="cb112-6" data-line-number="6"><span class="kw">cos</span>(<span class="kw">sin</span>(pi))</a></code></pre>
+<p>dplyr은 테이블형 데이터를 다루기 위한 도구를 제공하는 매우 편리한 패키지 입니다. <code>%&gt;%</code> 파이프 오퍼레이터를 사용하여 여러 함수를 연속적으로 사용할 수 있으며 R의 장점 중 하나인 apply와 같은 행렬 연산 기능을 subset, split, group 와 같은 행렬 편집 기능과 더하여 만들어낸 도구라고 할 수 있습니다 (홈페이지: <a href="https://dplyr.tidyverse.org/" class="uri">https://dplyr.tidyverse.org/</a>)</p>
+<p>파이프 오퍼레이터 <code>%&gt;%</code> 의 단축키는 <code>Ctrl</code> + <code>Shift</code> + <code>m</code> 입니다. 이 오퍼레이터는 <code>%&gt;%</code>의 왼쪽 코드의 결과를 출력으로 받아 오른쪽 코드의 입력 (첫번째 파라미터의 값)으로 받아들이는 작동을 합니다. 다음 예에서 보면 <code>sin(pi)</code> 와 같은 함수의 일반적인 사용법 대신 <code>pi %&gt;% sin</code> 처럼 사용해도 똑같은 결과를 보여줍니다. <code>cos(sin(pi))</code>와 같이 여러 합수를 중첩하여 사용할 경우에도 코드 디자인의 가독성이나 효율 측면에서 크게 향상된 방법을 제공해 줍니다.</p>
+<pre class="sourceCode r" id="cb113"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb113-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb113-3" data-line-number="3">pi <span class="op">%&gt;%</span><span class="st"> </span>sin</a>
+<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="kw">sin</span>(pi)</a>
+<a class="sourceLine" id="cb113-5" data-line-number="5">pi <span class="op">%&gt;%</span><span class="st"> </span>sin <span class="op">%&gt;%</span><span class="st"> </span>cos</a>
+<a class="sourceLine" id="cb113-6" data-line-number="6"><span class="kw">cos</span>(<span class="kw">sin</span>(pi))</a></code></pre>
 <p>특히 <code>%&gt;%</code>는 이후 설명할 dplyr의 group_by, split, filter, summary 등의 행렬 편집/연산 함수를 빈번히 다양한 조합으로 쓰게되는 상황에서 더 큰 효과를 발휘할 수 있습니다. 그에 앞서 pipe 오퍼레이터의 예제를 좀 더 살펴보겠습니다.</p>
-<p>pipe operator의 왼쪽 구문의 결과가 오른쪽 구문의 입력으로 처리된다고 설명드렸지만 엄밀히 따지면 오른쪽 구문의 첫 번째 파라미터의 입력 값으로 처리되는 것 입니다. 즉, 함수에서 사용되는 파라미터가 여러개일 경우가 있으므로 기본적으로 <code>%&gt;%</code> 의 왼쪽 구문의 출력 값은 오른쪽 구문 (함수)의 첫 번째 인자의 입력값으로 들어가는 것 입니다. 이는 다음 예들을 통해서 명확히 알 수 있습니다. 먼저 <code>paste</code>함수는 그 파라미터로 <code>,</code>로 구분되는 여러개의 입력 값을 가질 수 있습니다. 따라서 다음 코드는 <code>x</code>가 paste의 첫 번째 파라미터로 들어가게 되어 <code>&quot;1a&quot;, &quot;2a&quot;, &quot;3a&quot;, &quot;4a&quot;, &quot;5a&quot;</code> 로 a 앞에 x 값들이 붙어서 출력된 것을 알 수 있습니다.</p>
-<pre class="sourceCode r" id="cb113"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb113-2" data-line-number="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;a&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a></code></pre>
+<p>pipe operator의 왼쪽 구문의 결과가 오른쪽 구문의 입력으로 처리된다고 설명드렸지만 엄밀히 따지면 오른쪽 구문의 첫 번째 파라미터의 입력 값으로 처리되는 것 입니다. 즉, 함수에서 사용되는 파라미터가 여러개일 경우가 있으므로 기본적으로 <code>%&gt;%</code> 의 왼쪽 구문의 출력 값은 오른쪽 구문 (함수)의 첫 번째 인자의 입력값으로 들어가는 것 입니다.</p>
+<p><img src="images/05/02.PNG" /></p>
+<p>이는 다음 예들을 통해서 명확히 알 수 있습니다. 먼저 <code>paste</code>함수는 그 파라미터로 <code>,</code>로 구분되는 여러개의 입력 값을 가질 수 있습니다. 따라서 다음 코드는 <code>x</code>가 paste의 첫 번째 파라미터로 들어가게 되어 <code>&quot;1a&quot;, &quot;2a&quot;, &quot;3a&quot;, &quot;4a&quot;, &quot;5a&quot;</code> 로 a 앞에 x 값들이 붙어서 출력된 것을 알 수 있습니다.</p>
+<pre class="sourceCode r" id="cb114"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb114-2" data-line-number="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;a&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a></code></pre>
 <p>특정 데이터셋의 컬럼별 평균을 구하고 각 평균의 합을 구할 경우를 생각해 봅시다. R에서는 <code>colMeans</code>라는 특별한 함수를 제공하여 컬럼별로 평균을 계산해 줍니다. 그 후 sum 함수를 사용하여 최종 원하는 값을 얻을 수 있습니다. 이러한 코드를 <code>%&gt;%</code> 오퍼레이터를 사용한 경우의 코드와 비교해 볼 수 있습니다.</p>
-<pre class="sourceCode r" id="cb114"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
-<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">colMeans</span>(x))</a>
-<a class="sourceLine" id="cb114-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb114-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
-<a class="sourceLine" id="cb114-5" data-line-number="5">x <span class="op">%&gt;%</span><span class="st"> </span>colMeans <span class="op">%&gt;%</span><span class="st"> </span>sum</a></code></pre>
-<p>그럼 만약 두 번째 또는 다른 위치의 파라미터에 입력으로 왼쪽 구문의 출력을 받아들이고 싶을 경우는 어떻게 할까요? 그럴때는 place holer라는 <code>.</code> 을 사용하면 되겠습니다. round 함수는 두 개의 파라미터를 가지고 digits 값을 pipe operator로 넘겨주고 싶을 경우 아래와 같이 표현할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb115"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(pi, <span class="dt">digits=</span>.)</a>
-<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">round</span>(pi, <span class="dt">digits=</span><span class="dv">6</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb115"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">colMeans</span>(x))</a>
+<a class="sourceLine" id="cb115-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb115-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
+<a class="sourceLine" id="cb115-5" data-line-number="5">x <span class="op">%&gt;%</span><span class="st"> </span>colMeans <span class="op">%&gt;%</span><span class="st"> </span>sum</a></code></pre>
+<p>만약 두 번째 또는 다른 위치의 파라미터에 입력으로 왼쪽 구문의 출력을 받아들이고 싶을 경우는 place holer라는 <code>.</code> 을 사용하면 되겠습니다. round 함수는 두 개의 파라미터를 가지고 digits 값을 pipe operator로 넘겨주고 싶을 경우 아래와 같이 표현할 수 있습니다.</p>
+<pre class="sourceCode r" id="cb116"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(pi, <span class="dt">digits=</span>.)</a>
+<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="kw">round</span>(pi, <span class="dt">digits=</span><span class="dv">6</span>)</a></code></pre>
+<p><strong>[EXERCISE]</strong> 다음 행렬 <code>m</code>의 컬럼별 표준편차를 앞서 만든 <code>mysd</code> 함수와 <code>apply</code> 함수를 사용하여 구하되 <code>%&gt;%</code> 를 사용하시오</p>
 </div>
 <div id="dplyr---important-functions" class="section level3">
 <h3><span class="header-section-number">5.4.4</span> dplyr - Important functions</h3>
-<p>이제 본격적인 dplyr 함수를 사용해 보겠습니다. dplyr을 구성하는 중요한 함수는 다음 6가지가 있습니다.</p>
+<p>dplyr을 구성하는 중요한 함수는 다음 5가지가 있습니다.</p>
 <ul>
-<li>select() - select columns</li>
-<li>filter() - filter rows</li>
-<li>arrange() - re-order or arrange rows</li>
-<li>mutate() - create new columns</li>
-<li>summarise() - summarise values</li>
-<li>group_by() - allows for group operations in the “split-apply-combine” concept</li>
+<li>mutate() - 기존 데이터셋에 새로운 변수 추가<br />
+</li>
+<li>select() - 주어진 데이터에서 변수 선택</li>
+<li>filter() - 특정 값을 기준으로 샘플 (case) 선택</li>
+<li>summarise() - 대표값 계산</li>
+<li>arrange() - 샘플들의 배열 변환</li>
 </ul>
-<p>이 함수들은 <code>%&gt;%</code>와 함께 쓰이면서 강력한 성능을 발휘합니다. summarise 함수는 특정 값들의 통계 값을 계산해 주는 함수이며 그 외 5개 함수들은 행렬 편집을 위한 함수들로 보시면 되겠습니다. 각각의 설명보다는 직접 간단한 예제를 수행하면서 각각의 기능을 살펴보고 왜 dplyr이 널리 사용되고 그 장점이 무엇인지 파악해 보도록 하겠습니다.</p>
-<p>예제에 사용할 데이터는 iris 데이터로 R을 설치하면 기본으로 들어있는 데이터 입니다. 세 종류의 iris 품종에 대한 꽃잎과 꽃받침의 length와 with를 측정해 놓은 데이터 입니다. <code>head</code>와 <code>str</code> 명령어를 이용해서 데이터를 살펴 봅니다. <code>%&gt;%</code>를 배웠으니 써보겠습니다.</p>
-<pre class="sourceCode r" id="cb116"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb116-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span>str</a></code></pre>
-<p>데이터를 확인한 후 분석을 시작합니다. 분석은 간단히 각 iris 품종별로 꽃과 꽃받침의 평균을 비교하는 것으로 합니다.</p>
+<p>그리고 위 다섯개의 함수들과 결합해서 자주 사용되는 group_by() 함수가 있습니다. 특히 summarise 함수와 같이 사용될 때 강력한 성능을 발휘합니다. 여러개 함수를 동시에 적용할 때는 <code>%&gt;%</code>를 이용할 수 있으며 summarise 외 5개 함수들은 행렬 편집을 위한 함수들로 보시면 되겠습니다.</p>
+<p>예제를 수행하면서 각각의 기능을 살펴보고 그 장점이 무엇인지 파악해 보도록 하겠습니다. 예제에 사용할 데이터는 iris 데이터로 R을 설치하면 기본으로 들어있는 데이터 입니다. 세 종류의 iris 품종에 대한 꽃잎과 꽃받침의 length와 with를 측정해 놓은 데이터 입니다. <code>head</code>와 <code>str</code> 명령어를 이용해서 데이터를 살펴 봅니다. <code>%&gt;%</code>를 배웠으니 써보겠습니다.</p>
+<pre class="sourceCode r" id="cb117"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb117-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span>str</a></code></pre>
+<p>filter의 <code>,</code>로 구분되는 매개변수는 and 로직으로 묶인 조건입니다. R에서 and는 <code>&amp;</code>, or는 <code>|</code>, 그리고 not은 <code>!</code> 으로 사용하면 되겠습니다.</p>
+<p><img src="images/05/03.png" /></p>
+<p>Image from (<a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a>)</p>
+<pre class="sourceCode r" id="cb118"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">head</span>(iris)</a>
+<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span>, Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a>
+<a class="sourceLine" id="cb118-3" data-line-number="3"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a>
+<a class="sourceLine" id="cb118-4" data-line-number="4"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a></code></pre>
+<p><code>arrange()</code>는 샘플들의 배열 순서 즉, row의 순서를 바꾸는 기능을 수행합니다.</p>
+<pre class="sourceCode r" id="cb119"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">arrange</span>(iris, Sepal.Length)</a>
+<a class="sourceLine" id="cb119-2" data-line-number="2"><span class="kw">arrange</span>(iris, Sepal.Length, Sepal.Width)</a></code></pre>
+<p><code>select()</code> 는 주어진 데이터셋으로부터 관심있는 변수를 선택하여 보여줍니다. 다음 helper 함수들은 select 함수와 같이 유용하게 쓰일 수 있습니다.</p>
+<ul>
+<li>starts_with(“abc”) - “abc” 로 시작하는 문자열을 갖는 변수 이름</li>
+<li>ends_with(“xyz”) - “xyz”으로 끝나는 문자열을 갖는 변수 이름</li>
+<li>contains(“ijk”) - “ijk” 문자열을 포함하는 변수 이름</li>
+<li>matches(“(.)\1”) - 정규식, 반복되는 문자</li>
+</ul>
+<pre class="sourceCode r" id="cb120"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">select</span>(iris, Species, <span class="kw">everything</span>())</a>
+<a class="sourceLine" id="cb120-2" data-line-number="2"><span class="kw">select</span>(iris, <span class="kw">starts_with</span>(<span class="st">&#39;S&#39;</span>))</a>
+<a class="sourceLine" id="cb120-3" data-line-number="3"><span class="kw">select</span>(iris, <span class="dt">obs =</span> <span class="kw">starts_with</span>(<span class="st">&#39;S&#39;</span>))</a>
+<a class="sourceLine" id="cb120-4" data-line-number="4">iris2 &lt;-<span class="st"> </span><span class="kw">rename</span>(iris, <span class="dt">aavar =</span> Petal.Length)</a>
+<a class="sourceLine" id="cb120-5" data-line-number="5"><span class="kw">select</span>(iris2, <span class="kw">matches</span>(<span class="st">&quot;(.)</span><span class="ch">\\</span><span class="st">1&quot;</span>))</a></code></pre>
+<p><code>mutate()</code> 함수는 새로운 변수를 추가할 수 있는 기능을 제공합니다. <code>within()</code>과 비슷하다고 볼 수 있습니다.</p>
+<pre class="sourceCode r" id="cb121"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">iris2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">sepal_ratio =</span> Sepal.Length<span class="op">/</span>Sepal.Width)</a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="kw">head</span>(iris2)</a></code></pre>
+<p><code>summarise()</code>는 <code>data.frame</code>내 특정 변수의 값들로 하나의 요약값/대푯값을 만들어 줍니다. summarise 함수는 단독으로 쓰이기 보다는 <code>group_by()</code> 기능과 병행해서 쓰이는 경우에 유용하게 쓰입니다. <code>summarise_all()</code> 함수를 사용하면 모든 변수에 대해서 지정된 함수를 실행합니다.</p>
+<pre class="sourceCode r" id="cb122"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">summarise</span>(iris, <span class="kw">mean</span>(Sepal.Length), <span class="dt">m=</span><span class="kw">mean</span>(Sepal.Width))</a>
+<a class="sourceLine" id="cb122-2" data-line-number="2">by_species &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
+<a class="sourceLine" id="cb122-3" data-line-number="3"><span class="kw">summarise</span>(by_species, <span class="kw">mean</span>(Sepal.Width))</a>
+<a class="sourceLine" id="cb122-4" data-line-number="4"><span class="kw">summarise_all</span>(by_species, mean)</a>
+<a class="sourceLine" id="cb122-5" data-line-number="5"><span class="kw">summarise_all</span>(by_species, sd)</a></code></pre>
+<p>위와 같은 <code>dplyr</code> 함수들은 <code>%&gt;%</code>와 같이 사용되어 다중 오퍼레이션을 구현하면 더욱 강력한 효과를 발휘할 수 있습니다. 위에서 구한 품종별 꽃잎과 꽃받침의 평균 길이는 다음과 같이 구현할 수 있습니다.</p>
+<pre class="sourceCode r" id="cb123"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean)</a></code></pre>
+<p>여러 합수를 중접하여 한 줄로 코딩할 수 있지만 가독성이 떨어지므로 중첩해서 함수를 사용하는 습관은 어떤 프로그래밍 언어에서도 권장하지 않습니다.</p>
+<pre class="sourceCode r" id="cb124"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">iris_split &lt;-<span class="st"> </span><span class="kw">split</span>(iris, iris<span class="op">$</span>Species)</a>
+<a class="sourceLine" id="cb124-2" data-line-number="2">iris_means &lt;-<span class="st"> </span><span class="kw">lapply</span>(iris_split, <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])})</a>
+<a class="sourceLine" id="cb124-3" data-line-number="3">iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(iris_means)</a>
+<a class="sourceLine" id="cb124-4" data-line-number="4">iris_means_df</a></code></pre>
 <p>dplyr의 전신이라 할 수 있는 plyr 패키지는 다음과 같이 설명이 되어 있습니다. <em>A set of tools for a common set of problems: you need to split up a big data structure into homogeneous pieces, apply a function to each piece and then combine all the results back together.</em> 즉 split-apply-combine 세 가지 동작을 쉽게 할 수 있도록 만들어 놓은 툴 입니다. R이 다른 언어에 비해 데이터 분석에서 주목을 받는 이유로 split, apply 등의 행렬 연산 함수가 발달한 것을 내세우는데 dplyr은 이들보다 더 편리하게 데이터 조작을 할 수 있도록 만들어 놓은 것 입니다.</p>
-<p>이제 split, apply, combine을 활용하여 평균을 구하는 코드와 dplyr 패키지를 사용하여 만든 코드를 비교해 보도록 하겠습니다. split은 factor형 변수인 Species를 기준으로 iris 데이터를 나누어 주는 역할을 하며 lapply는 list 형 데이터인 iris_split을 각 리스트의 각각의 원소들에 대해서 function(x) 를 수행하는 역할을 합니다. 마지막 data.frame으로 최종 경로를 merge 합니다.</p>
-<pre class="sourceCode r" id="cb117"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">iris_split &lt;-<span class="st"> </span><span class="kw">split</span>(iris, iris<span class="op">$</span>Species)</a>
-<a class="sourceLine" id="cb117-2" data-line-number="2">iris_means &lt;-<span class="st"> </span><span class="kw">lapply</span>(iris_split, <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])})</a>
-<a class="sourceLine" id="cb117-3" data-line-number="3">iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(iris_means)</a>
-<a class="sourceLine" id="cb117-4" data-line-number="4">iris_means_df</a></code></pre>
-<p>위 코드를 한 줄로 사용하여 최종 iris_means_df 데이터를 를 구한다면 다음과 같이 됩니다. 한눈에 코드가 들어오지 않고 이렇게 중첩해서 함수를 사용하는 습관은 어떤 프로그래밍 언어에서도 권장하지 않습니다.</p>
-<pre class="sourceCode r" id="cb118"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">lapply</span>(<span class="kw">split</span>(iris, iris<span class="op">$</span>Species), <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])}))</a></code></pre>
-<p>아래는 dplyr 패키지를 사용한 코드 입니다.</p>
-<pre class="sourceCode r" id="cb119"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">iris_means_df2 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean)</a>
-<a class="sourceLine" id="cb119-2" data-line-number="2">iris_means_df2</a></code></pre>
-<p>위에서 보듯 dplyr 패키지를 사용할 경우 그 결과는 같으나 코드의 가독성과 효율성면에서 장점을 보여줍니다. 여기서 group_by, summarise_all 함수 등의 사용법은 help 페이지를 참고해 주세요. 간단히 iris 데이터를 받아서 Species에 명시된 그룹으로 나누고 mean 함수를 모든 컬럼에 대해서 사용하라는 의미 입니다.</p>
-<p>이제 각 평균에 대한 barplot을 그려보도록 하겠습니다. 그런데 barplot은 numeric matrix 형태의 입력만을 받으므로 이에 맞도록 데이터를 다시 변형해야 합니다. 후에 배울 ggplot 을 이용하면 이러한 불편함이 없이 data.frame 형 데이터셋도 쉽게 가시화 할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb120"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">barplot</span>(iris_means_df2, <span class="dt">beside=</span>T)</a>
-<a class="sourceLine" id="cb120-2" data-line-number="2">iris_means_df2</a></code></pre>
+<p><strong>[EXERCISE]</strong> babies 데이터셋에서 산모의 흡연 여부를 기준으로 아이와, 아이의 엄마, 아빠의 몸무게 데이터에 대한 평균을 구하고 barplot으로 비교하는 분석 실습을 진행하겠습니다. 이 과정에서 split, apply, combine을 활용하여 평균을 구하는 코드와 dplyr 패키지를 사용하여 만든 코드를 비교해 보도록 하겠습니다. 대략적인 분석 프로세스는 다음과 같습니다.</p>
+<ul>
+<li>필요 데이터셋 준비 - subset</li>
+<li>데이터 클리닝, 변환 - within<br />
+</li>
+<li>그룹별 데이터 분리 - split</li>
+<li>대표값 계산 - lapply, apply</li>
+<li>계산값 통합 - rbind</li>
+<li>그래프 비교 - barplot</li>
+</ul>
+<pre class="sourceCode r" id="cb125"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">head</span>(babies)</a>
+<a class="sourceLine" id="cb125-2" data-line-number="2">mydat &lt;-<span class="st"> </span><span class="kw">subset</span>(babies, ??? =<span class="st"> </span><span class="kw">c</span>(wt, wt1, dwt, smoke))</a>
+<a class="sourceLine" id="cb125-3" data-line-number="3">mydat &lt;-<span class="st"> </span>???(mydat, {</a>
+<a class="sourceLine" id="cb125-4" data-line-number="4">  wt[wt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb125-5" data-line-number="5">  wt1[wt1 <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb125-6" data-line-number="6">  dwt[dwt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb125-7" data-line-number="7">})</a>
+<a class="sourceLine" id="cb125-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb125-9" data-line-number="9">mydat &lt;-<span class="st"> </span><span class="kw">within</span>(mydat, {</a>
+<a class="sourceLine" id="cb125-10" data-line-number="10">  smoke =<span class="st"> </span>???(smoke)</a>
+<a class="sourceLine" id="cb125-11" data-line-number="11">  <span class="kw">levels</span>(smoke) =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb125-12" data-line-number="12">    <span class="st">&quot;never&quot;</span> =<span class="st"> </span><span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb125-13" data-line-number="13">    <span class="st">&quot;smoke now&quot;</span> =<span class="st"> </span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb125-14" data-line-number="14">    <span class="st">&quot;until current pregnancy&quot;</span> =<span class="st"> </span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb125-15" data-line-number="15">    <span class="st">&quot;once did, not now&quot;</span> =<span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb125-16" data-line-number="16">  })</a>
+<a class="sourceLine" id="cb125-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb125-18" data-line-number="18">by_smoke &lt;-<span class="st"> </span><span class="kw">split</span>(mydat, ???)</a>
+<a class="sourceLine" id="cb125-19" data-line-number="19"><span class="kw">apply</span>(by_smoke[[<span class="dv">1</span>]][,<span class="op">-</span><span class="dv">4</span>], <span class="dv">2</span>, mean, ???=T)</a>
+<a class="sourceLine" id="cb125-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb125-21" data-line-number="21">mysummary &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb125-22" data-line-number="22">  ???(x[,<span class="op">-</span><span class="dv">4</span>], <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb125-23" data-line-number="23">}</a>
+<a class="sourceLine" id="cb125-24" data-line-number="24"><span class="kw">mysummary</span>(by_smoke[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb125-25" data-line-number="25">by_smoke_mean &lt;-<span class="st"> </span>???(by_smoke, mysummary)</a>
+<a class="sourceLine" id="cb125-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb125-27" data-line-number="27">## for</a>
+<a class="sourceLine" id="cb125-28" data-line-number="28">wt_mean &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, by_smoke_mean)</a>
+<a class="sourceLine" id="cb125-29" data-line-number="29"><span class="kw">barplot</span>(wt_mean, <span class="dt">beside=</span>T, <span class="dt">legend.text =</span> <span class="kw">rownames</span>(wt_mean), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">200</span>))</a>
+<a class="sourceLine" id="cb125-30" data-line-number="30"><span class="co">#legend(x=1, y=150, legend = rownames(wt_mean))</span></a></code></pre>
+<p>split은 factor형 변수를 기준으로 데이터를 나누어 주는 역할을 하며 lapply는 list 형 데이터를 각 리스트의 각각의 원소들에 대해서 function(x) 를 수행하는 역할을 합니다. 마지막 rbind를 이용해서 list를 data.frame으로 통합하며 이 때 <code>do.call</code> 함수를 사용할 수도 있습니다. 이제 <code>dplyr</code> 패키지를 이용하여 동일한 기능을 수행해 봅니다.</p>
+<p>위에서 보듯 dplyr 패키지를 사용할 경우 그 결과는 같으나 코드의 가독성과 효율성면에서 장점을 보여줍니다. 여기서 group_by, summarise_all 함수 등의 자세한 사용법은 help 페이지를 참고해 주세요. 참고로 barplot은 numeric matrix 형태의 입력만을 받으므로 이에 맞도록 데이터를 다시 변형해야 합니다. 후에 배울 ggplot 을 이용하면 이러한 불편함이 없이 data.frame 형 데이터셋도 쉽게 가시화 할 수 있습니다.</p>
 
 </div>
 </div>
@@ -616,8 +711,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           </div>
         </div>
       </div>
-<a href="bivariate-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="bivariate-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="populations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
