@@ -410,7 +410,7 @@ apply(b4, 2, function(x){
 ```{r, eval=F}
 n <- 40
 m <- matrix(sample(1:100, n, replace=T), ncol=4)
-
+m
 mysd <- function(x){
   xmean <- sum(x)/length(x)
   tmpdif <- x-xmean
@@ -418,13 +418,28 @@ mysd <- function(x){
   xsd <- sqrt(xvar)
   return(xsd)
 }
-
+mysd(m[1,])
 apply(m, 1, mysd)
 apply(m, 1, sd)
 ```
 
 
 **[EXERCISE]** ```for``` 문과 mysd를 이용하여 위 행렬 ```m```의 4개 컬럼에 대한 stadard deviation을 구하시오 
+
+```{r, eval=F}
+
+mysd(m[,1])
+mysd(m[,2])
+mysd(m[,3])
+mysd(m[,4])
+
+sd_result <- rep(NA, 4)
+for(i in 1:4){
+  sd_result[i] <- mysd(m[,i])
+}
+sd_result
+apply(m, 2, mysd)
+```
 
 
 
@@ -545,7 +560,7 @@ Image from (https://r4ds.had.co.nz/)
 head(iris)
 filter(iris, Species=="setosa", Species=="versicolor")
 filter(iris, Species=="setosa" & Species=="versicolor")
-filter(iris, Species=="setosa" | Species=="versicolor")
+filter(iris, Species=="setosa" | Species=="versicolor") %>% dim
 
 ```
 
@@ -567,11 +582,18 @@ arrange(iris, Sepal.Length, Sepal.Width)
 
 
 ```{r, eval=F}
+head(iris)
 select(iris, Species, everything())
 select(iris, starts_with('S'))
 select(iris, obs = starts_with('S'))
 iris2 <- rename(iris, aavar = Petal.Length)
 select(iris2, matches("(.)\\1"))
+
+
+tmp <-iris[,3:5]
+colnames(iris)[grep("^S", colnames(iris))]
+iris[,grep("^S", colnames(iris))]
+tmp
 ```
 
 
@@ -605,10 +627,34 @@ iris %>% group_by(Species) %>% summarise_all(mean)
 여러 합수를 중접하여 한 줄로 코딩할 수 있지만 가독성이 떨어지므로 중첩해서 함수를 사용하는 습관은 어떤 프로그래밍 언어에서도 권장하지 않습니다.
 
 ```{r, eval=F}
+iris %>% head(10)
+iris$Species
 iris_split <- split(iris, iris$Species)
+iris_split %>% lapply(dim)
+iris_split %>% lapply(class) 
+
+colMeans(iris_split[[1]][,-5])
+x <- iris_split[[1]]
+class(x)
+head(x)
+colMeans(x)
+colMeans(x[,-5])
+apply(x[,-5], 2, mean)
+
 iris_means <- lapply(iris_split, function(x){colMeans(x[,1:4])})
+iris_means
+
+irisdat <- rbind(iris_means[[1]], iris_means[[2]], iris_means[[3]])
+rownames(irisdat) <-names(iris_means)
+irisdat 
+
+irisdat <- do.call(rbind, iris_means)
+
 iris_means_df <- data.frame(iris_means)
 iris_means_df
+
+barplot(irisdat, beside = T, legend.text = rownames(irisdat))
+
 ```
 
 
@@ -628,15 +674,15 @@ dplyr의 전신이라 할 수 있는 plyr 패키지는 다음과 같이 설명�
 
 ```{r, eval=F}
 head(babies)
-mydat <- subset(babies, ??? = c(wt, wt1, dwt, smoke))
-mydat <- ???(mydat, {
+mydat <- subset(babies, select = c(wt, wt1, dwt, smoke))
+mydat <- within(mydat, {
   wt[wt == 999] <- NA
   wt1[wt1 == 999] <- NA
   dwt[dwt == 999] <- NA
 })
 
 mydat <- within(mydat, {
-  smoke = ???(smoke)
+  smoke = factor(smoke)
   levels(smoke) = list(
     "never" = 0, 
     "smoke now" = 1, 
@@ -644,17 +690,23 @@ mydat <- within(mydat, {
     "once did, not now" = 3)
   })
 
-by_smoke <- split(mydat, ???)
-apply(by_smoke[[1]][,-4], 2, mean, ???=T)
+mydat %>% str
+by_smoke <- split(mydat, mydat$smoke)
+
+by_smoke %>% lapply(dim)
+
+
+apply(by_smoke[[1]][,-4], 2, mean, na.rm=T)
 
 mysummary <- function(x){
-  ???(x[,-4], 2, mean, na.rm=T)
+  apply(x[,-4], 2, mean, na.rm=T)
 }
 mysummary(by_smoke[[1]])
-by_smoke_mean <- ???(by_smoke, mysummary)
+by_smoke_mean <- lapply(by_smoke, mysummary)
 
 ## for
 wt_mean <- do.call(rbind, by_smoke_mean)
+wt_mean
 barplot(wt_mean, beside=T, legend.text = rownames(wt_mean), ylim=c(0,200))
 #legend(x=1, y=150, legend = rownames(wt_mean))
 ```
@@ -663,6 +715,18 @@ barplot(wt_mean, beside=T, legend.text = rownames(wt_mean), ylim=c(0,200))
 split은 factor형 변수를 기준으로 데이터를 나누어 주는 역할을 하며 lapply는 list 형 데이터를 각 리스트의 각각의 원소들에 대해서 function(x) 를 수행하는 역할을 합니다. 마지막 rbind를 이용해서 list를 data.frame으로 통합하며 이 때 ```do.call``` 함수를 사용할 수도 있습니다. 이제 ```dplyr``` 패키지를 이용하여 동일한 기능을 수행해 봅니다. 
 
 
+```{r, eval=F}
+babies %>% str
+tmp <- babies %>% 
+  select(c(wt, wt1, dwt, smoke)) %>% 
+  filter(wt!=999, wt1!=999, dwt!=999) %>% 
+  mutate(smoke=factor(smoke)) %>% 
+  group_by(smoke) %>% 
+  summarise_all(mean)
+
+tmp
+
+```
 
 
 

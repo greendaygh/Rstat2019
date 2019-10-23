@@ -28,7 +28,9 @@ $$ P(A or B) = P(A) + P(B) - P(A ~ and ~ B) $$
 
 ```{r, eval=F}
 tbl <- xtabs(~Sex + Smoke, data=survey)
-tbl
+sum(tbl)
+margin.table(tbl, 1)
+margin.table(tbl, 2)
 ```
 
 

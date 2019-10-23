@@ -258,11 +258,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p><span class="math display">\[ \sum_{All} P(E) = 1\]</span></p>
 <p><span class="math display">\[ P(A or B) = P(A) + P(B) - P(A ~ and ~ B) \]</span></p>
 <p><strong>[EXERCISE]</strong> 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오</p>
-<pre class="sourceCode r" id="cb126"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
-<a class="sourceLine" id="cb126-2" data-line-number="2">tbl</a></code></pre>
+<pre class="sourceCode r" id="cb128"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
+<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
+<a class="sourceLine" id="cb128-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb128-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
 <p>위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다.</p>
-<pre class="sourceCode r" id="cb127"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb127-2" data-line-number="2">smoke</a></code></pre>
+<pre class="sourceCode r" id="cb129"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb129-2" data-line-number="2">smoke</a></code></pre>
 <p>survey의 smoke를 pupulation 데이터라고 가정하고 <span class="math inline">\(X\)</span>를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) <span class="math inline">\(X\)</span> 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 <span class="math inline">\(P()\)</span>를 사용하여 <span class="math inline">\(P(X)\)</span> 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다.</p>
 <p><span class="math display">\[ P(X=&quot;Never&quot;) = \]</span>
 <span class="math display">\[ P(X=&quot;Heavy&quot;) = \]</span>
