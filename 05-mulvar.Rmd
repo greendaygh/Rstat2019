@@ -975,11 +975,18 @@ ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
 
 p <- Cars93 %>% ggplot(aes(x=Weight, y=MPG.highway)) + geom_point()
 p <- p + geom_smooth()
-p + facet_grid(~Type)
+p + facet_wrap(~Type, nrow=2)
 
 ```
 
-
+Heatmap
+```{r, eval=F}
+str(Cars93)
+Cars93 %>% mutate(rescale_price = scale(Horsepower)) %>% 
+  ggplot(aes(x=Model, y=Manufacturer)) + 
+    geom_tile(aes(fill = rescale_price), colour = "white") + 
+    scale_fill_gradient(low = "white", high = "steelblue")
+```
 
 
 

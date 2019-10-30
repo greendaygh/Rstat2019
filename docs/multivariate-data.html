@@ -926,7 +926,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb142-26" data-line-number="26"></a>
 <a class="sourceLine" id="cb142-27" data-line-number="27">p &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight, <span class="dt">y=</span>MPG.highway)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a>
 <a class="sourceLine" id="cb142-28" data-line-number="28">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a>
-<a class="sourceLine" id="cb142-29" data-line-number="29">p <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(<span class="op">~</span>Type)</a></code></pre>
+<a class="sourceLine" id="cb142-29" data-line-number="29">p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>)</a></code></pre>
+<p>Heatmap</p>
+<pre class="sourceCode r" id="cb143"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">str</span>(Cars93)</a>
+<a class="sourceLine" id="cb143-2" data-line-number="2">Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">rescale_price =</span> <span class="kw">scale</span>(Horsepower)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Model, <span class="dt">y=</span>Manufacturer)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb143-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> rescale_price), <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb143-5" data-line-number="5"><span class="st">    </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a></code></pre>
 
 </div>
 </div>
