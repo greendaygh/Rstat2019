@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-10-23" />
+<meta name="date" content="2019-10-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,11 +217,25 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.4.3" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---pipe-operator"><i class="fa fa-check"></i><b>5.4.3</b> dplyr - pipe operator</a></li>
 <li class="chapter" data-level="5.4.4" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---important-functions"><i class="fa fa-check"></i><b>5.4.4</b> dplyr - Important functions</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-with-basic-graph-functions"><i class="fa fa-check"></i><b>5.5.1</b> Bar graph with basic graph functions</a></li>
+<li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
+<li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
 <li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="populations.html"><a href="populations.html#random-variable"><i class="fa fa-check"></i><b>6.1.1</b> Random variable</a></li>
 </ul></li>
+<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="populations.html"><a href="populations.html#probability-mass-function"><i class="fa fa-check"></i><b>6.2.1</b> Probability mass function</a></li>
+<li class="chapter" data-level="6.2.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-discrete-r.v."><i class="fa fa-check"></i><b>6.2.2</b> Mean and standard deviation of discrete R.V.</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="populations.html"><a href="populations.html#probability-density-function"><i class="fa fa-check"></i><b>6.3.1</b> Probability density function</a></li>
+<li class="chapter" data-level="6.3.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-continuous-r.v."><i class="fa fa-check"></i><b>6.3.2</b> Mean and standard deviation of continuous R.V.</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="populations.html"><a href="populations.html#sampling-from-a-population"><i class="fa fa-check"></i><b>6.4</b> Sampling from a population</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -758,6 +772,115 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb127-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb127-9" data-line-number="9">tmp</a></code></pre>
 <p>위에서 보듯 dplyr 패키지를 사용할 경우 그 결과는 같으나 코드의 가독성과 효율성면에서 장점을 보여줍니다. 여기서 group_by, summarise_all 함수 등의 자세한 사용법은 help 페이지를 참고해 주세요. 참고로 barplot은 numeric matrix 형태의 입력만을 받으므로 이에 맞도록 데이터를 다시 변형해야 합니다. 후에 배울 ggplot 을 이용하면 이러한 불편함이 없이 data.frame 형 데이터셋도 쉽게 가시화 할 수 있습니다.</p>
+</div>
+</div>
+<div id="multivariate-graphics---ggplot2-package" class="section level2">
+<h2><span class="header-section-number">5.5</span> Multivariate graphics - ggplot2 package</h2>
+<p>데이터 분석에서 데이터를 눈으로 확인하는 것은 중요합니다. 가능하면 raw 데이터를 보면서 크기 비교나 분포를 대략적으로 예측한다면 tool을 사용해서 나오는 결과를 가늠하는 척도가 될 수도 있습니다. 그러나 비교적 큰 데이터의 경우 눈으로 확인하는 것은 한계가 있으므로 그래프나 도표를 그려서 데이터의 분포를 확인하게 됩니다.</p>
+<div id="bar-graph-with-basic-graph-functions" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Bar graph with basic graph functions</h3>
+<p>Bar graph를 그리기 위한 데이터는 연속형과 범주형으로 나눌 수 있습니다. 아래 예제들은 후에 배울 ggplot의 stat 옵션을 설명하기 위한 예제들로 특정 변수에 대한 그래프를 그릴 때 변수의 값들을 count를 해야할지 아니면 그 값 그대로를 그릴지에 대한 설명을 이해하는데 도움을 줄 있습니다.</p>
+<p>첫 번째는 x 변수가 연속형 (continuous)인 경우로 대부분의 경우 bar 그래프는 histogram 을 표현하는데 사용 됩니다. 즉, 특정 구간 내에 포함되는 x의 값의 갯수 (count)를 bar로 표현하는 것 입니다.</p>
+<pre class="sourceCode r" id="cb128"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">10</span>)</a></code></pre>
+<p>두 번째는 하나의 변수 x의 값이 이산형 (discrete) 일 경우에는 x가 갖는 각 값이 몇 개인지를 (count) 나타내기 위해서 bar 그래프를 그릴 수 있을 것 입니다. 아래 코드에서는 x 값 범주의 counting을 위해 table 함수를 사용하였습니다.</p>
+<pre class="sourceCode r" id="cb129"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb129-2" data-line-number="2">count_x &lt;-<span class="st"> </span><span class="kw">table</span>(x)</a>
+<a class="sourceLine" id="cb129-3" data-line-number="3"><span class="kw">barplot</span>(count_x)</a></code></pre>
+<p>앞서 두 경우가 하나의 x 변수에 대한 값들을 bar graph로 표현한 경우라면 세 번째와 네 번째 경우는 변수가 두 개인 경우라고 볼 수 있습니다. 그 중 세번째 경우로 두 변수 x, y 가 있을 경우 x가 연속형 값을 갖고 y는 각 x 값의 빈도수를 나타내는 상황을 생각할 수 있습니다. 예를 들어 1.212값을 갖는 데이터가 20개이다 라는 상황을 가정할 경우 x=1.212 가 되고 y=20이 됩니다. 이 경우는 앞에서와 같은 카운팅은 필요 없이 x, y 값 그대로를 화면에 그려주면 됩니다.</p>
+<pre class="sourceCode r" id="cb130"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb130-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb130-3" data-line-number="3"><span class="kw">plot</span>(x, y, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a></code></pre>
+<p>마지막으로 앞서와 같이 두 개의 변수로 이루어져 있으나 x가 연속형이 아닌 이산형 변수라는 점이 다릅니다. y는 각 x 값들의 빈도수를 나타내며 이 경우도 x의 빈도수가 y값에 저장되어 있으니 y 값 그대로를 화면에 그려주면 됩니다.</p>
+<pre class="sourceCode r" id="cb131"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">sample</span>(x, <span class="dv">100</span>, <span class="dt">replace =</span> T))</a>
+<a class="sourceLine" id="cb131-3" data-line-number="3"><span class="kw">barplot</span>(y)</a></code></pre>
+</div>
+<div id="bar-graph-ggplot" class="section level3">
+<h3><span class="header-section-number">5.5.2</span> Bar graph ggplot</h3>
+<p>ggplot의 문법은 간단히 다음과 같습니다. 각 요소들은 레이어 개념으로 생각하면 되며 각 레이어는 <code>+</code> 기호로 줄을 바꿔가며 사용할 수 있습니다.</p>
+<ul>
+<li>데이터 지정 (ggplot)</li>
+<li>색상, 크기, x축의 값, y축의 값 등 심미적 요소 지정 (aes)</li>
+<li>점, 선, 면 등 기하학적 요소 지정 (geoms)</li>
+<li>그릴 통계량 지정 (stats)</li>
+<li>테마, 스케일 지정</li>
+</ul>
+<p>이제 앞서와 같은 4가지 데이터들을 ggplot을 이용하여 차례로 bar graph를 그려 보겠습니다. 간단히 ggplot 함수로 먼저 데이터와 aes로 (미학요소 또는 미적요소) x축 y축 등을 명시하고 <code>+</code> 오퍼레이터를 사용하여 필요한 레이어를 차례로 추가하면서 그래프를 그릴 수 있습니다.</p>
+<p>아래 ggplot2를 로딩후 ggplot을 실행할 경우 데이터와 x, y 축만 지정한 상태로 어떤 그래프 (히스토그램인지, 산포도인지 등)를 그릴지 명시되어 있지 않아서 아무것도 그리지 않은 상태의 빈 켄버스만 그려지게 됩니다.</p>
+<pre class="sourceCode r" id="cb132"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb132-4" data-line-number="4">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb132-5" data-line-number="5"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat)</a>
+<a class="sourceLine" id="cb132-6" data-line-number="6"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y))</a></code></pre>
+<p><code>+</code> 로 레이어를 추가하면서 geom_bar() 함수로 막대그래프를 그린다고 명시를 하면 되지만 geom_bar의 기본 stat은 count로 data의 y 값은 count 데이터가 아니므로 여전히 빈 화면을 보여줍니다.</p>
+<pre class="sourceCode r" id="cb133"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb133-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre>
+<p>따라서 stat을 “identity”로 명시하고 그릴 경우 정상적으로 barplot이 그려지게 됩니다.</p>
+<pre class="sourceCode r" id="cb134"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre>
+<p>x가 연속형일 경우 아래와 같이 histogram을 그려 줍니다. continuous 일 경우 stat은 bin으로 하면 특정 범위 안에 있는 값들의 빈도수를 계산하여 히스토그램을 그려줍니다.</p>
+<pre class="sourceCode r" id="cb135"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rnorm</span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb135-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;bin&quot;</span>, <span class="dt">bins=</span><span class="dv">30</span>)</a></code></pre>
+<p>x가 이산형인 경우는 stat을 count로 설정하여 해당 값들의 빈도수를 그려줄 수 있으며</p>
+<pre class="sourceCode r" id="cb136"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb136-2" data-line-number="2">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">factor</span>(x))</a>
+<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>)</a></code></pre>
+<p>세 번째, 네 번째 경우 x, y 두 변수에서 y가 x의 빈도수를 저장하고 있을 경우 x가 연속형, 이산형에 상관 없이 stat을 identity로 설정하여 bar graph를 그릴 수 있습니다.</p>
+<pre class="sourceCode r" id="cb137"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb137-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb137-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb137-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb137-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a>
+<a class="sourceLine" id="cb137-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb137-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb137-8" data-line-number="8">x1 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb137-9" data-line-number="9">y1 &lt;-<span class="st"> </span><span class="kw">tabulate</span>(<span class="kw">sample</span>(x1, <span class="dv">100</span>, <span class="dt">replace=</span>T))</a>
+<a class="sourceLine" id="cb137-10" data-line-number="10">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
+<a class="sourceLine" id="cb137-11" data-line-number="11"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb137-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a></code></pre>
+<p>ggplot은 다음과 같이 다양한 레이어를 추가하여 필요한 기능을 사용할 수 있습니다.</p>
+<pre class="sourceCode r" id="cb138"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb138-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">tabulate</span>(<span class="kw">sample</span>(x1, <span class="dv">100</span>, <span class="dt">replace=</span>T))</a>
+<a class="sourceLine" id="cb138-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
+<a class="sourceLine" id="cb138-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">fill=</span>x1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-7" data-line-number="7"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-8" data-line-number="8"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-9" data-line-number="9"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb138-10" data-line-number="10"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bar graph for x:discrete and y:value&quot;</span>)</a></code></pre>
+</div>
+<div id="line-graph-with-ggplot" class="section level3">
+<h3><span class="header-section-number">5.5.3</span> Line graph with ggplot</h3>
+<p>다음으로 ggplot을 이용한 line graph를 그리는 방법을 알아 봅니다. 앞서 bar graph와의 관계를 보면 line graph는 bar graph의 각 bar에 해당하는 값들을 서로 선으로 이어주는 graph라고 볼 수 있겠습니다.</p>
+<p>Line graph는 geom_line이라는 함수를 사용해서 그릴 수 있으며 stat의 사용법은 앞서 bar graph와 같습니다. Line graph에서 중요한 점은 아래 group 파라미터 입니다. 선이라는 것은 두 점 이상의 값들을 알 경우에만 연결할 수 있고 ggplot에서는 같은 그룹에 (<code>group</code>) 속해있는 두 개 이상의 값들을 선으로 연결한다는 의미 입니다. 그런데 우리가 가진 데이터 <code>dat</code> 에는 group을 나타내는 변수가 없습니다. 따라서 <code>group=1</code>이라고 할 경우 모든 값들이 같은 <code>1</code> 그룹에 있는 것으로 간주되고 모든 값들을 선으로 연결하는 line 그래프가 그려집니다. bar그래프와 다른 점은 <code>group=1</code>과 <code>geom_bar</code> 대신 <code>geom_line</code>을 사용한 점입니다. 그리고 bar graph의 fill 옵션은 bar의 색을 결정하는 부분으로 line 그래프에서는 bar가 없으므로 사용하지 않습니다.</p>
+<pre class="sourceCode r" id="cb139"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-5" data-line-number="5"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb139-6" data-line-number="6"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
+<p>추가로 아래와 같이 그려지는 선의 두께를 조절하고 점을 추가로 그려볼 수 있습니다. 점을 그리는 명령어는 geom_point로서 line 과 함께 그리는 것 이므로 <code>+</code> 오퍼레이터를 사용하여 geom_line 과 함께 사용하면 됩니다.</p>
+<pre class="sourceCode r" id="cb140"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-6" data-line-number="6"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb140-7" data-line-number="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
+<p>같은 방법으로 bar 또한 같이 그려줄 수 있습니다. 여기서는 fill 옵션이 geom_bar에 하나 geom_point에 하나씩 쓰였는데 이는 각 geometry에 따라서 필요한 옵션이 다르므로 각각의 geom_xxx 를 사용할 때 상황에 맞게 (help 나 예제를 통해서) 사용하시면 되겠습니다.</p>
+<pre class="sourceCode r" id="cb141"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">fill=</span>x1) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-5" data-line-number="5"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-6" data-line-number="6"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-7" data-line-number="7"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb141-8" data-line-number="8"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
 
 </div>
 </div>

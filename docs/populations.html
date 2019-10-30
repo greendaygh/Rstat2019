@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-10-23" />
+<meta name="date" content="2019-10-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,11 +217,25 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.4.3" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---pipe-operator"><i class="fa fa-check"></i><b>5.4.3</b> dplyr - pipe operator</a></li>
 <li class="chapter" data-level="5.4.4" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---important-functions"><i class="fa fa-check"></i><b>5.4.4</b> dplyr - Important functions</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-with-basic-graph-functions"><i class="fa fa-check"></i><b>5.5.1</b> Bar graph with basic graph functions</a></li>
+<li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
+<li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
 <li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="populations.html"><a href="populations.html#random-variable"><i class="fa fa-check"></i><b>6.1.1</b> Random variable</a></li>
 </ul></li>
+<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="populations.html"><a href="populations.html#probability-mass-function"><i class="fa fa-check"></i><b>6.2.1</b> Probability mass function</a></li>
+<li class="chapter" data-level="6.2.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-discrete-r.v."><i class="fa fa-check"></i><b>6.2.2</b> Mean and standard deviation of discrete R.V.</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="populations.html"><a href="populations.html#probability-density-function"><i class="fa fa-check"></i><b>6.3.1</b> Probability density function</a></li>
+<li class="chapter" data-level="6.3.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-continuous-r.v."><i class="fa fa-check"></i><b>6.3.2</b> Mean and standard deviation of continuous R.V.</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="populations.html"><a href="populations.html#sampling-from-a-population"><i class="fa fa-check"></i><b>6.4</b> Sampling from a population</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -251,27 +265,141 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p><img src="images/06/02.PNG" /></p>
 <div id="random-variable" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> Random variable</h3>
-<p>확률변수는 변수와 같지만 데이터가 들어있지 않은 빈 공간으로 보면 되며 population의 데이터가 들어올 가능성만을 갖는 변수로 이해하면 되겠습니다. 즉, population의 어떤 데이터도 샘플링되어 들어갈 수 있지만 아직 들어가 있지 않은 상태이며 따라서 특정 값이 들어갈 수 있는 확률만이 존재해서 확률 변수라고 합니다. 확률의 정의는 아래와 같습니다.</p>
-<p><span class="math display">\[ P(E) = \frac{Number ~ of ~ events ~ in ~ E}{Number ~ of ~ events ~ in ~ total} \]</span><br />
-이 때 모든 사건이 동일 확률로 일어나고 총 사건이 한정적이라고 가정하면 다음과 같은 규칙이 적용 됩니다.</p>
-<p><span class="math display">\[ P(E) &gt; 0 \]</span></p>
-<p><span class="math display">\[ \sum_{All} P(E) = 1\]</span></p>
-<p><span class="math display">\[ P(A or B) = P(A) + P(B) - P(A ~ and ~ B) \]</span></p>
+<p>확률변수는 변수와 같지만 데이터가 들어있지 않은 빈 공간으로 보면 되며 population의 데이터가 들어올 가능성만을 갖는 변수로 이해하면 되겠습니다. 즉, population의 어떤 데이터도 샘플링되어 들어갈 수 있지만 아직 들어가 있지 않은 상태이며 따라서 특정 값이 들어갈 수 있는 확률만이 존재해서 확률 변수라고 합니다.</p>
+<p>경우의 수는 임의 시행에서 어떤 사건이 일어날 수 있는 가짓수를 말하며 사건 E가 일어날 경우의 수는 <span class="math inline">\(n(E)\)</span> 로 나타냅니다. N을 모든 경우의 수가 일어날 수 있는 가짓수라 할 때 확률의 정의는 아래와 같습니다.</p>
+<p><span class="math display">\[ P(E) = \frac{n(E)}{N} \]</span><br />
+가짓수를 구할 때 두 사건 A, B가 동시에 일어나지 않는 경우, 즉 사건 A 또는 사건 B가 일어나는 경우의 수는 합의 법칙에 의해 두 경우의 수를 더해주고 두 사건이 동시에 일어날 때, 즉, 사건 A에 연이어 (동시에) 사건 B가 일어나는 경우의 수는 곱의 법칙에 의해 두 경우의 수를 곱해줍니다 .</p>
+<p>모든 사건이 동일 확률로 일어나고 총 사건이 한정적이라고 가정하면 다음과 같은 규칙이 적용 됩니다.</p>
+<p><span class="math display">\[ 
+\begin{split}
+P(E) &amp; &gt; 0 \\
+\sum_{All} P(E) &amp; = 1 \\
+P(A \text{ OR } B) &amp; = P(A) + P(B) - P(A ~ \text{AND} ~ B) 
+\end{split}
+\]</span></p>
+<p>여기서 만약 사건 A와 B가 배반사건 일 경우 A 또는 B가 일어날 확률은 <span class="math inline">\(P(A) + P(B)\)</span> 이며 만약 두 사건이 독립일 경우 A와 B가 동시에 일어날 확률은 <span class="math inline">\(P(A)p(B)\)</span> 입니다. 독립이라는 것은 하나의 사건이 일어날 확률이 다른 사건이 일어날 확률에 영향을 주지 않는 경우를 말합니다.</p>
 <p><strong>[EXERCISE]</strong> 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오</p>
-<pre class="sourceCode r" id="cb128"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
-<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
-<a class="sourceLine" id="cb128-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb128-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb142"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
+<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb142-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
 <p>위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다.</p>
-<pre class="sourceCode r" id="cb129"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb129-2" data-line-number="2">smoke</a></code></pre>
+<pre class="sourceCode r" id="cb143"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb143-2" data-line-number="2">smoke</a></code></pre>
 <p>survey의 smoke를 pupulation 데이터라고 가정하고 <span class="math inline">\(X\)</span>를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) <span class="math inline">\(X\)</span> 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 <span class="math inline">\(P()\)</span>를 사용하여 <span class="math inline">\(P(X)\)</span> 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다.</p>
-<p><span class="math display">\[ P(X=&quot;Never&quot;) = \]</span>
-<span class="math display">\[ P(X=&quot;Heavy&quot;) = \]</span>
-<span class="math display">\[ P(X=&quot;Occas&quot;) = \]</span>
-<span class="math display">\[ P(X=&quot;Regul&quot;) = \]</span></p>
-
+<p><span class="math display">\[ P(X=&quot;Never&quot;) =  \\
+ P(X=&quot;Heavy&quot;) = \\
+ P(X=&quot;Occas&quot;) = \\
+ P(X=&quot;Regul&quot;) = \]</span></p>
 </div>
+</div>
+<div id="discrete-random-variable" class="section level2">
+<h2><span class="header-section-number">6.2</span> Discrete random variable</h2>
+<p><span class="math inline">\(X\)</span> 를 이산형 확률변수라 하면 <span class="math inline">\(X\)</span>가 가질 수 있는 값은 <span class="math inline">\({0, 1, ..}\)</span> 또는 <span class="math inline">\({&quot;yes&quot;, &quot;no&quot;}\)</span> 등의 이산형 값을 가질 수 있으며 이 값들을 <span class="math inline">\(k\)</span>라 하면 <span class="math inline">\(P(X=k)&gt;0\)</span> 이며 <span class="math inline">\(X\)</span>의 분포는 이러한 확률들을 나열한 것으로 생각하면 됩니다. 즉, 이산형 확률변수 <span class="math inline">\(X\)</span>의 분포는 먼저 가능한 <span class="math inline">\(k\)</span>의 값들을 구한 후 <span class="math inline">\(p_k&gt;0\)</span>이고 <span class="math inline">\(\sum{k}=1\)</span>인 확률 <span class="math inline">\(p_k = P(X=k)\)</span>의 값을 명시하면 됩니다.</p>
+<p><strong>[EXERCISE]</strong> 동전 한 번 던지기, 가능한 경우의 수는? 확률 변수는? 분포는?</p>
+<p><strong>[EXERCISE]</strong> 주머니에서 공 꺼내기 (G+R=N), 반복 허용해서 두 번 뽑을 때, <span class="math inline">\(X\)</span>를 빨간 공의 갯수라 하면, 가능한 경우의 수는? 분포는?</p>
+<p><img src="images/06/03.png" /></p>
+<div id="probability-mass-function" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Probability mass function</h3>
+<p>그러나 확률 변수의 분포를 언급할 때마다 일일이 확률을 명시할 수 없으므로 이러한 확률을 나타내는 함수를 정의하여 사용할 수 있고 이를 확률 질량 함수 (probability mass function, PMF)라 합니다.</p>
+<p><strong>[EXERCISE]</strong> 앞서 동전 던지는 예제에서 PMF는?</p>
+<p><span class="math display">\[
+f_X(x) =  \begin{cases} 
+\frac{1}{2} ~~~~~ \text{where} ~ x \in \{0, 1\} \\
+0   ~~~~~~ \text{where} ~ x \notin \{0, 1\}
+\end{cases}
+\]</span></p>
+</div>
+<div id="mean-and-standard-deviation-of-discrete-r.v." class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Mean and standard deviation of discrete R.V.</h3>
+<p>Dataset에서는 평균과 분산이 각각 center와 spread를 나타내는 대표값이였으나 확률 변수에서는 그 정의가 달라집니다. 모평균 (population mean)은 <span class="math inline">\(\mu\)</span>로 나타내며 확률 변수 <span class="math inline">\(X\)</span>에 대한 평균은 기댓값 (expected value)으로 불리우며 기호로는 다음과 같이 <span class="math inline">\(E(X)\)</span>로 나타낼 수 있습니다.</p>
+<p><span class="math display">\[
+\mu = E(X) = \sum k P(X=k) \\
+\]</span>
+이는 가중평균으로 모든 <span class="math inline">\(k\)</span> 값들에 대해서 <span class="math inline">\(P(X=k)\)</span>의 가중치를 비율로 곱한 후 더하면 됩니다. 참고로 기댓값은 다음과 같은 선형적 성질을 가지고 있습니다.</p>
+<ul>
+<li>가산성 <span class="math inline">\(E(X+Y) = E(X) + E(Y)\)</span></li>
+<li>동차 <span class="math inline">\(E(cX) = cE(X)\)</span></li>
+</ul>
+<p><strong>[EXERCISE]</strong> 주사위를 한 번 던질 때 나올 수 있는 주사위의 수의 기댓값을 구하시오 (확률변수 <span class="math inline">\(X\)</span>?, 확률변수의 분포?, 확률변수의 기댓값?)</p>
+<p>모표준편차는 <span class="math inline">\(\sigma\)</span>로 표현하며 다음과 같이 정의할 수 있습니다
+<span class="math display">\[ 
+\begin{split} 
+\sigma^2  &amp; = VAR(X) \\
+&amp; = E((X-\mu)^2) \\
+&amp; = ? \\
+&amp; = E(X^2) - E(X)^2
+\end{split}
+\]</span>
+즉, 이 값은 <span class="math inline">\((X-\mu)^2\)</span>의 기댓값과 같습니다.</p>
+<p><strong>[EXERCISE]</strong> 주머니에서 공 꺼내기 (G+R=N), R을 빨강, G를 녹색 공이라 하고 N을 총 공의 갯수라 하자. 반복을 허용해서 두 번의 공을 뽑을 때 빨간 공의 갯수를 확률변수 <span class="math inline">\(X\)</span>라 하자. 분포는?
+<span class="math display">\[
+P(X=0) = \\
+P(X=1) = \\
+P(X=2) = 
+\]</span>
+<span class="math inline">\(p=R/N, q=G/N\)</span> 이라 할 경우 기댓값과 분산을 구하시오
+<span class="math display">\[
+E(X) = \\
+VAR(X) =
+\]</span>
+확률 변수 <span class="math inline">\(X\)</span>를 반복을 허용해서 3번의 공을 뽑는 경우에 기댓값과 분산을 구하시오</p>
+</div>
+</div>
+<div id="continuous-random-variable" class="section level2">
+<h2><span class="header-section-number">6.3</span> Continuous random variable</h2>
+<p>연속 데이터의 경우에는 <span class="math inline">\(P(X=k)\)</span> 와 같은 개념이 불가능하므로 다른 방식의 확률에 대한 정의가 필요합니다. 이 경우에는 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 확률의 범위를 지정하는 방식이 쓰입니다. 이는 <span class="math inline">\(F(b) = P(X&lt;b)\)</span> 함수나 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 크기에 해당하는 a, b, 그리고 <span class="math inline">\(f(x)\)</span>로 둘러쌓이는 함수 <span class="math inline">\(f(x)\)</span>로 구현될 수 있습니다. 위 함수 <span class="math inline">\(f(x)\)</span>를 확률변수 <span class="math inline">\(X\)</span>의 밀도라 하며 <span class="math inline">\(F(x)\)</span>와의 관계는 다음 그림과 같습니다.</p>
+<pre class="sourceCode r" id="cb144"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
+<a class="sourceLine" id="cb144-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
+<a class="sourceLine" id="cb144-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb144-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb144-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
+<a class="sourceLine" id="cb144-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
+<div id="probability-density-function" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Probability density function</h3>
+<p>여기서 <span class="math inline">\(f(x)\)</span>는 확률 변수의 분포를 나타내는 함수로써 확률 밀도 함수(probability density function, PDF)라 하고 확률 밀도 함수<span class="math inline">\(f(x)\)</span>와 구간 [a, b]에 대해서 확률변수 X가 구간에 포함될 확률은 <span class="math inline">\(P(a &lt; X \le b)\)</span>은 <span class="math inline">\(\int^a_b f(x) dx\)</span> 입니다. 일반적으로 PDF는 다음 두 조건을 만족해야 합니다.</p>
+<ul>
+<li>모든 실수값 <span class="math inline">\(x\)</span>에 대해서 <span class="math inline">\(f(x) \ge 0\)</span></li>
+<li><span class="math inline">\(\int^{\inf}_{-\inf} f(x) dx=1\)</span></li>
+</ul>
+<p>참고로 지수함수는 다음과 같은 PDF를 가집니다.</p>
+<p><span class="math display">\[
+f_X(x; \lambda) = \begin{cases}
+\lambda e^{-\lambda x} ~~~ \text{where } x \ge 0 \\
+0 ~~~~~~~~~~\text{where } x &lt; 0 
+\end{cases}
+\]</span></p>
+<p>또한 확률밀도함수와 누적분포함수 (cumulative density function, CDF) <span class="math inline">\(F(x) = P(X \le x)\)</span>는 다음과 같은 수식이 성립합니다.</p>
+<p><span class="math display">\[
+F(x) = \int^x_{-\inf} f(x) dx \\
+f(x) = \frac{d}{dx} F(x) 
+\]</span></p>
+</div>
+<div id="mean-and-standard-deviation-of-continuous-r.v." class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Mean and standard deviation of continuous R.V.</h3>
+<p>연속형 확률변수의 기댓값과 분산은 앞서 이산형의 경우와 같으며 각각 다음과 같이 정의됩니다.</p>
+<p><span class="math display">\[
+\begin{split}
+\mu = E(X) &amp; = \int^{\infty}_{-\infty} x f(x) dx \\
+\sigma^2 = VAR(X) &amp; = E((X-\mu)^2) \\
+&amp; = E(X^2) - E(X)^2 \\
+&amp; = \int^{\infty}_{-\infty} x^2 f(x) dx - {\int^{\infty}_{-\infty} x f(x) dx} ^2
+\end{split}
+\]</span></p>
+</div>
+</div>
+<div id="sampling-from-a-population" class="section level2">
+<h2><span class="header-section-number">6.4</span> Sampling from a population</h2>
+<p>위와 같은 확률 변수를 사용하는 목적을 우리의 실험을 예를 들어 다시 한번 생각해 보면 실험을 해서 얻는 데이터가 우리가 모르는 모집단으로부터 나오는 것이라 가정하고 최대한 많은 데이터를 확보한 후 확률변수를 정의하고 그 분포가 모집단의 분포와 같을 것으로 기대하여 기댓값과 분산을 계산하는 것 입니다. 앞에서 배운바와 같이 이러한 확률변수의 기댓값과 분산이 모집단의 대표값들 입니다.</p>
+<p>따라서 모집단에서 샘플링을 하는 방법이 중요하며 이 때 사용하는 방법이 Random sampling 입니다. <span class="math inline">\(X_1, X_2, X_3, ..., X_n\)</span>을 모집단에서 뽑은 일련의 확률 변수라 한다면 이들의 분포가 같을 때 identically distributed 되었다고 하며 하나의 확률 변수의 값이 다른 변수들의 분포에 영향을 주지 않을 때 (즉 하나의 확률변수의 값을 알 때 다른 변수들의 분포가 변하지 않을 때) 그 변수는 다른 변수와 independent 하다고 합니다. 이 두 가지 특성을 갖는 샘플들을 indepentent and identically distributed 라고 해서 i.i.d.라 부르고 이는 랜덤 샘플링을 할 때 기본이 되는 개념입니다.</p>
+<p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 다시 넣지 않고 꺼내는 경우는?</p>
+<p>R에서는 <code>sample</code> 함수를 사용해서 이러한 작업을 수행할 수 있습니다.</p>
+<pre class="sourceCode r" id="cb145"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
+<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
+<p><strong>[EXERCISE]</strong> 하나의 주사위를 10번 굴릴 경우 코드를 작성하시오</p>
+<p><strong>[EXERCISE]</strong> 5개의 빨간색 공과 3개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우의 기댓값과 반복을 허용하지 않고 3개를 뽑을 경우의 기댓값을 구하고 그 코드를 작성하시오</p>
+
 </div>
 </div>
             </section>
