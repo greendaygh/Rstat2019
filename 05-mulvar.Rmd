@@ -752,6 +752,9 @@ Bar graph를 그리기 위한 데이터는 연속형과 범주형으로 나눌 �
 ```{r eval=F}
 x <- rnorm(100)
 hist(x, br=10)
+head(x)
+class(x)
+
 ```
 
 두 번째는 하나의 변수 x의 값이 이산형 (discrete) 일 경우에는 x가 갖는 각 값이 몇 개인지를 (count) 나타내기 위해서 bar 그래프를 그릴 수 있을 것 입니다. 아래 코드에서는 x 값 범주의 counting을 위해 table 함수를 사용하였습니다. 
@@ -760,6 +763,10 @@ hist(x, br=10)
 x <- sample(1:3, 100, replace = T)
 count_x <- table(x)
 barplot(count_x)
+head(x)
+class(x)
+count_x
+barplot(x)
 ```
 
 
@@ -770,6 +777,8 @@ barplot(count_x)
 x <- rnorm(10)
 y <- rnorm(10)
 plot(x, y, type="h")
+plot(x, y)
+data.frame(x,y)
 ```
 
 마지막으로 앞서와 같이 두 개의 변수로 이루어져 있으나 x가 연속형이 아닌 이산형 변수라는 점이 다릅니다. y는 각 x 값들의 빈도수를 나타내며 이 경우도 x의 빈도수가 y값에 저장되어 있으니 y 값 그대로를 화면에 그려주면 됩니다. 
@@ -778,7 +787,10 @@ plot(x, y, type="h")
 ```{r eval=F}
 x <- 1:3
 y <- table(sample(x, 100, replace = T))
+y
+x
 barplot(y)
+plot(x=x, y=y, type="h")
 ```
 
 
@@ -806,6 +818,7 @@ y <- rnorm(10)
 dat <- data.frame(x, y)
 ggplot(data=dat)
 ggplot(data=dat, aes(x=x, y=y))
+dat
 ```
 
 
@@ -830,8 +843,11 @@ x가 연속형일 경우 아래와 같이 histogram을 그려 줍니다. continu
 
 ```{r eval=F}
 dat <- data.frame(x1=rnorm(100))
+barplot(dat$x1)
+plot(x=1:length(dat$x1), y=dat$x1, type="h")
 ggplot(dat, aes(x=x1)) +
   geom_bar(stat="bin", bins=30)
+dat
 ```
 
 
@@ -839,9 +855,11 @@ x가 이산형인 경우는 stat을 count로 설정하여 해당 값들의 빈�
 
 ```{r eval=F}
 x <- sample(1:3, 100, replace = T)
+x
 dat <- data.frame(x=factor(x))
 ggplot(dat, aes(x=x)) +
   geom_bar(stat="count")
+
 ```
 
 
@@ -925,6 +943,41 @@ ggplot(dat, aes(x=x1, y=y1, group=1)) +
 ```
 
 
+
+비교 
+
+```{r eval=F}
+library(UsingR)
+library(dplyr)
+str(Cars93)
+tmp <- Cars93 %>% select(Price, Horsepower)
+head(tmp)
+str(tmp)
+
+
+mycol <- c("black", "red", "blue", "red", "yellow", "brown")
+mydat <- data.frame(Cars93$Price, Cars93$Horsepower, Cars93$Type)
+head(mydat)
+mycol2 <- Cars93$Type
+levels(mycol2) <- mycol
+mycol3 <- as.character(mycol2)
+plot(Cars93$Price, Cars93$Horsepower, col=mycol3); legend(x=10, y=300, pch=19, col=levels(mycol2), legend = levels(Cars93$Type))
+
+str(Cars93)
+
+ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(.~Type, nrow=2) 
+
+ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
+  geom_boxplot()
+
+p <- Cars93 %>% ggplot(aes(x=Weight, y=MPG.highway)) + geom_point()
+p <- p + geom_smooth()
+p + facet_grid(~Type)
+
+```
 
 
 
