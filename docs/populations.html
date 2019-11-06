@@ -438,11 +438,11 @@ f(x) = \frac{d}{dx} F(x)
 </div>
 <div id="sampling-from-a-population" class="section level2">
 <h2><span class="header-section-number">6.4</span> Sampling from a population</h2>
-<p>위와 같은 확률 변수를 사용하는 목적을 우리의 실험을 예를 들어 다시 한번 생각해 보면 실험을 해서 얻는 데이터가 우리가 모르는 모집단으로부터 나오는 것이라 가정하고 최대한 많은 데이터를 확보한 후 확률변수를 정의하고 그 분포가 모집단의 분포와 같을 것으로 기대하여 기댓값과 분산을 계산하는 것 입니다. 앞에서 배운바와 같이 이러한 확률변수의 기댓값과 분산이 모집단의 대표값들 입니다.</p>
+<p>위와 같은 확률 변수를 사용하는 목적을 우리의 실험을 예를 들어 다시 한번 생각해 보면 실험을 해서 얻는 데이터가 우리가 모르는 모집단으로부터 나오는 것이라 가정하고 최대한 많은 데이터를 확보한 후 그 분포가 모집단의 분포와 같을 것으로 기대하여 기댓값과 분산을 계산하는 것 입니다. 그런데 데이터를 수집하기 전 즉, 실험을 수행하기 전에 도 확률변수를 정의하고 그 확률변수의 기대값을 계산할 수 있고 이는 앞에서 배운바와 같이 이러한 확률변수의 기댓값과 분산이 모집단의 대표값들 입니다.</p>
 <p>따라서 모집단에서 표본을 추출 하는 방법이 중요하며 이 때 사용하는 방법이 <strong>임의 복원추출 (Random sampling)</strong> 입니다. <span class="math inline">\(X_1, X_2, X_3, ..., X_n\)</span>을 모집단에서 뽑은 일련의 확률 변수라 한다면 이들의 분포가 같을 때 identically distributed 되었다고 하며 하나의 확률 변수의 값이 다른 변수들의 분포에 영향을 주지 않을 때 (즉 하나의 확률변수의 값을 알 때 다른 변수들의 분포가 변하지 않을 때) 그 변수는 다른 변수와 independent 하다고 합니다. 이 두 가지 특성을 갖는 표본들을 indepentent and identically distributed 라고 해서 i.i.d.라 부르고 이는 랜덤 샘플링을 할 때 기본이 되는 개념입니다.</p>
-<p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 다시 넣지 않고 꺼내는 경우는?</p>
+<p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 넣고 다시 꺼내는 복원 추출의 경우의 표본들도 마찬가지로 iid 입니다. 그런데 다시 넣지 않고 꺼내는 경우는 어떨까요?</p>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우를 생각해 보자. 확률변수 <span class="math inline">\(X_i\)</span>를 <span class="math inline">\(i\)</span>번째 뽑은 공의 색이라 할 때 <span class="math inline">\(X_1\)</span> 의 확률 분포와 <span class="math inline">\(X_2\)</span>의 확률 분포는? 반복을 허용하지 않는 경우의 확률 분포는?</p>
-<p>R에서는 <code>sample</code> 함수를 사용해서 샘플링 작업을 수행할 수 있습니다.</p>
+<p>R에서는 <code>sample</code> 함수를 사용해서 복원추출 과정을 시뮬레이션 할 수 있습니다.</p>
 <pre class="sourceCode r" id="cb152"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
 <a class="sourceLine" id="cb152-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
 <a class="sourceLine" id="cb152-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
@@ -458,12 +458,11 @@ E[X] = ?
 <p>위에서 구한 기댓값이 실제 나오는지 주사위를 던져서 같은 값이 나오는지를 시뮬레이션하는 코드를 작성하시오.</p>
 <pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span>T)</a>
 <a class="sourceLine" id="cb153-2" data-line-number="2"><span class="co">#...</span></a></code></pre>
-<p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 <span class="math inline">\(X\)</span>를 녹색 공의 갯수라 하자, <span class="math inline">\(X\)</span>의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오.</p>
-<p>또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오.</p>
+<p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 <span class="math inline">\(X\)</span>를 녹색 공의 갯수라 하자, <span class="math inline">\(X\)</span>의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오. 또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오.</p>
 </div>
 <div id="sampling-distribution" class="section level2">
 <h2><span class="header-section-number">6.5</span> Sampling distribution</h2>
-<p><strong>통계량(a statistic)</strong>은 랜덤 표본을 요약하는 하나의 값입니다. 표본평균이 그 예이며 <span class="math inline">\(\bar{X} = (X_1 + X_2 + ... + X_n)/n\)</span> 으로 나타낼 수 있습니다. 그런데 통계량이 랜덤 표본에 의존한다면 해당 통계량 또한 확률 변수가 되며 이 통계량의 분포를 <strong>표본분포라고 (sampling distribution)</strong> 합니다. 표본 분포는 복잡한 것으로 알려져 있으나 일반적으로 사용하는 평균이나 분산 등의 통계량에 대해서는 연구가 많이 되어 잘 알려져 있는 편이며 대부분 그들의 모집단과 관련된 값을 가지고 있읍니다. 예를 들어 표본평균의 기댓값과 표준편차는 다음과 같은 값을 가집니다.</p>
+<p><strong>통계량(a statistic)</strong>은 랜덤 표본을 요약하는 하나의 값입니다. 표본평균이 그 예이며 <span class="math inline">\(\bar{X} = (X_1 + X_2 + ... + X_n)/n\)</span> 으로 나타낼 수 있습니다. 그런데 통계량이 랜덤 표본에 의존한다면 해당 통계량 또한 확률 변수가 되며 이 통계량의 분포를 <strong>표본분포라고 (sample distribution)</strong> 합니다. 표본 분포는 복잡한 것으로 알려져 있으나 일반적으로 사용하는 평균이나 분산 등의 통계량에 대해서는 연구가 많이 되어 잘 알려져 있는 편이며 대부분 그들의 모집단과 관련된 값을 가지고 있읍니다. 예를 들어 표본평균의 기댓값과 표준편차는 다음과 같은 값을 가집니다.</p>
 <p><span class="math display">\[
 E(\bar{X}) = \mu_{\bar{X}} = \mu \\ 
 SD(\bar{X}) = \sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}
