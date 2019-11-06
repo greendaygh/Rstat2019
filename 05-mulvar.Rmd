@@ -943,17 +943,13 @@ ggplot(dat, aes(x=x1, y=y1, group=1)) +
 ```
 
 
+### Color, facet, heatmap
 
-비교 
+다음은 R의 기본 그래픽 함수와 ggplot을 이용한 비교 예제 입니다. 
 
 ```{r eval=F}
 library(UsingR)
 library(dplyr)
-str(Cars93)
-tmp <- Cars93 %>% select(Price, Horsepower)
-head(tmp)
-str(tmp)
-
 
 mycol <- c("black", "red", "blue", "red", "yellow", "brown")
 mydat <- data.frame(Cars93$Price, Cars93$Horsepower, Cars93$Type)
@@ -963,8 +959,39 @@ levels(mycol2) <- mycol
 mycol3 <- as.character(mycol2)
 plot(Cars93$Price, Cars93$Horsepower, col=mycol3); legend(x=10, y=300, pch=19, col=levels(mycol2), legend = levels(Cars93$Type))
 
-str(Cars93)
+```
 
+
+ggplot 사용, 컬러 지정 
+
+```{r, eval=F}
+ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
+  geom_point() +
+  scale_color_manual(values=mycol)
+
+```
+
+R에서는 컬러를 지정할 수 있는 다음과 같은 다양한 함수들을 제공합니다. 
+scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scale_colour_hue, scale_colour_viridis_d 각 함수는 ggplot 명령어와 함께 사용할 수 있으며 자세한 사용법은 도움말을 참고하시기 바랍니다. 
+
+
+```{r, eval=F}
+ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
+  geom_point() +
+  scale_color_brewer(palette="Spectral")
+```
+
+color는 태두리의 색을 지정하는 경우이며 fill은 내부의 색을 지정함을 참고하세요.  
+
+```{r, eval=F}
+ggplot(Cars93, aes(x=Price, y=Horsepower, fill=Type)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Spectral")
+```
+
+facet_wrap 또는 facet_grid 등의 명령어로 여러 그래프를 그릴 수 있으며 x, y 배치는 formular 형태의 표현식을 사용해서 지정해 줍니다. 
+
+```{r eval=F}
 ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
   geom_point() +
   geom_smooth() +
@@ -979,8 +1006,9 @@ p + facet_wrap(~Type, nrow=2)
 
 ```
 
-Heatmap
+Heatmap은 geom_tile 함수를 사용하시면 됩니다. 
 ```{r, eval=F}
+library(UsingR)
 str(Cars93)
 Cars93 %>% mutate(rescale_price = scale(Horsepower)) %>% 
   ggplot(aes(x=Model, y=Manufacturer)) + 
@@ -988,6 +1016,14 @@ Cars93 %>% mutate(rescale_price = scale(Horsepower)) %>%
     scale_fill_gradient(low = "white", high = "steelblue")
 ```
 
+**[EXERCISE]** Cars93 데이터에서 numeric 인 변수들만을 뽑아서 별도의 데이터셋을 만들고 NA 제거, Price 기준으로 내림차순 정렬을 수행한 후 상위 30개 데이터만을 가지고 heatmap을 그리시오 
 
 
+```{r, eval=F, echo=F}
+library(UsingR)
+library(dplyr)
+str(Cars93)
+mydata <- Cars93 %>% select(Price, EngineSize, Horsepower, Length, Wheelbase, Width, Luggage.room, Weight) 
+mydata <- mydata %>% filter(complete.cases(.)) %>% arrange(desc(Price)) %>% head(30)
+```
 

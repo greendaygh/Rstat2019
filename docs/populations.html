@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-05" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,6 +221,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-with-basic-graph-functions"><i class="fa fa-check"></i><b>5.5.1</b> Bar graph with basic graph functions</a></li>
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
+<li class="chapter" data-level="5.5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#color-facet-heatmap"><i class="fa fa-check"></i><b>5.5.4</b> Color, facet, heatmap</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
@@ -236,6 +237,9 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.3.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-continuous-r.v."><i class="fa fa-check"></i><b>6.3.2</b> Mean and standard deviation of continuous R.V.</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="populations.html"><a href="populations.html#sampling-from-a-population"><i class="fa fa-check"></i><b>6.4</b> Sampling from a population</a></li>
+<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="populations.html"><a href="populations.html#probability-distributions"><i class="fa fa-check"></i><b>6.5.1</b> Probability distributions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -279,13 +283,13 @@ P(A \text{ OR } B) &amp; = P(A) + P(B) - P(A ~ \text{AND} ~ B)
 \]</span></p>
 <p>여기서 만약 사건 A와 B가 배반사건 일 경우 A 또는 B가 일어날 확률은 <span class="math inline">\(P(A) + P(B)\)</span> 이며 만약 두 사건이 독립일 경우 A와 B가 동시에 일어날 확률은 <span class="math inline">\(P(A)p(B)\)</span> 입니다. 독립이라는 것은 하나의 사건이 일어날 확률이 다른 사건이 일어날 확률에 영향을 주지 않는 경우를 말합니다.</p>
 <p><strong>[EXERCISE]</strong> 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오</p>
-<pre class="sourceCode r" id="cb144"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
-<a class="sourceLine" id="cb144-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
-<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb144-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb148"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
+<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
+<a class="sourceLine" id="cb148-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb148-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
 <p>위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다.</p>
-<pre class="sourceCode r" id="cb145"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb145-2" data-line-number="2">smoke</a></code></pre>
+<pre class="sourceCode r" id="cb149"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb149-2" data-line-number="2">smoke</a></code></pre>
 <p>survey의 smoke를 pupulation 데이터라고 가정하고 <span class="math inline">\(X\)</span>를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) <span class="math inline">\(X\)</span> 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 <span class="math inline">\(P()\)</span>를 사용하여 <span class="math inline">\(P(X)\)</span> 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다.</p>
 <p><span class="math display">\[ 
 P(X=\text{&quot;Never&quot;}) =  \\
@@ -293,9 +297,9 @@ P(X=\text{&quot;Heavy&quot;}) = \\
 P(X=\text{&quot;Occas&quot;}) = \\
 P(X=\text{&quot;Regul&quot;}) = 
 \]</span></p>
-<pre class="sourceCode r" id="cb146"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb146-2" data-line-number="2">smoke</a>
-<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
+<pre class="sourceCode r" id="cb150"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">smoke</a>
+<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
 </div>
 </div>
 <div id="discrete-random-variable" class="section level2">
@@ -393,18 +397,18 @@ VAR(X) =
 <div id="continuous-random-variable" class="section level2">
 <h2><span class="header-section-number">6.3</span> Continuous random variable</h2>
 <p>연속 데이터의 경우에는 <span class="math inline">\(P(X=k)\)</span> 와 같은 개념이 불가능하므로 다른 방식의 확률에 대한 정의가 필요합니다. 이 경우에는 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 확률의 범위를 지정하는 방식이 쓰입니다. 이는 <span class="math inline">\(F(b) = P(X&lt;b)\)</span> 함수나 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 크기에 해당하는 a, b, 그리고 <span class="math inline">\(f(x)\)</span>로 둘러쌓이는 함수 <span class="math inline">\(f(x)\)</span>로 구현될 수 있습니다. 위 함수 <span class="math inline">\(f(x)\)</span>를 확률변수 <span class="math inline">\(X\)</span>의 밀도라 하며 <span class="math inline">\(F(x)\)</span>와의 관계는 다음 그림과 같습니다.</p>
-<pre class="sourceCode r" id="cb147"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
-<a class="sourceLine" id="cb147-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
-<a class="sourceLine" id="cb147-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb147-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb147-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
-<a class="sourceLine" id="cb147-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb151"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
+<a class="sourceLine" id="cb151-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
+<a class="sourceLine" id="cb151-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb151-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb151-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
+<a class="sourceLine" id="cb151-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
 <div id="probability-density-function" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Probability density function</h3>
 <p>여기서 <span class="math inline">\(f(x)\)</span>는 확률 변수의 분포를 나타내는 함수로써 확률 밀도 함수(probability density function, PDF)라 하고 확률 밀도 함수<span class="math inline">\(f(x)\)</span>와 구간 [a, b]에 대해서 확률변수 X가 구간에 포함될 확률은 <span class="math inline">\(P(a &lt; X \le b)\)</span>은 <span class="math inline">\(\int^a_b f(x) dx\)</span> 입니다. 일반적으로 PDF는 다음 두 조건을 만족해야 합니다.</p>
 <ul>
 <li>모든 실수값 <span class="math inline">\(x\)</span>에 대해서 <span class="math inline">\(f(x) \ge 0\)</span></li>
-<li><span class="math inline">\(\int^{\inf}_{-\inf} f(x) dx=1\)</span></li>
+<li><span class="math inline">\(\int^{\infty}_{-\infty} f(x) dx=1\)</span></li>
 </ul>
 <p>참고로 지수함수는 다음과 같은 PDF를 가집니다.</p>
 <p><span class="math display">\[
@@ -415,7 +419,7 @@ f_X(x; \lambda) = \begin{cases}
 \]</span></p>
 <p>또한 확률밀도함수와 누적분포함수 (cumulative density function, CDF) <span class="math inline">\(F(x) = P(X \le x)\)</span>는 다음과 같은 수식이 성립합니다.</p>
 <p><span class="math display">\[
-F(x) = \int^x_{-\inf} f(x) dx \\
+F(x) = \int^x_{-\infty} f(x) dx \\
 f(x) = \frac{d}{dx} F(x) 
 \]</span></p>
 </div>
@@ -435,15 +439,70 @@ f(x) = \frac{d}{dx} F(x)
 <div id="sampling-from-a-population" class="section level2">
 <h2><span class="header-section-number">6.4</span> Sampling from a population</h2>
 <p>위와 같은 확률 변수를 사용하는 목적을 우리의 실험을 예를 들어 다시 한번 생각해 보면 실험을 해서 얻는 데이터가 우리가 모르는 모집단으로부터 나오는 것이라 가정하고 최대한 많은 데이터를 확보한 후 확률변수를 정의하고 그 분포가 모집단의 분포와 같을 것으로 기대하여 기댓값과 분산을 계산하는 것 입니다. 앞에서 배운바와 같이 이러한 확률변수의 기댓값과 분산이 모집단의 대표값들 입니다.</p>
-<p>따라서 모집단에서 샘플링을 하는 방법이 중요하며 이 때 사용하는 방법이 Random sampling 입니다. <span class="math inline">\(X_1, X_2, X_3, ..., X_n\)</span>을 모집단에서 뽑은 일련의 확률 변수라 한다면 이들의 분포가 같을 때 identically distributed 되었다고 하며 하나의 확률 변수의 값이 다른 변수들의 분포에 영향을 주지 않을 때 (즉 하나의 확률변수의 값을 알 때 다른 변수들의 분포가 변하지 않을 때) 그 변수는 다른 변수와 independent 하다고 합니다. 이 두 가지 특성을 갖는 샘플들을 indepentent and identically distributed 라고 해서 i.i.d.라 부르고 이는 랜덤 샘플링을 할 때 기본이 되는 개념입니다.</p>
+<p>따라서 모집단에서 표본을 추출 하는 방법이 중요하며 이 때 사용하는 방법이 <strong>임의 복원추출 (Random sampling)</strong> 입니다. <span class="math inline">\(X_1, X_2, X_3, ..., X_n\)</span>을 모집단에서 뽑은 일련의 확률 변수라 한다면 이들의 분포가 같을 때 identically distributed 되었다고 하며 하나의 확률 변수의 값이 다른 변수들의 분포에 영향을 주지 않을 때 (즉 하나의 확률변수의 값을 알 때 다른 변수들의 분포가 변하지 않을 때) 그 변수는 다른 변수와 independent 하다고 합니다. 이 두 가지 특성을 갖는 표본들을 indepentent and identically distributed 라고 해서 i.i.d.라 부르고 이는 랜덤 샘플링을 할 때 기본이 되는 개념입니다.</p>
 <p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 다시 넣지 않고 꺼내는 경우는?</p>
-<p>R에서는 <code>sample</code> 함수를 사용해서 이러한 작업을 수행할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb148"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
-<a class="sourceLine" id="cb148-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
-<p><strong>[EXERCISE]</strong> 하나의 주사위를 10번 굴릴 경우 코드를 작성하시오</p>
-<p><strong>[EXERCISE]</strong> 5개의 빨간색 공과 3개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우의 기댓값과 반복을 허용하지 않고 3개를 뽑을 경우의 기댓값을 구하고 그 코드를 작성하시오</p>
+<p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우를 생각해 보자. 확률변수 <span class="math inline">\(X_i\)</span>를 <span class="math inline">\(i\)</span>번째 뽑은 공의 색이라 할 때 <span class="math inline">\(X_1\)</span> 의 확률 분포와 <span class="math inline">\(X_2\)</span>의 확률 분포는? 반복을 허용하지 않는 경우의 확률 분포는?</p>
+<p>R에서는 <code>sample</code> 함수를 사용해서 샘플링 작업을 수행할 수 있습니다.</p>
+<pre class="sourceCode r" id="cb152"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
+<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
+<p><strong>[EXERCISE]</strong> 하나의 주사위를 한 번 굴릴 경우 확률변수 <span class="math inline">\(X\)</span>를 나오는 주사위 값이라 하면 <span class="math inline">\(X\)</span>의 기댓값을 구하시오.</p>
+<p><span class="math display">\[
+\begin{split}
+P(X=1) = 1/6 \\
+P(X=2) = 1/6 \\
+... \\
+E[X] = ?
+\end{split}
+\]</span></p>
+<p>위에서 구한 기댓값이 실제 나오는지 주사위를 던져서 같은 값이 나오는지를 시뮬레이션하는 코드를 작성하시오.</p>
+<pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span>T)</a>
+<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="co">#...</span></a></code></pre>
+<p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 <span class="math inline">\(X\)</span>를 녹색 공의 갯수라 하자, <span class="math inline">\(X\)</span>의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오.</p>
+<p>또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오.</p>
+</div>
+<div id="sampling-distribution" class="section level2">
+<h2><span class="header-section-number">6.5</span> Sampling distribution</h2>
+<p><strong>통계량(a statistic)</strong>은 랜덤 표본을 요약하는 하나의 값입니다. 표본평균이 그 예이며 <span class="math inline">\(\bar{X} = (X_1 + X_2 + ... + X_n)/n\)</span> 으로 나타낼 수 있습니다. 그런데 통계량이 랜덤 표본에 의존한다면 해당 통계량 또한 확률 변수가 되며 이 통계량의 분포를 <strong>표본분포라고 (sampling distribution)</strong> 합니다. 표본 분포는 복잡한 것으로 알려져 있으나 일반적으로 사용하는 평균이나 분산 등의 통계량에 대해서는 연구가 많이 되어 잘 알려져 있는 편이며 대부분 그들의 모집단과 관련된 값을 가지고 있읍니다. 예를 들어 표본평균의 기댓값과 표준편차는 다음과 같은 값을 가집니다.</p>
+<p><span class="math display">\[
+E(\bar{X}) = \mu_{\bar{X}} = \mu \\ 
+SD(\bar{X}) = \sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}
+\]</span>
+즉, 표본평균의 기댓값은 모평균과 같고 표본평균의 표준편차는 모평균의 표준편차와 관계가 있으나 더 작습니다. 이러한 특성 때문에 <span class="math inline">\(\bar{X}\)</span>를 모평균의 추정에 사용할 수 있습니다.</p>
+<p><strong>[EXERCISE]</strong> 1, 2, 3 세 개의 숫자가 각각 적힌 공이 주머니에 있다. 여기서 하나의 공을 뽑을 때 나오는 숫자를 확률변수 <span class="math inline">\(X\)</span>라 할 때 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오 (공식 이용, 코드 작성).</p>
+<p><strong>[EXERCISE]</strong> 위 예제에서 임의 복원 추출 방법으로 두 개의 표본을 추출하는 경우를 생각해보자. 이 경우 확률변수 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오</p>
+<p>위 예제의 경우는 모집단을 알고 있는 경우입니다. 만약 주머니 안에 몇개의 공이 있는지 어떤 수가 써 있는지 모르는 경우를 생각하면 주머니에서 임의 복원 추출을 통해 모수 (모평균)를 추정해야 합니다. 즉 표본평균의 기댓값을 구해야 하므로 임의 복원추출 시행과 그 표본들의 평균을 구하는 여러번의 반복 작업으로 모평균을 추정할 수 있습니다.</p>
+<p><strong>[EXERCISE]</strong> 위 예제에서 주머니 안에 몇 개의 공이 있는지 모른다고 가정하자. 임의 복원 추출 방법으로 <span class="math inline">\(n\)</span>개의 표본을 추출하고 확률변수 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오</p>
+<div id="probability-distributions" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> Probability distributions</h3>
+<p>통계에는 다양한 분포들이 존재할 수 있으나 유사한 특성을 갖는 분포들을 분류할 (families of distribution) 수 있고 (<a href="https://en.wikipedia.org/wiki/List_of_probability_distributions" class="uri">https://en.wikipedia.org/wiki/List_of_probability_distributions</a>) 이들 중 잘 알려진 몇 가지 분포들이 많이 연구되고 있습니다. 각 분포는 분포를 결정하는 parameter의 function (PDF, PMF)으로 표현 될 수 있습니다.</p>
+<ul>
+<li>Discrete random variable
+<ul>
+<li>Bernoulli distribution</li>
+<li>Binomial distribution</li>
+<li>Poisson distribution</li>
+</ul></li>
+<li>Continuous random variable
+<ul>
+<li>Uniform distribution</li>
+<li>Normal distribution</li>
+<li>Exponential distribution</li>
+<li>Lognormal distribution</li>
+<li>t-distribution</li>
+<li>chi-squared distribution</li>
+</ul></li>
+</ul>
+<p>R에서는 4가지 타입의 분포 정보를 활용할 수 있는 함수를 제공하고 있습니다.</p>
+<ul>
+<li>“d” 함수는 분포의 PDF/PMF 값 반환</li>
+<li>“p” 함수는 분포의 CDF/CMF 값 반환</li>
+<li>“q” 함수는 분포의 사분위값 반환</li>
+<li>“r” 함수는 분포에서 임의 표본 추출</li>
+</ul>
+<p><strong>[EXERCISE]</strong> 다음 파라미터를 갖는 uniform, normal, poisson, expoential, chi-squared 분포에서 임의로 1000개의 표본을 추출한 후 dataset을 만들고 데이터들의 분포를 히스토그램을 이용하여 확인하시오</p>
 
+</div>
 </div>
 </div>
             </section>
