@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-06" />
+<meta name="date" content="2019-11-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -222,6 +222,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
 <li class="chapter" data-level="5.5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#color-facet-heatmap"><i class="fa fa-check"></i><b>5.5.4</b> Color, facet, heatmap</a></li>
+<li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-sapply-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, sapply, tibble row and column names</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
@@ -935,19 +936,28 @@ scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scal
 <a class="sourceLine" id="cb146-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_wrap</span>(.<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>) </a>
 <a class="sourceLine" id="cb146-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb146-6" data-line-number="6"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb146-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a>
-<a class="sourceLine" id="cb146-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb146-9" data-line-number="9">p &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight, <span class="dt">y=</span>MPG.highway)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb146-10" data-line-number="10">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a>
-<a class="sourceLine" id="cb146-11" data-line-number="11">p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>)</a></code></pre>
+<a class="sourceLine" id="cb146-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre>
+<p>다음과 같이 plot을 특정 변수에 저장하고 <code>+</code> 기호로 추가 레이어를 구성할 수 있으며 facet 그래프에서 scale=“free” 옵션으로 각 판넬의 x 또는 y축에 scale이 다르게 보여지게 할 수 있습니다.</p>
+<pre class="sourceCode r" id="cb147"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">p &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight, <span class="dt">y=</span>MPG.highway)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a>
+<a class="sourceLine" id="cb147-2" data-line-number="2">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a>
+<a class="sourceLine" id="cb147-3" data-line-number="3">p</a>
+<a class="sourceLine" id="cb147-4" data-line-number="4">p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb147-5" data-line-number="5">p2 &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>)</a>
+<a class="sourceLine" id="cb147-6" data-line-number="6">p2</a></code></pre>
 <p>Heatmap은 geom_tile 함수를 사용하시면 됩니다.</p>
-<pre class="sourceCode r" id="cb147"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
-<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="kw">str</span>(Cars93)</a>
-<a class="sourceLine" id="cb147-3" data-line-number="3">Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">rescale_price =</span> <span class="kw">scale</span>(Horsepower)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb147-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Model, <span class="dt">y=</span>Manufacturer)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb147-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> rescale_price), <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb147-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb148"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
+<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="kw">str</span>(Cars93)</a>
+<a class="sourceLine" id="cb148-3" data-line-number="3">Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">rescale_price =</span> <span class="kw">scale</span>(Horsepower)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb148-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Model, <span class="dt">y=</span>Manufacturer)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb148-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> rescale_price), <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb148-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a></code></pre>
+</div>
+<div id="reshape-scaling-sapply-tibble-row-and-column-names" class="section level3">
+<h3><span class="header-section-number">5.5.5</span> reshape, scaling, sapply, tibble row and column names</h3>
+<p>앞서 5.3.4절에서는 <code>reshape</code> 함수를 이용해서 long 형이나 wide 형의 데이터들을 서로 형태를 전환하는 방법을 배웠습니다. 그러나 reshape 함수보다는 <code>reshape2</code> 패키지의 <code>melt</code>함수를 사용하는 것이 좀 더 직관적이어서 많이 사용되고 있습니다. long 형 데이터의 경우 id, variable, value 세가지 변수만 기억하면 되겠습니다. wide형 데이터를 잘 생각해 보면 id, variable, 그리고 value 이 세가지 요인이 주요 구성 요소임을 알 수 있습니다. data.frame 에 대한 <code>melt</code> 함수의 경우 (help 참고) <code>id.vars</code> 와 <code>measure.vars</code> 파라메터들을 제어해서 사용될 ID나 변수를 선택할 수 있고 value.name을 이용해서 value가 들어갈 변수 이름을 설정할 수 있습니다. 따로 설정하지 않으면 “value”라는 이름으로 저장 됩니다.</p>
+<p><img src="images/05/04.png" /></p>
 <p><strong>[EXERCISE]</strong> Cars93 데이터에서 numeric 인 변수들만을 뽑아서 별도의 데이터셋을 만들고 NA 제거, Price 기준으로 내림차순 정렬을 수행한 후 상위 30개 데이터만을 가지고 heatmap을 그리시오</p>
+<p><strong>[EXERCISE]</strong> 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오</p>
 
 </div>
 </div>

@@ -999,11 +999,17 @@ ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
 
 ggplot(Cars93, aes(x=Price, y=Horsepower, color=Type)) +
   geom_boxplot()
+```
 
+다음과 같이 plot을 특정 변수에 저장하고 ```+``` 기호로 추가 레이어를 구성할 수 있으며 facet 그래프에서 scale="free" 옵션으로 각 판넬의 x 또는 y축에 scale이 다르게 보여지게 할 수 있습니다. 
+
+```{r, eval=F}
 p <- Cars93 %>% ggplot(aes(x=Weight, y=MPG.highway)) + geom_point()
 p <- p + geom_smooth()
+p
 p + facet_wrap(~Type, nrow=2)
-
+p2 <- p + facet_wrap(~Type, nrow=2, scale="free")
+p2
 ```
 
 Heatmap은 geom_tile 함수를 사용하시면 됩니다. 
@@ -1016,14 +1022,92 @@ Cars93 %>% mutate(rescale_price = scale(Horsepower)) %>%
     scale_fill_gradient(low = "white", high = "steelblue")
 ```
 
+
+### reshape, scaling, sapply, tibble row and column names
+
+앞서 5.3.4절에서는 ```reshape``` 함수를 이용해서 long 형이나 wide 형의 데이터들을 서로 형태를 전환하는 방법을 배웠습니다. 그러나 reshape 함수보다는 ```reshape2``` 패키지의 ```melt```함수를 사용하는 것이 좀 더 직관적이어서 많이 사용되고 있습니다. long 형 데이터의 경우 id, variable, value 세가지 변수만 기억하면 되겠습니다. wide형 데이터를 잘 생각해 보면 id, variable, 그리고 value 이 세가지 요인이 주요 구성 요소임을 알 수 있습니다. data.frame 에 대한 ```melt``` 함수의 경우 (help 참고) ```id.vars``` 와 ```measure.vars``` 파라메터들을 제어해서 사용될 ID나 변수를 선택할 수 있고 value.name을 이용해서 value가 들어갈 변수 이름을 설정할 수 있습니다. 따로 설정하지 않으면 "value"라는 이름으로 저장 됩니다. 
+
+![](images/05/04.png)
+
+
 **[EXERCISE]** Cars93 데이터에서 numeric 인 변수들만을 뽑아서 별도의 데이터셋을 만들고 NA 제거, Price 기준으로 내림차순 정렬을 수행한 후 상위 30개 데이터만을 가지고 heatmap을 그리시오 
 
 
 ```{r, eval=F, echo=F}
 library(UsingR)
 library(dplyr)
+library(reshape2)
 str(Cars93)
-mydata <- Cars93 %>% select(Price, EngineSize, Horsepower, Length, Wheelbase, Width, Luggage.room, Weight) 
-mydata <- mydata %>% filter(complete.cases(.)) %>% arrange(desc(Price)) %>% head(30)
+#mydata <- Cars93 %>% select(Price, EngineSize, Horsepower, Length, Wheelbase, Width, Luggage.room, Weight) 
+mydata <- Cars93 %>% select_if(is.numeric) %>% 
+  filter(complete.cases(.)) %>% 
+  arrange(desc(Price)) %>% 
+  mutate(id=factor(1:length(Price))) %>%  
+  head(30)
+
+mydata_mlt <- melt(mydata, id.vars="id")
+ggplot(mydata_mlt, aes(x=id, y=variable, fill=value)) + 
+  geom_tile(colour = "white") + 
+  scale_fill_gradient(low = "white", high = "steelblue")
+
+## boxplot
+ggplot(mydata_mlt, aes(x=variable, y=value)) + 
+  geom_boxplot()
+```
+
+
+```{r, eval=F, echo=F}
+library(viridis)
+library(dplyr)
+library(reshape2)
+library(UsingR)
+
+mydata2 <- Cars93 %>% select_if(is.numeric) %>% 
+  filter(complete.cases(.)) %>% 
+  apply(2, scale) %>% 
+  as.data.frame() %>% 
+  arrange(desc(Price)) %>% 
+  mutate(id=factor(1:length(Price))) %>% 
+  head(30)
+  
+mydata_mlt2 <- melt(mydata2, id.vars="id")
+p <- ggplot(mydata_mlt2, aes(x=variable, y=id, fill=value)) + 
+  geom_tile(colour = "white") 
+p
+
+p +  scale_fill_gradient(low = "white", high = "steelblue")
+p + scale_fill_viridis() 
+
+p <- p + scale_fill_viridis() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p
+```
+
+**[EXERCISE]** 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오
+
+```{r, eval=F, echo=F}
+library(viridis)
+library(tibble)
+
+mydata2 <- Cars93 %>% select(which(sapply(., class)=="numeric" | sapply(., class)=="integer"), Make) %>% 
+  filter_all(function(x){!is.na(x)}) %>% 
+  mutate_if(is.numeric, function(x){x/sum(x)})  %>% 
+  as.data.frame() %>% 
+  arrange(desc(Price)) %>% 
+  column_to_rownames("Make") %>%  
+  rownames_to_column() %>% 
+  mutate(rowname=factor(rowname, levels=rowname[order(Price)])) %>% 
+  head(30)
+
+mydata_mlt2 <- melt(mydata2, id.vars="rowname")
+p <- ggplot(mydata_mlt2, aes(x=variable, y=rowname, fill=value)) + 
+  geom_tile(colour = "white") +
+  scale_fill_viridis(name="Scaled value") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  xlab("Variables") +
+  ylab("Make") +
+  ggtitle("") 
+
+p
 ```
 

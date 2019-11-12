@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-06" />
+<meta name="date" content="2019-11-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -222,6 +222,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
 <li class="chapter" data-level="5.5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#color-facet-heatmap"><i class="fa fa-check"></i><b>5.5.4</b> Color, facet, heatmap</a></li>
+<li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-sapply-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, sapply, tibble row and column names</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
@@ -283,13 +284,13 @@ P(A \text{ OR } B) &amp; = P(A) + P(B) - P(A ~ \text{AND} ~ B)
 \]</span></p>
 <p>여기서 만약 사건 A와 B가 배반사건 일 경우 A 또는 B가 일어날 확률은 <span class="math inline">\(P(A) + P(B)\)</span> 이며 만약 두 사건이 독립일 경우 A와 B가 동시에 일어날 확률은 <span class="math inline">\(P(A)p(B)\)</span> 입니다. 독립이라는 것은 하나의 사건이 일어날 확률이 다른 사건이 일어날 확률에 영향을 주지 않는 경우를 말합니다.</p>
 <p><strong>[EXERCISE]</strong> 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오</p>
-<pre class="sourceCode r" id="cb148"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
-<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
-<a class="sourceLine" id="cb148-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb148-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb149"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
+<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
+<a class="sourceLine" id="cb149-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb149-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
 <p>위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다.</p>
-<pre class="sourceCode r" id="cb149"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb149-2" data-line-number="2">smoke</a></code></pre>
+<pre class="sourceCode r" id="cb150"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">smoke</a></code></pre>
 <p>survey의 smoke를 pupulation 데이터라고 가정하고 <span class="math inline">\(X\)</span>를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) <span class="math inline">\(X\)</span> 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 <span class="math inline">\(P()\)</span>를 사용하여 <span class="math inline">\(P(X)\)</span> 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다.</p>
 <p><span class="math display">\[ 
 P(X=\text{&quot;Never&quot;}) =  \\
@@ -297,9 +298,9 @@ P(X=\text{&quot;Heavy&quot;}) = \\
 P(X=\text{&quot;Occas&quot;}) = \\
 P(X=\text{&quot;Regul&quot;}) = 
 \]</span></p>
-<pre class="sourceCode r" id="cb150"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb150-2" data-line-number="2">smoke</a>
-<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
+<pre class="sourceCode r" id="cb151"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb151-2" data-line-number="2">smoke</a>
+<a class="sourceLine" id="cb151-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
 </div>
 </div>
 <div id="discrete-random-variable" class="section level2">
@@ -397,12 +398,12 @@ VAR(X) =
 <div id="continuous-random-variable" class="section level2">
 <h2><span class="header-section-number">6.3</span> Continuous random variable</h2>
 <p>연속 데이터의 경우에는 <span class="math inline">\(P(X=k)\)</span> 와 같은 개념이 불가능하므로 다른 방식의 확률에 대한 정의가 필요합니다. 이 경우에는 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 확률의 범위를 지정하는 방식이 쓰입니다. 이는 <span class="math inline">\(F(b) = P(X&lt;b)\)</span> 함수나 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 크기에 해당하는 a, b, 그리고 <span class="math inline">\(f(x)\)</span>로 둘러쌓이는 함수 <span class="math inline">\(f(x)\)</span>로 구현될 수 있습니다. 위 함수 <span class="math inline">\(f(x)\)</span>를 확률변수 <span class="math inline">\(X\)</span>의 밀도라 하며 <span class="math inline">\(F(x)\)</span>와의 관계는 다음 그림과 같습니다.</p>
-<pre class="sourceCode r" id="cb151"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
-<a class="sourceLine" id="cb151-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
-<a class="sourceLine" id="cb151-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb151-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb151-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
-<a class="sourceLine" id="cb151-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb152"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
+<a class="sourceLine" id="cb152-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
+<a class="sourceLine" id="cb152-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb152-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb152-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
+<a class="sourceLine" id="cb152-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
 <div id="probability-density-function" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Probability density function</h3>
 <p>여기서 <span class="math inline">\(f(x)\)</span>는 확률 변수의 분포를 나타내는 함수로써 확률 밀도 함수(probability density function, PDF)라 하고 확률 밀도 함수<span class="math inline">\(f(x)\)</span>와 구간 [a, b]에 대해서 확률변수 X가 구간에 포함될 확률은 <span class="math inline">\(P(a &lt; X \le b)\)</span>은 <span class="math inline">\(\int^a_b f(x) dx\)</span> 입니다. 일반적으로 PDF는 다음 두 조건을 만족해야 합니다.</p>
@@ -443,9 +444,9 @@ f(x) = \frac{d}{dx} F(x)
 <p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 넣고 다시 꺼내는 복원 추출의 경우의 표본들도 마찬가지로 iid 입니다. 그런데 다시 넣지 않고 꺼내는 경우는 어떨까요?</p>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우를 생각해 보자. 확률변수 <span class="math inline">\(X_i\)</span>를 <span class="math inline">\(i\)</span>번째 뽑은 공의 색이라 할 때 <span class="math inline">\(X_1\)</span> 의 확률 분포와 <span class="math inline">\(X_2\)</span>의 확률 분포는? 반복을 허용하지 않는 경우의 확률 분포는?</p>
 <p>R에서는 <code>sample</code> 함수를 사용해서 복원추출 과정을 시뮬레이션 할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb152"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
-<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
+<pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
+<a class="sourceLine" id="cb153-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
 <p><strong>[EXERCISE]</strong> 하나의 주사위를 한 번 굴릴 경우 확률변수 <span class="math inline">\(X\)</span>를 나오는 주사위 값이라 하면 <span class="math inline">\(X\)</span>의 기댓값을 구하시오.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -456,8 +457,8 @@ E[X] = ?
 \end{split}
 \]</span></p>
 <p>위에서 구한 기댓값이 실제 나오는지 주사위를 던져서 같은 값이 나오는지를 시뮬레이션하는 코드를 작성하시오.</p>
-<pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span>T)</a>
-<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="co">#...</span></a></code></pre>
+<pre class="sourceCode r" id="cb154"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span>T)</a>
+<a class="sourceLine" id="cb154-2" data-line-number="2"><span class="co">#...</span></a></code></pre>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 <span class="math inline">\(X\)</span>를 녹색 공의 갯수라 하자, <span class="math inline">\(X\)</span>의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오. 또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오.</p>
 </div>
 <div id="sampling-distribution" class="section level2">
