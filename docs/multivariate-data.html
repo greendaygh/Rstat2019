@@ -222,7 +222,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
 <li class="chapter" data-level="5.5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#color-facet-heatmap"><i class="fa fa-check"></i><b>5.5.4</b> Color, facet, heatmap</a></li>
-<li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-sapply-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, sapply, tibble row and column names</a></li>
+<li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, tibble row and column names</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
@@ -608,32 +608,42 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb113-17" data-line-number="17"><span class="kw">Map</span>(min, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb113-18" data-line-number="18"><span class="co">#simplification of output</span></a>
 <a class="sourceLine" id="cb113-19" data-line-number="19"><span class="kw">mapply</span>(min, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) </a></code></pre>
+<p>sapply는 lapply와 유사하며 벡터, 리스트, 데이터프레임 등에 함수를 적용하고 그 결과를 벡터 또는 행렬로 반환합니다.</p>
+<pre class="sourceCode r" id="cb114"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">sapply</span>(x, <span class="cf">function</span>(x){<span class="dv">2</span><span class="op">*</span>x})</a>
+<a class="sourceLine" id="cb114-3" data-line-number="3">x<span class="op">*</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb114-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb114-5" data-line-number="5">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">b=</span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">logic=</span><span class="kw">c</span>(T,T,F,T))</a>
+<a class="sourceLine" id="cb114-6" data-line-number="6"><span class="kw">sapply</span>(x, quantile)</a>
+<a class="sourceLine" id="cb114-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb114-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dt">b=</span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">logic=</span><span class="kw">c</span>(T,T,F,T,T,T,F))</a>
+<a class="sourceLine" id="cb114-9" data-line-number="9"><span class="kw">sapply</span>(x, class)</a></code></pre>
 </div>
 <div id="dplyr---pipe-operator" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> dplyr - pipe operator</h3>
 <p>dplyr은 테이블형 데이터를 다루기 위한 도구를 제공하는 매우 편리한 패키지 입니다. <code>%&gt;%</code> 파이프 오퍼레이터를 사용하여 여러 함수를 연속적으로 사용할 수 있으며 R의 장점 중 하나인 apply와 같은 행렬 연산 기능을 subset, split, group 와 같은 행렬 편집 기능과 더하여 만들어낸 도구라고 할 수 있습니다 (홈페이지: <a href="https://dplyr.tidyverse.org/" class="uri">https://dplyr.tidyverse.org/</a>)</p>
 <p>파이프 오퍼레이터 <code>%&gt;%</code> 의 단축키는 <code>Ctrl</code> + <code>Shift</code> + <code>m</code> 입니다. 이 오퍼레이터는 <code>%&gt;%</code>의 왼쪽 코드의 결과를 출력으로 받아 오른쪽 코드의 입력 (첫번째 파라미터의 값)으로 받아들이는 작동을 합니다. 다음 예에서 보면 <code>sin(pi)</code> 와 같은 함수의 일반적인 사용법 대신 <code>pi %&gt;% sin</code> 처럼 사용해도 똑같은 결과를 보여줍니다. <code>cos(sin(pi))</code>와 같이 여러 합수를 중첩하여 사용할 경우에도 코드 디자인의 가독성이나 효율 측면에서 크게 향상된 방법을 제공해 줍니다.</p>
-<pre class="sourceCode r" id="cb114"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb114-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb114-3" data-line-number="3">pi <span class="op">%&gt;%</span><span class="st"> </span>sin</a>
-<a class="sourceLine" id="cb114-4" data-line-number="4"><span class="kw">sin</span>(pi)</a>
-<a class="sourceLine" id="cb114-5" data-line-number="5">pi <span class="op">%&gt;%</span><span class="st"> </span>sin <span class="op">%&gt;%</span><span class="st"> </span>cos</a>
-<a class="sourceLine" id="cb114-6" data-line-number="6"><span class="kw">cos</span>(<span class="kw">sin</span>(pi))</a></code></pre>
+<pre class="sourceCode r" id="cb115"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb115-3" data-line-number="3">pi <span class="op">%&gt;%</span><span class="st"> </span>sin</a>
+<a class="sourceLine" id="cb115-4" data-line-number="4"><span class="kw">sin</span>(pi)</a>
+<a class="sourceLine" id="cb115-5" data-line-number="5">pi <span class="op">%&gt;%</span><span class="st"> </span>sin <span class="op">%&gt;%</span><span class="st"> </span>cos</a>
+<a class="sourceLine" id="cb115-6" data-line-number="6"><span class="kw">cos</span>(<span class="kw">sin</span>(pi))</a></code></pre>
 <p>특히 <code>%&gt;%</code>는 이후 설명할 dplyr의 group_by, split, filter, summary 등의 행렬 편집/연산 함수를 빈번히 다양한 조합으로 쓰게되는 상황에서 더 큰 효과를 발휘할 수 있습니다. 그에 앞서 pipe 오퍼레이터의 예제를 좀 더 살펴보겠습니다.</p>
 <p>pipe operator의 왼쪽 구문의 결과가 오른쪽 구문의 입력으로 처리된다고 설명드렸지만 엄밀히 따지면 오른쪽 구문의 첫 번째 파라미터의 입력 값으로 처리되는 것 입니다. 즉, 함수에서 사용되는 파라미터가 여러개일 경우가 있으므로 기본적으로 <code>%&gt;%</code> 의 왼쪽 구문의 출력 값은 오른쪽 구문 (함수)의 첫 번째 인자의 입력값으로 들어가는 것 입니다.</p>
 <p><img src="images/05/02.PNG" /></p>
 <p>이는 다음 예들을 통해서 명확히 알 수 있습니다. 먼저 <code>paste</code>함수는 그 파라미터로 <code>,</code>로 구분되는 여러개의 입력 값을 가질 수 있습니다. 따라서 다음 코드는 <code>x</code>가 paste의 첫 번째 파라미터로 들어가게 되어 <code>&quot;1a&quot;, &quot;2a&quot;, &quot;3a&quot;, &quot;4a&quot;, &quot;5a&quot;</code> 로 a 앞에 x 값들이 붙어서 출력된 것을 알 수 있습니다.</p>
-<pre class="sourceCode r" id="cb115"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb115-2" data-line-number="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;a&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb116"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb116-2" data-line-number="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;a&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a></code></pre>
 <p>특정 데이터셋의 컬럼별 평균을 구하고 각 평균의 합을 구할 경우를 생각해 봅시다. R에서는 <code>colMeans</code>라는 특별한 함수를 제공하여 컬럼별로 평균을 계산해 줍니다. 그 후 sum 함수를 사용하여 최종 원하는 값을 얻을 수 있습니다. 이러한 코드를 <code>%&gt;%</code> 오퍼레이터를 사용한 경우의 코드와 비교해 볼 수 있습니다.</p>
-<pre class="sourceCode r" id="cb116"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
-<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">colMeans</span>(x))</a>
-<a class="sourceLine" id="cb116-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb116-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
-<a class="sourceLine" id="cb116-5" data-line-number="5">x <span class="op">%&gt;%</span><span class="st"> </span>colMeans <span class="op">%&gt;%</span><span class="st"> </span>sum</a></code></pre>
+<pre class="sourceCode r" id="cb117"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
+<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">colMeans</span>(x))</a>
+<a class="sourceLine" id="cb117-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb117-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">201</span><span class="op">:</span><span class="dv">300</span>))</a>
+<a class="sourceLine" id="cb117-5" data-line-number="5">x <span class="op">%&gt;%</span><span class="st"> </span>colMeans <span class="op">%&gt;%</span><span class="st"> </span>sum</a></code></pre>
 <p>만약 두 번째 또는 다른 위치의 파라미터에 입력으로 왼쪽 구문의 출력을 받아들이고 싶을 경우는 place holer라는 <code>.</code> 을 사용하면 되겠습니다. round 함수는 두 개의 파라미터를 가지고 digits 값을 pipe operator로 넘겨주고 싶을 경우 아래와 같이 표현할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb117"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(pi, <span class="dt">digits=</span>.)</a>
-<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="kw">round</span>(pi, <span class="dt">digits=</span><span class="dv">6</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb118"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(pi, <span class="dt">digits=</span>.)</a>
+<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="kw">round</span>(pi, <span class="dt">digits=</span><span class="dv">6</span>)</a></code></pre>
 <p><strong>[EXERCISE]</strong> 다음 행렬 <code>m</code>의 컬럼별 표준편차를 앞서 만든 <code>mysd</code> 함수와 <code>apply</code> 함수를 사용하여 구하되 <code>%&gt;%</code> 를 사용하시오</p>
 </div>
 <div id="dplyr---important-functions" class="section level3">
@@ -649,18 +659,18 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul>
 <p>그리고 위 다섯개의 함수들과 결합해서 자주 사용되는 group_by() 함수가 있습니다. 특히 summarise 함수와 같이 사용될 때 강력한 성능을 발휘합니다. 여러개 함수를 동시에 적용할 때는 <code>%&gt;%</code>를 이용할 수 있으며 summarise 외 5개 함수들은 행렬 편집을 위한 함수들로 보시면 되겠습니다.</p>
 <p>예제를 수행하면서 각각의 기능을 살펴보고 그 장점이 무엇인지 파악해 보도록 하겠습니다. 예제에 사용할 데이터는 iris 데이터로 R을 설치하면 기본으로 들어있는 데이터 입니다. 세 종류의 iris 품종에 대한 꽃잎과 꽃받침의 length와 with를 측정해 놓은 데이터 입니다. <code>head</code>와 <code>str</code> 명령어를 이용해서 데이터를 살펴 봅니다. <code>%&gt;%</code>를 배웠으니 써보겠습니다.</p>
-<pre class="sourceCode r" id="cb118"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb118-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span>str</a></code></pre>
+<pre class="sourceCode r" id="cb119"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb119-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span>str</a></code></pre>
 <p>filter의 <code>,</code>로 구분되는 매개변수는 and 로직으로 묶인 조건입니다. R에서 and는 <code>&amp;</code>, or는 <code>|</code>, 그리고 not은 <code>!</code> 으로 사용하면 되겠습니다.</p>
 <p><img src="images/05/03.png" /></p>
 <p>Image from (<a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a>)</p>
-<pre class="sourceCode r" id="cb119"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">head</span>(iris)</a>
-<a class="sourceLine" id="cb119-2" data-line-number="2"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span>, Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a>
-<a class="sourceLine" id="cb119-3" data-line-number="3"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a>
-<a class="sourceLine" id="cb119-4" data-line-number="4"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>dim</a></code></pre>
+<pre class="sourceCode r" id="cb120"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">head</span>(iris)</a>
+<a class="sourceLine" id="cb120-2" data-line-number="2"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span>, Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a>
+<a class="sourceLine" id="cb120-3" data-line-number="3"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)</a>
+<a class="sourceLine" id="cb120-4" data-line-number="4"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;versicolor&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>dim</a></code></pre>
 <p><code>arrange()</code>는 샘플들의 배열 순서 즉, row의 순서를 바꾸는 기능을 수행합니다.</p>
-<pre class="sourceCode r" id="cb120"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">arrange</span>(iris, Sepal.Length)</a>
-<a class="sourceLine" id="cb120-2" data-line-number="2"><span class="kw">arrange</span>(iris, Sepal.Length, Sepal.Width)</a></code></pre>
+<pre class="sourceCode r" id="cb121"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">arrange</span>(iris, Sepal.Length)</a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="kw">arrange</span>(iris, Sepal.Length, Sepal.Width)</a></code></pre>
 <p><code>select()</code> 는 주어진 데이터셋으로부터 관심있는 변수를 선택하여 보여줍니다. 다음 helper 함수들은 select 함수와 같이 유용하게 쓰일 수 있습니다.</p>
 <ul>
 <li>starts_with(“abc”) - “abc” 로 시작하는 문자열을 갖는 변수 이름</li>
@@ -668,57 +678,57 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>contains(“ijk”) - “ijk” 문자열을 포함하는 변수 이름</li>
 <li>matches(“(.)\1”) - 정규식, 반복되는 문자</li>
 </ul>
-<pre class="sourceCode r" id="cb121"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">head</span>(iris)</a>
-<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="kw">select</span>(iris, Species, <span class="kw">everything</span>())</a>
-<a class="sourceLine" id="cb121-3" data-line-number="3"><span class="kw">select</span>(iris, <span class="kw">starts_with</span>(<span class="st">&#39;S&#39;</span>))</a>
-<a class="sourceLine" id="cb121-4" data-line-number="4"><span class="kw">select</span>(iris, <span class="dt">obs =</span> <span class="kw">starts_with</span>(<span class="st">&#39;S&#39;</span>))</a>
-<a class="sourceLine" id="cb121-5" data-line-number="5">iris2 &lt;-<span class="st"> </span><span class="kw">rename</span>(iris, <span class="dt">aavar =</span> Petal.Length)</a>
-<a class="sourceLine" id="cb121-6" data-line-number="6"><span class="kw">select</span>(iris2, <span class="kw">matches</span>(<span class="st">&quot;(.)</span><span class="ch">\\</span><span class="st">1&quot;</span>))</a>
-<a class="sourceLine" id="cb121-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb121-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb121-9" data-line-number="9">tmp &lt;-iris[,<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb121-10" data-line-number="10"><span class="kw">colnames</span>(iris)[<span class="kw">grep</span>(<span class="st">&quot;^S&quot;</span>, <span class="kw">colnames</span>(iris))]</a>
-<a class="sourceLine" id="cb121-11" data-line-number="11">iris[,<span class="kw">grep</span>(<span class="st">&quot;^S&quot;</span>, <span class="kw">colnames</span>(iris))]</a>
-<a class="sourceLine" id="cb121-12" data-line-number="12">tmp</a></code></pre>
+<pre class="sourceCode r" id="cb122"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">head</span>(iris)</a>
+<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw">select</span>(iris, Species, <span class="kw">everything</span>())</a>
+<a class="sourceLine" id="cb122-3" data-line-number="3"><span class="kw">select</span>(iris, <span class="kw">starts_with</span>(<span class="st">&#39;S&#39;</span>))</a>
+<a class="sourceLine" id="cb122-4" data-line-number="4"><span class="kw">select</span>(iris, <span class="dt">obs =</span> <span class="kw">starts_with</span>(<span class="st">&#39;S&#39;</span>))</a>
+<a class="sourceLine" id="cb122-5" data-line-number="5">iris2 &lt;-<span class="st"> </span><span class="kw">rename</span>(iris, <span class="dt">aavar =</span> Petal.Length)</a>
+<a class="sourceLine" id="cb122-6" data-line-number="6"><span class="kw">select</span>(iris2, <span class="kw">matches</span>(<span class="st">&quot;(.)</span><span class="ch">\\</span><span class="st">1&quot;</span>))</a>
+<a class="sourceLine" id="cb122-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb122-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb122-9" data-line-number="9">tmp &lt;-iris[,<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb122-10" data-line-number="10"><span class="kw">colnames</span>(iris)[<span class="kw">grep</span>(<span class="st">&quot;^S&quot;</span>, <span class="kw">colnames</span>(iris))]</a>
+<a class="sourceLine" id="cb122-11" data-line-number="11">iris[,<span class="kw">grep</span>(<span class="st">&quot;^S&quot;</span>, <span class="kw">colnames</span>(iris))]</a>
+<a class="sourceLine" id="cb122-12" data-line-number="12">tmp</a></code></pre>
 <p><code>mutate()</code> 함수는 새로운 변수를 추가할 수 있는 기능을 제공합니다. <code>within()</code>과 비슷하다고 볼 수 있습니다.</p>
-<pre class="sourceCode r" id="cb122"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">iris2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">sepal_ratio =</span> Sepal.Length<span class="op">/</span>Sepal.Width)</a>
-<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw">head</span>(iris2)</a></code></pre>
+<pre class="sourceCode r" id="cb123"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">iris2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">sepal_ratio =</span> Sepal.Length<span class="op">/</span>Sepal.Width)</a>
+<a class="sourceLine" id="cb123-2" data-line-number="2"><span class="kw">head</span>(iris2)</a></code></pre>
 <p><code>summarise()</code>는 <code>data.frame</code>내 특정 변수의 값들로 하나의 요약값/대푯값을 만들어 줍니다. summarise 함수는 단독으로 쓰이기 보다는 <code>group_by()</code> 기능과 병행해서 쓰이는 경우에 유용하게 쓰입니다. <code>summarise_all()</code> 함수를 사용하면 모든 변수에 대해서 지정된 함수를 실행합니다.</p>
-<pre class="sourceCode r" id="cb123"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="kw">summarise</span>(iris, <span class="kw">mean</span>(Sepal.Length), <span class="dt">m=</span><span class="kw">mean</span>(Sepal.Width))</a>
-<a class="sourceLine" id="cb123-2" data-line-number="2">by_species &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
-<a class="sourceLine" id="cb123-3" data-line-number="3"><span class="kw">summarise</span>(by_species, <span class="kw">mean</span>(Sepal.Width))</a>
-<a class="sourceLine" id="cb123-4" data-line-number="4"><span class="kw">summarise_all</span>(by_species, mean)</a>
-<a class="sourceLine" id="cb123-5" data-line-number="5"><span class="kw">summarise_all</span>(by_species, sd)</a></code></pre>
+<pre class="sourceCode r" id="cb124"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">summarise</span>(iris, <span class="kw">mean</span>(Sepal.Length), <span class="dt">m=</span><span class="kw">mean</span>(Sepal.Width))</a>
+<a class="sourceLine" id="cb124-2" data-line-number="2">by_species &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
+<a class="sourceLine" id="cb124-3" data-line-number="3"><span class="kw">summarise</span>(by_species, <span class="kw">mean</span>(Sepal.Width))</a>
+<a class="sourceLine" id="cb124-4" data-line-number="4"><span class="kw">summarise_all</span>(by_species, mean)</a>
+<a class="sourceLine" id="cb124-5" data-line-number="5"><span class="kw">summarise_all</span>(by_species, sd)</a></code></pre>
 <p>위와 같은 <code>dplyr</code> 함수들은 <code>%&gt;%</code>와 같이 사용되어 다중 오퍼레이션을 구현하면 더욱 강력한 효과를 발휘할 수 있습니다. 위에서 구한 품종별 꽃잎과 꽃받침의 평균 길이는 다음과 같이 구현할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb124"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean)</a></code></pre>
+<pre class="sourceCode r" id="cb125"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean)</a></code></pre>
 <p>여러 합수를 중접하여 한 줄로 코딩할 수 있지만 가독성이 떨어지므로 중첩해서 함수를 사용하는 습관은 어떤 프로그래밍 언어에서도 권장하지 않습니다.</p>
-<pre class="sourceCode r" id="cb125"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb125-2" data-line-number="2">iris<span class="op">$</span>Species</a>
-<a class="sourceLine" id="cb125-3" data-line-number="3">iris_split &lt;-<span class="st"> </span><span class="kw">split</span>(iris, iris<span class="op">$</span>Species)</a>
-<a class="sourceLine" id="cb125-4" data-line-number="4">iris_split <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lapply</span>(dim)</a>
-<a class="sourceLine" id="cb125-5" data-line-number="5">iris_split <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lapply</span>(class) </a>
-<a class="sourceLine" id="cb125-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb125-7" data-line-number="7"><span class="kw">colMeans</span>(iris_split[[<span class="dv">1</span>]][,<span class="op">-</span><span class="dv">5</span>])</a>
-<a class="sourceLine" id="cb125-8" data-line-number="8">x &lt;-<span class="st"> </span>iris_split[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb125-9" data-line-number="9"><span class="kw">class</span>(x)</a>
-<a class="sourceLine" id="cb125-10" data-line-number="10"><span class="kw">head</span>(x)</a>
-<a class="sourceLine" id="cb125-11" data-line-number="11"><span class="kw">colMeans</span>(x)</a>
-<a class="sourceLine" id="cb125-12" data-line-number="12"><span class="kw">colMeans</span>(x[,<span class="op">-</span><span class="dv">5</span>])</a>
-<a class="sourceLine" id="cb125-13" data-line-number="13"><span class="kw">apply</span>(x[,<span class="op">-</span><span class="dv">5</span>], <span class="dv">2</span>, mean)</a>
-<a class="sourceLine" id="cb125-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb125-15" data-line-number="15">iris_means &lt;-<span class="st"> </span><span class="kw">lapply</span>(iris_split, <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])})</a>
-<a class="sourceLine" id="cb125-16" data-line-number="16">iris_means</a>
-<a class="sourceLine" id="cb125-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb125-18" data-line-number="18">irisdat &lt;-<span class="st"> </span><span class="kw">rbind</span>(iris_means[[<span class="dv">1</span>]], iris_means[[<span class="dv">2</span>]], iris_means[[<span class="dv">3</span>]])</a>
-<a class="sourceLine" id="cb125-19" data-line-number="19"><span class="kw">rownames</span>(irisdat) &lt;-<span class="kw">names</span>(iris_means)</a>
-<a class="sourceLine" id="cb125-20" data-line-number="20">irisdat </a>
-<a class="sourceLine" id="cb125-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb125-22" data-line-number="22">irisdat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, iris_means)</a>
-<a class="sourceLine" id="cb125-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb125-24" data-line-number="24">iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(iris_means)</a>
-<a class="sourceLine" id="cb125-25" data-line-number="25">iris_means_df</a>
-<a class="sourceLine" id="cb125-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb125-27" data-line-number="27"><span class="kw">barplot</span>(irisdat, <span class="dt">beside =</span> T, <span class="dt">legend.text =</span> <span class="kw">rownames</span>(irisdat))</a></code></pre>
+<pre class="sourceCode r" id="cb126"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb126-2" data-line-number="2">iris<span class="op">$</span>Species</a>
+<a class="sourceLine" id="cb126-3" data-line-number="3">iris_split &lt;-<span class="st"> </span><span class="kw">split</span>(iris, iris<span class="op">$</span>Species)</a>
+<a class="sourceLine" id="cb126-4" data-line-number="4">iris_split <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lapply</span>(dim)</a>
+<a class="sourceLine" id="cb126-5" data-line-number="5">iris_split <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lapply</span>(class) </a>
+<a class="sourceLine" id="cb126-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb126-7" data-line-number="7"><span class="kw">colMeans</span>(iris_split[[<span class="dv">1</span>]][,<span class="op">-</span><span class="dv">5</span>])</a>
+<a class="sourceLine" id="cb126-8" data-line-number="8">x &lt;-<span class="st"> </span>iris_split[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb126-9" data-line-number="9"><span class="kw">class</span>(x)</a>
+<a class="sourceLine" id="cb126-10" data-line-number="10"><span class="kw">head</span>(x)</a>
+<a class="sourceLine" id="cb126-11" data-line-number="11"><span class="kw">colMeans</span>(x)</a>
+<a class="sourceLine" id="cb126-12" data-line-number="12"><span class="kw">colMeans</span>(x[,<span class="op">-</span><span class="dv">5</span>])</a>
+<a class="sourceLine" id="cb126-13" data-line-number="13"><span class="kw">apply</span>(x[,<span class="op">-</span><span class="dv">5</span>], <span class="dv">2</span>, mean)</a>
+<a class="sourceLine" id="cb126-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb126-15" data-line-number="15">iris_means &lt;-<span class="st"> </span><span class="kw">lapply</span>(iris_split, <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])})</a>
+<a class="sourceLine" id="cb126-16" data-line-number="16">iris_means</a>
+<a class="sourceLine" id="cb126-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb126-18" data-line-number="18">irisdat &lt;-<span class="st"> </span><span class="kw">rbind</span>(iris_means[[<span class="dv">1</span>]], iris_means[[<span class="dv">2</span>]], iris_means[[<span class="dv">3</span>]])</a>
+<a class="sourceLine" id="cb126-19" data-line-number="19"><span class="kw">rownames</span>(irisdat) &lt;-<span class="kw">names</span>(iris_means)</a>
+<a class="sourceLine" id="cb126-20" data-line-number="20">irisdat </a>
+<a class="sourceLine" id="cb126-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb126-22" data-line-number="22">irisdat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, iris_means)</a>
+<a class="sourceLine" id="cb126-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb126-24" data-line-number="24">iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(iris_means)</a>
+<a class="sourceLine" id="cb126-25" data-line-number="25">iris_means_df</a>
+<a class="sourceLine" id="cb126-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb126-27" data-line-number="27"><span class="kw">barplot</span>(irisdat, <span class="dt">beside =</span> T, <span class="dt">legend.text =</span> <span class="kw">rownames</span>(irisdat))</a></code></pre>
 <p>dplyr의 전신이라 할 수 있는 plyr 패키지는 다음과 같이 설명이 되어 있습니다. <em>A set of tools for a common set of problems: you need to split up a big data structure into homogeneous pieces, apply a function to each piece and then combine all the results back together.</em> 즉 split-apply-combine 세 가지 동작을 쉽게 할 수 있도록 만들어 놓은 툴 입니다. R이 다른 언어에 비해 데이터 분석에서 주목을 받는 이유로 split, apply 등의 행렬 연산 함수가 발달한 것을 내세우는데 dplyr은 이들보다 더 편리하게 데이터 조작을 할 수 있도록 만들어 놓은 것 입니다.</p>
 <p><strong>[EXERCISE]</strong> babies 데이터셋에서 산모의 흡연 여부를 기준으로 아이와, 아이의 엄마, 아빠의 몸무게 데이터에 대한 평균을 구하고 barplot으로 비교하는 분석 실습을 진행하겠습니다. 이 과정에서 split, apply, combine을 활용하여 평균을 구하는 코드와 dplyr 패키지를 사용하여 만든 코드를 비교해 보도록 하겠습니다. 대략적인 분석 프로세스는 다음과 같습니다.</p>
 <ul>
@@ -730,52 +740,52 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>계산값 통합 - rbind</li>
 <li>그래프 비교 - barplot</li>
 </ul>
-<pre class="sourceCode r" id="cb126"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">head</span>(babies)</a>
-<a class="sourceLine" id="cb126-2" data-line-number="2">mydat &lt;-<span class="st"> </span><span class="kw">subset</span>(babies, <span class="dt">select =</span> <span class="kw">c</span>(wt, wt1, dwt, smoke))</a>
-<a class="sourceLine" id="cb126-3" data-line-number="3">mydat &lt;-<span class="st"> </span><span class="kw">within</span>(mydat, {</a>
-<a class="sourceLine" id="cb126-4" data-line-number="4">  wt[wt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb126-5" data-line-number="5">  wt1[wt1 <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb126-6" data-line-number="6">  dwt[dwt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb126-7" data-line-number="7">})</a>
-<a class="sourceLine" id="cb126-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb126-9" data-line-number="9">mydat &lt;-<span class="st"> </span><span class="kw">within</span>(mydat, {</a>
-<a class="sourceLine" id="cb126-10" data-line-number="10">  smoke =<span class="st"> </span><span class="kw">factor</span>(smoke)</a>
-<a class="sourceLine" id="cb126-11" data-line-number="11">  <span class="kw">levels</span>(smoke) =<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb126-12" data-line-number="12">    <span class="st">&quot;never&quot;</span> =<span class="st"> </span><span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb126-13" data-line-number="13">    <span class="st">&quot;smoke now&quot;</span> =<span class="st"> </span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb126-14" data-line-number="14">    <span class="st">&quot;until current pregnancy&quot;</span> =<span class="st"> </span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb126-15" data-line-number="15">    <span class="st">&quot;once did, not now&quot;</span> =<span class="st"> </span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb126-16" data-line-number="16">  })</a>
-<a class="sourceLine" id="cb126-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb126-18" data-line-number="18">mydat <span class="op">%&gt;%</span><span class="st"> </span>str</a>
-<a class="sourceLine" id="cb126-19" data-line-number="19">by_smoke &lt;-<span class="st"> </span><span class="kw">split</span>(mydat, mydat<span class="op">$</span>smoke)</a>
-<a class="sourceLine" id="cb126-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb126-21" data-line-number="21">by_smoke <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lapply</span>(dim)</a>
-<a class="sourceLine" id="cb126-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb126-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb126-24" data-line-number="24"><span class="kw">apply</span>(by_smoke[[<span class="dv">1</span>]][,<span class="op">-</span><span class="dv">4</span>], <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
-<a class="sourceLine" id="cb126-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb126-26" data-line-number="26">mysummary &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb126-27" data-line-number="27">  <span class="kw">apply</span>(x[,<span class="op">-</span><span class="dv">4</span>], <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
-<a class="sourceLine" id="cb126-28" data-line-number="28">}</a>
-<a class="sourceLine" id="cb126-29" data-line-number="29"><span class="kw">mysummary</span>(by_smoke[[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb126-30" data-line-number="30">by_smoke_mean &lt;-<span class="st"> </span><span class="kw">lapply</span>(by_smoke, mysummary)</a>
-<a class="sourceLine" id="cb126-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb126-32" data-line-number="32">## for</a>
-<a class="sourceLine" id="cb126-33" data-line-number="33">wt_mean &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, by_smoke_mean)</a>
-<a class="sourceLine" id="cb126-34" data-line-number="34">wt_mean</a>
-<a class="sourceLine" id="cb126-35" data-line-number="35"><span class="kw">barplot</span>(wt_mean, <span class="dt">beside=</span>T, <span class="dt">legend.text =</span> <span class="kw">rownames</span>(wt_mean), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">200</span>))</a>
-<a class="sourceLine" id="cb126-36" data-line-number="36"><span class="co">#legend(x=1, y=150, legend = rownames(wt_mean))</span></a></code></pre>
-<p>split은 factor형 변수를 기준으로 데이터를 나누어 주는 역할을 하며 lapply는 list 형 데이터를 각 리스트의 각각의 원소들에 대해서 function(x) 를 수행하는 역할을 합니다. 마지막 rbind를 이용해서 list를 data.frame으로 통합하며 이 때 <code>do.call</code> 함수를 사용할 수도 있습니다. 이제 <code>dplyr</code> 패키지를 이용하여 동일한 기능을 수행해 봅니다.</p>
-<pre class="sourceCode r" id="cb127"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">babies <span class="op">%&gt;%</span><span class="st"> </span>str</a>
-<a class="sourceLine" id="cb127-2" data-line-number="2">tmp &lt;-<span class="st"> </span>babies <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb127-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">c</span>(wt, wt1, dwt, smoke)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb127-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(wt<span class="op">!=</span><span class="dv">999</span>, wt1<span class="op">!=</span><span class="dv">999</span>, dwt<span class="op">!=</span><span class="dv">999</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb127-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">smoke=</span><span class="kw">factor</span>(smoke)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb127-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(smoke) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb127-7" data-line-number="7"><span class="st">  </span><span class="kw">summarise_all</span>(mean)</a>
+<pre class="sourceCode r" id="cb127"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="kw">head</span>(babies)</a>
+<a class="sourceLine" id="cb127-2" data-line-number="2">mydat &lt;-<span class="st"> </span><span class="kw">subset</span>(babies, <span class="dt">select =</span> <span class="kw">c</span>(wt, wt1, dwt, smoke))</a>
+<a class="sourceLine" id="cb127-3" data-line-number="3">mydat &lt;-<span class="st"> </span><span class="kw">within</span>(mydat, {</a>
+<a class="sourceLine" id="cb127-4" data-line-number="4">  wt[wt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb127-5" data-line-number="5">  wt1[wt1 <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb127-6" data-line-number="6">  dwt[dwt <span class="op">==</span><span class="st"> </span><span class="dv">999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb127-7" data-line-number="7">})</a>
 <a class="sourceLine" id="cb127-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb127-9" data-line-number="9">tmp</a></code></pre>
+<a class="sourceLine" id="cb127-9" data-line-number="9">mydat &lt;-<span class="st"> </span><span class="kw">within</span>(mydat, {</a>
+<a class="sourceLine" id="cb127-10" data-line-number="10">  smoke =<span class="st"> </span><span class="kw">factor</span>(smoke)</a>
+<a class="sourceLine" id="cb127-11" data-line-number="11">  <span class="kw">levels</span>(smoke) =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb127-12" data-line-number="12">    <span class="st">&quot;never&quot;</span> =<span class="st"> </span><span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb127-13" data-line-number="13">    <span class="st">&quot;smoke now&quot;</span> =<span class="st"> </span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb127-14" data-line-number="14">    <span class="st">&quot;until current pregnancy&quot;</span> =<span class="st"> </span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb127-15" data-line-number="15">    <span class="st">&quot;once did, not now&quot;</span> =<span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb127-16" data-line-number="16">  })</a>
+<a class="sourceLine" id="cb127-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb127-18" data-line-number="18">mydat <span class="op">%&gt;%</span><span class="st"> </span>str</a>
+<a class="sourceLine" id="cb127-19" data-line-number="19">by_smoke &lt;-<span class="st"> </span><span class="kw">split</span>(mydat, mydat<span class="op">$</span>smoke)</a>
+<a class="sourceLine" id="cb127-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb127-21" data-line-number="21">by_smoke <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lapply</span>(dim)</a>
+<a class="sourceLine" id="cb127-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb127-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb127-24" data-line-number="24"><span class="kw">apply</span>(by_smoke[[<span class="dv">1</span>]][,<span class="op">-</span><span class="dv">4</span>], <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb127-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb127-26" data-line-number="26">mysummary &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb127-27" data-line-number="27">  <span class="kw">apply</span>(x[,<span class="op">-</span><span class="dv">4</span>], <span class="dv">2</span>, mean, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb127-28" data-line-number="28">}</a>
+<a class="sourceLine" id="cb127-29" data-line-number="29"><span class="kw">mysummary</span>(by_smoke[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb127-30" data-line-number="30">by_smoke_mean &lt;-<span class="st"> </span><span class="kw">lapply</span>(by_smoke, mysummary)</a>
+<a class="sourceLine" id="cb127-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb127-32" data-line-number="32">## for</a>
+<a class="sourceLine" id="cb127-33" data-line-number="33">wt_mean &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, by_smoke_mean)</a>
+<a class="sourceLine" id="cb127-34" data-line-number="34">wt_mean</a>
+<a class="sourceLine" id="cb127-35" data-line-number="35"><span class="kw">barplot</span>(wt_mean, <span class="dt">beside=</span>T, <span class="dt">legend.text =</span> <span class="kw">rownames</span>(wt_mean), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">200</span>))</a>
+<a class="sourceLine" id="cb127-36" data-line-number="36"><span class="co">#legend(x=1, y=150, legend = rownames(wt_mean))</span></a></code></pre>
+<p>split은 factor형 변수를 기준으로 데이터를 나누어 주는 역할을 하며 lapply는 list 형 데이터를 각 리스트의 각각의 원소들에 대해서 function(x) 를 수행하는 역할을 합니다. 마지막 rbind를 이용해서 list를 data.frame으로 통합하며 이 때 <code>do.call</code> 함수를 사용할 수도 있습니다. 이제 <code>dplyr</code> 패키지를 이용하여 동일한 기능을 수행해 봅니다.</p>
+<pre class="sourceCode r" id="cb128"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">babies <span class="op">%&gt;%</span><span class="st"> </span>str</a>
+<a class="sourceLine" id="cb128-2" data-line-number="2">tmp &lt;-<span class="st"> </span>babies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">c</span>(wt, wt1, dwt, smoke)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(wt<span class="op">!=</span><span class="dv">999</span>, wt1<span class="op">!=</span><span class="dv">999</span>, dwt<span class="op">!=</span><span class="dv">999</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">smoke=</span><span class="kw">factor</span>(smoke)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(smoke) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-7" data-line-number="7"><span class="st">  </span><span class="kw">summarise_all</span>(mean)</a>
+<a class="sourceLine" id="cb128-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb128-9" data-line-number="9">tmp</a></code></pre>
 <p>위에서 보듯 dplyr 패키지를 사용할 경우 그 결과는 같으나 코드의 가독성과 효율성면에서 장점을 보여줍니다. 여기서 group_by, summarise_all 함수 등의 자세한 사용법은 help 페이지를 참고해 주세요. 참고로 barplot은 numeric matrix 형태의 입력만을 받으므로 이에 맞도록 데이터를 다시 변형해야 합니다. 후에 배울 ggplot 을 이용하면 이러한 불편함이 없이 data.frame 형 데이터셋도 쉽게 가시화 할 수 있습니다.</p>
 </div>
 </div>
@@ -786,31 +796,31 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h3><span class="header-section-number">5.5.1</span> Bar graph with basic graph functions</h3>
 <p>Bar graph를 그리기 위한 데이터는 연속형과 범주형으로 나눌 수 있습니다. 아래 예제들은 후에 배울 ggplot의 stat 옵션을 설명하기 위한 예제들로 특정 변수에 대한 그래프를 그릴 때 변수의 값들을 count를 해야할지 아니면 그 값 그대로를 그릴지에 대한 설명을 이해하는데 도움을 줄 있습니다.</p>
 <p>첫 번째는 x 변수가 연속형 (continuous)인 경우로 대부분의 경우 bar 그래프는 histogram 을 표현하는데 사용 됩니다. 즉, 특정 구간 내에 포함되는 x의 값의 갯수 (count)를 bar로 표현하는 것 입니다.</p>
-<pre class="sourceCode r" id="cb128"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb128-3" data-line-number="3"><span class="kw">head</span>(x)</a>
-<a class="sourceLine" id="cb128-4" data-line-number="4"><span class="kw">class</span>(x)</a></code></pre>
+<pre class="sourceCode r" id="cb129"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb129-2" data-line-number="2"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb129-3" data-line-number="3"><span class="kw">head</span>(x)</a>
+<a class="sourceLine" id="cb129-4" data-line-number="4"><span class="kw">class</span>(x)</a></code></pre>
 <p>두 번째는 하나의 변수 x의 값이 이산형 (discrete) 일 경우에는 x가 갖는 각 값이 몇 개인지를 (count) 나타내기 위해서 bar 그래프를 그릴 수 있을 것 입니다. 아래 코드에서는 x 값 범주의 counting을 위해 table 함수를 사용하였습니다.</p>
-<pre class="sourceCode r" id="cb129"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb129-2" data-line-number="2">count_x &lt;-<span class="st"> </span><span class="kw">table</span>(x)</a>
-<a class="sourceLine" id="cb129-3" data-line-number="3"><span class="kw">barplot</span>(count_x)</a>
-<a class="sourceLine" id="cb129-4" data-line-number="4"><span class="kw">head</span>(x)</a>
-<a class="sourceLine" id="cb129-5" data-line-number="5"><span class="kw">class</span>(x)</a>
-<a class="sourceLine" id="cb129-6" data-line-number="6">count_x</a>
-<a class="sourceLine" id="cb129-7" data-line-number="7"><span class="kw">barplot</span>(x)</a></code></pre>
+<pre class="sourceCode r" id="cb130"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb130-2" data-line-number="2">count_x &lt;-<span class="st"> </span><span class="kw">table</span>(x)</a>
+<a class="sourceLine" id="cb130-3" data-line-number="3"><span class="kw">barplot</span>(count_x)</a>
+<a class="sourceLine" id="cb130-4" data-line-number="4"><span class="kw">head</span>(x)</a>
+<a class="sourceLine" id="cb130-5" data-line-number="5"><span class="kw">class</span>(x)</a>
+<a class="sourceLine" id="cb130-6" data-line-number="6">count_x</a>
+<a class="sourceLine" id="cb130-7" data-line-number="7"><span class="kw">barplot</span>(x)</a></code></pre>
 <p>앞서 두 경우가 하나의 x 변수에 대한 값들을 bar graph로 표현한 경우라면 세 번째와 네 번째 경우는 변수가 두 개인 경우라고 볼 수 있습니다. 그 중 세번째 경우로 두 변수 x, y 가 있을 경우 x가 연속형 값을 갖고 y는 각 x 값의 빈도수를 나타내는 상황을 생각할 수 있습니다. 예를 들어 1.212값을 갖는 데이터가 20개이다 라는 상황을 가정할 경우 x=1.212 가 되고 y=20이 됩니다. 이 경우는 앞에서와 같은 카운팅은 필요 없이 x, y 값 그대로를 화면에 그려주면 됩니다.</p>
-<pre class="sourceCode r" id="cb130"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb130-3" data-line-number="3"><span class="kw">plot</span>(x, y, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a>
-<a class="sourceLine" id="cb130-4" data-line-number="4"><span class="kw">plot</span>(x, y)</a>
-<a class="sourceLine" id="cb130-5" data-line-number="5"><span class="kw">data.frame</span>(x,y)</a></code></pre>
+<pre class="sourceCode r" id="cb131"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb131-3" data-line-number="3"><span class="kw">plot</span>(x, y, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a>
+<a class="sourceLine" id="cb131-4" data-line-number="4"><span class="kw">plot</span>(x, y)</a>
+<a class="sourceLine" id="cb131-5" data-line-number="5"><span class="kw">data.frame</span>(x,y)</a></code></pre>
 <p>마지막으로 앞서와 같이 두 개의 변수로 이루어져 있으나 x가 연속형이 아닌 이산형 변수라는 점이 다릅니다. y는 각 x 값들의 빈도수를 나타내며 이 경우도 x의 빈도수가 y값에 저장되어 있으니 y 값 그대로를 화면에 그려주면 됩니다.</p>
-<pre class="sourceCode r" id="cb131"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb131-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">sample</span>(x, <span class="dv">100</span>, <span class="dt">replace =</span> T))</a>
-<a class="sourceLine" id="cb131-3" data-line-number="3">y</a>
-<a class="sourceLine" id="cb131-4" data-line-number="4">x</a>
-<a class="sourceLine" id="cb131-5" data-line-number="5"><span class="kw">barplot</span>(y)</a>
-<a class="sourceLine" id="cb131-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb132"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">sample</span>(x, <span class="dv">100</span>, <span class="dt">replace =</span> T))</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3">y</a>
+<a class="sourceLine" id="cb132-4" data-line-number="4">x</a>
+<a class="sourceLine" id="cb132-5" data-line-number="5"><span class="kw">barplot</span>(y)</a>
+<a class="sourceLine" id="cb132-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a></code></pre>
 </div>
 <div id="bar-graph-ggplot" class="section level3">
 <h3><span class="header-section-number">5.5.2</span> Bar graph ggplot</h3>
@@ -824,139 +834,182 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul>
 <p>이제 앞서와 같은 4가지 데이터들을 ggplot을 이용하여 차례로 bar graph를 그려 보겠습니다. 간단히 ggplot 함수로 먼저 데이터와 aes로 (미학요소 또는 미적요소) x축 y축 등을 명시하고 <code>+</code> 오퍼레이터를 사용하여 필요한 레이어를 차례로 추가하면서 그래프를 그릴 수 있습니다.</p>
 <p>아래 ggplot2를 로딩후 ggplot을 실행할 경우 데이터와 x, y 축만 지정한 상태로 어떤 그래프 (히스토그램인지, 산포도인지 등)를 그릴지 명시되어 있지 않아서 아무것도 그리지 않은 상태의 빈 켄버스만 그려지게 됩니다.</p>
-<pre class="sourceCode r" id="cb132"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb132-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb132-3" data-line-number="3">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb132-4" data-line-number="4">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb132-5" data-line-number="5"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat)</a>
-<a class="sourceLine" id="cb132-6" data-line-number="6"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y))</a>
-<a class="sourceLine" id="cb132-7" data-line-number="7">dat</a></code></pre>
+<pre class="sourceCode r" id="cb133"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb133-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb133-3" data-line-number="3">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb133-4" data-line-number="4">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb133-5" data-line-number="5"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat)</a>
+<a class="sourceLine" id="cb133-6" data-line-number="6"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y))</a>
+<a class="sourceLine" id="cb133-7" data-line-number="7">dat</a></code></pre>
 <p><code>+</code> 로 레이어를 추가하면서 geom_bar() 함수로 막대그래프를 그린다고 명시를 하면 되지만 geom_bar의 기본 stat은 count로 data의 y 값은 count 데이터가 아니므로 여전히 빈 화면을 보여줍니다.</p>
-<pre class="sourceCode r" id="cb133"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb133-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre>
-<p>따라서 stat을 “identity”로 명시하고 그릴 경우 정상적으로 barplot이 그려지게 됩니다.</p>
 <pre class="sourceCode r" id="cb134"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre>
+<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre>
+<p>따라서 stat을 “identity”로 명시하고 그릴 경우 정상적으로 barplot이 그려지게 됩니다.</p>
+<pre class="sourceCode r" id="cb135"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre>
 <p>x가 연속형일 경우 아래와 같이 histogram을 그려 줍니다. continuous 일 경우 stat은 bin으로 하면 특정 범위 안에 있는 값들의 빈도수를 계산하여 히스토그램을 그려줍니다.</p>
-<pre class="sourceCode r" id="cb135"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rnorm</span>(<span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="kw">barplot</span>(dat<span class="op">$</span>x1)</a>
-<a class="sourceLine" id="cb135-3" data-line-number="3"><span class="kw">plot</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(dat<span class="op">$</span>x1), <span class="dt">y=</span>dat<span class="op">$</span>x1, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a>
-<a class="sourceLine" id="cb135-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb135-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;bin&quot;</span>, <span class="dt">bins=</span><span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb135-6" data-line-number="6">dat</a></code></pre>
+<pre class="sourceCode r" id="cb136"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rnorm</span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="kw">barplot</span>(dat<span class="op">$</span>x1)</a>
+<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="kw">plot</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(dat<span class="op">$</span>x1), <span class="dt">y=</span>dat<span class="op">$</span>x1, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</a>
+<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;bin&quot;</span>, <span class="dt">bins=</span><span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb136-6" data-line-number="6">dat</a></code></pre>
 <p>x가 이산형인 경우는 stat을 count로 설정하여 해당 값들의 빈도수를 그려줄 수 있으며</p>
-<pre class="sourceCode r" id="cb136"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb136-2" data-line-number="2">x</a>
-<a class="sourceLine" id="cb136-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">factor</span>(x))</a>
-<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb136-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb137"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb137-2" data-line-number="2">x</a>
+<a class="sourceLine" id="cb137-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">factor</span>(x))</a>
+<a class="sourceLine" id="cb137-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb137-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>)</a></code></pre>
 <p>세 번째, 네 번째 경우 x, y 두 변수에서 y가 x의 빈도수를 저장하고 있을 경우 x가 연속형, 이산형에 상관 없이 stat을 identity로 설정하여 bar graph를 그릴 수 있습니다.</p>
-<pre class="sourceCode r" id="cb137"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb137-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb137-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb137-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a>
-<a class="sourceLine" id="cb137-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb137-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb137-8" data-line-number="8">x1 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb137-9" data-line-number="9">y1 &lt;-<span class="st"> </span><span class="kw">tabulate</span>(<span class="kw">sample</span>(x1, <span class="dv">100</span>, <span class="dt">replace=</span>T))</a>
-<a class="sourceLine" id="cb137-10" data-line-number="10">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
-<a class="sourceLine" id="cb137-11" data-line-number="11"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a></code></pre>
+<pre class="sourceCode r" id="cb138"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb138-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb138-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb138-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a>
+<a class="sourceLine" id="cb138-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb138-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb138-8" data-line-number="8">x1 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb138-9" data-line-number="9">y1 &lt;-<span class="st"> </span><span class="kw">tabulate</span>(<span class="kw">sample</span>(x1, <span class="dv">100</span>, <span class="dt">replace=</span>T))</a>
+<a class="sourceLine" id="cb138-10" data-line-number="10">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
+<a class="sourceLine" id="cb138-11" data-line-number="11"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a></code></pre>
 <p>ggplot은 다음과 같이 다양한 레이어를 추가하여 필요한 기능을 사용할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb138"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb138-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">tabulate</span>(<span class="kw">sample</span>(x1, <span class="dv">100</span>, <span class="dt">replace=</span>T))</a>
-<a class="sourceLine" id="cb138-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
-<a class="sourceLine" id="cb138-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">fill=</span>x1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb138-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb138-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb138-7" data-line-number="7"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb138-8" data-line-number="8"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb138-9" data-line-number="9"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb138-10" data-line-number="10"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bar graph for x:discrete and y:value&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb139"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb139-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">tabulate</span>(<span class="kw">sample</span>(x1, <span class="dv">100</span>, <span class="dt">replace=</span>T))</a>
+<a class="sourceLine" id="cb139-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">fill=</span>x1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-7" data-line-number="7"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-8" data-line-number="8"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-9" data-line-number="9"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb139-10" data-line-number="10"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bar graph for x:discrete and y:value&quot;</span>)</a></code></pre>
 </div>
 <div id="line-graph-with-ggplot" class="section level3">
 <h3><span class="header-section-number">5.5.3</span> Line graph with ggplot</h3>
 <p>다음으로 ggplot을 이용한 line graph를 그리는 방법을 알아 봅니다. 앞서 bar graph와의 관계를 보면 line graph는 bar graph의 각 bar에 해당하는 값들을 서로 선으로 이어주는 graph라고 볼 수 있겠습니다.</p>
 <p>Line graph는 geom_line이라는 함수를 사용해서 그릴 수 있으며 stat의 사용법은 앞서 bar graph와 같습니다. Line graph에서 중요한 점은 아래 group 파라미터 입니다. 선이라는 것은 두 점 이상의 값들을 알 경우에만 연결할 수 있고 ggplot에서는 같은 그룹에 (<code>group</code>) 속해있는 두 개 이상의 값들을 선으로 연결한다는 의미 입니다. 그런데 우리가 가진 데이터 <code>dat</code> 에는 group을 나타내는 변수가 없습니다. 따라서 <code>group=1</code>이라고 할 경우 모든 값들이 같은 <code>1</code> 그룹에 있는 것으로 간주되고 모든 값들을 선으로 연결하는 line 그래프가 그려집니다. bar그래프와 다른 점은 <code>group=1</code>과 <code>geom_bar</code> 대신 <code>geom_line</code>을 사용한 점입니다. 그리고 bar graph의 fill 옵션은 bar의 색을 결정하는 부분으로 line 그래프에서는 bar가 없으므로 사용하지 않습니다.</p>
-<pre class="sourceCode r" id="cb139"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb139-5" data-line-number="5"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb139-6" data-line-number="6"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
-<p>추가로 아래와 같이 그려지는 선의 두께를 조절하고 점을 추가로 그려볼 수 있습니다. 점을 그리는 명령어는 geom_point로서 line 과 함께 그리는 것 이므로 <code>+</code> 오퍼레이터를 사용하여 geom_line 과 함께 사용하면 됩니다.</p>
 <pre class="sourceCode r" id="cb140"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb140-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb140-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb140-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb140-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb140-6" data-line-number="6"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb140-7" data-line-number="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
-<p>같은 방법으로 bar 또한 같이 그려줄 수 있습니다. 여기서는 fill 옵션이 geom_bar에 하나 geom_point에 하나씩 쓰였는데 이는 각 geometry에 따라서 필요한 옵션이 다르므로 각각의 geom_xxx 를 사용할 때 상황에 맞게 (help 나 예제를 통해서) 사용하시면 되겠습니다.</p>
+<a class="sourceLine" id="cb140-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-5" data-line-number="5"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb140-6" data-line-number="6"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
+<p>추가로 아래와 같이 그려지는 선의 두께를 조절하고 점을 추가로 그려볼 수 있습니다. 점을 그리는 명령어는 geom_point로서 line 과 함께 그리는 것 이므로 <code>+</code> 오퍼레이터를 사용하여 geom_line 과 함께 사용하면 됩니다.</p>
 <pre class="sourceCode r" id="cb141"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">fill=</span>x1) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-5" data-line-number="5"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-6" data-line-number="6"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-7" data-line-number="7"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb141-8" data-line-number="8"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
+<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-6" data-line-number="6"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb141-7" data-line-number="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
+<p>같은 방법으로 bar 또한 같이 그려줄 수 있습니다. 여기서는 fill 옵션이 geom_bar에 하나 geom_point에 하나씩 쓰였는데 이는 각 geometry에 따라서 필요한 옵션이 다르므로 각각의 geom_xxx 를 사용할 때 상황에 맞게 (help 나 예제를 통해서) 사용하시면 되겠습니다.</p>
+<pre class="sourceCode r" id="cb142"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y=</span>y1, <span class="dt">group=</span><span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">fill=</span>x1) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-5" data-line-number="5"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-6" data-line-number="6"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-7" data-line-number="7"><span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb142-8" data-line-number="8"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Barplot for x:discrete and y:value&quot;</span>)</a></code></pre>
 </div>
 <div id="color-facet-heatmap" class="section level3">
 <h3><span class="header-section-number">5.5.4</span> Color, facet, heatmap</h3>
 <p>다음은 R의 기본 그래픽 함수와 ggplot을 이용한 비교 예제 입니다.</p>
-<pre class="sourceCode r" id="cb142"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
-<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb142-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb142-4" data-line-number="4">mycol &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;brown&quot;</span>)</a>
-<a class="sourceLine" id="cb142-5" data-line-number="5">mydat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Cars93<span class="op">$</span>Price, Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>Type)</a>
-<a class="sourceLine" id="cb142-6" data-line-number="6"><span class="kw">head</span>(mydat)</a>
-<a class="sourceLine" id="cb142-7" data-line-number="7">mycol2 &lt;-<span class="st"> </span>Cars93<span class="op">$</span>Type</a>
-<a class="sourceLine" id="cb142-8" data-line-number="8"><span class="kw">levels</span>(mycol2) &lt;-<span class="st"> </span>mycol</a>
-<a class="sourceLine" id="cb142-9" data-line-number="9">mycol3 &lt;-<span class="st"> </span><span class="kw">as.character</span>(mycol2)</a>
-<a class="sourceLine" id="cb142-10" data-line-number="10"><span class="kw">plot</span>(Cars93<span class="op">$</span>Price, Cars93<span class="op">$</span>Horsepower, <span class="dt">col=</span>mycol3); <span class="kw">legend</span>(<span class="dt">x=</span><span class="dv">10</span>, <span class="dt">y=</span><span class="dv">300</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="kw">levels</span>(mycol2), <span class="dt">legend =</span> <span class="kw">levels</span>(Cars93<span class="op">$</span>Type))</a></code></pre>
+<pre class="sourceCode r" id="cb143"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
+<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb143-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb143-4" data-line-number="4">mycol &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;brown&quot;</span>)</a>
+<a class="sourceLine" id="cb143-5" data-line-number="5">mydat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Cars93<span class="op">$</span>Price, Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>Type)</a>
+<a class="sourceLine" id="cb143-6" data-line-number="6"><span class="kw">head</span>(mydat)</a>
+<a class="sourceLine" id="cb143-7" data-line-number="7">mycol2 &lt;-<span class="st"> </span>Cars93<span class="op">$</span>Type</a>
+<a class="sourceLine" id="cb143-8" data-line-number="8"><span class="kw">levels</span>(mycol2) &lt;-<span class="st"> </span>mycol</a>
+<a class="sourceLine" id="cb143-9" data-line-number="9">mycol3 &lt;-<span class="st"> </span><span class="kw">as.character</span>(mycol2)</a>
+<a class="sourceLine" id="cb143-10" data-line-number="10"><span class="kw">plot</span>(Cars93<span class="op">$</span>Price, Cars93<span class="op">$</span>Horsepower, <span class="dt">col=</span>mycol3); <span class="kw">legend</span>(<span class="dt">x=</span><span class="dv">10</span>, <span class="dt">y=</span><span class="dv">300</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="kw">levels</span>(mycol2), <span class="dt">legend =</span> <span class="kw">levels</span>(Cars93<span class="op">$</span>Type))</a></code></pre>
 <p>ggplot 사용, 컬러 지정</p>
-<pre class="sourceCode r" id="cb143"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>mycol)</a></code></pre>
-<p>R에서는 컬러를 지정할 수 있는 다음과 같은 다양한 함수들을 제공합니다.
-scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scale_colour_hue, scale_colour_viridis_d 각 함수는 ggplot 명령어와 함께 사용할 수 있으며 자세한 사용법은 도움말을 참고하시기 바랍니다.</p>
 <pre class="sourceCode r" id="cb144"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb144-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Spectral&quot;</span>)</a></code></pre>
+<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>mycol)</a></code></pre>
+<p>R에서는 컬러를 지정할 수 있는 다음과 같은 다양한 함수들을 제공합니다.
+scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scale_colour_hue, scale_colour_viridis_d 각 함수는 ggplot 명령어와 함께 사용할 수 있으며 자세한 사용법은 도움말을 참고하시기 바랍니다.</p>
+<pre class="sourceCode r" id="cb145"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Spectral&quot;</span>)</a></code></pre>
 <p>color는 태두리의 색을 지정하는 경우이며 fill은 내부의 색을 지정함을 참고하세요.</p>
-<pre class="sourceCode r" id="cb145"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">fill=</span>Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Spectral&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb146"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">fill=</span>Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb146-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Spectral&quot;</span>)</a></code></pre>
 <p>facet_wrap 또는 facet_grid 등의 명령어로 여러 그래프를 그릴 수 있으며 x, y 배치는 formular 형태의 표현식을 사용해서 지정해 줍니다.</p>
-<pre class="sourceCode r" id="cb146"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb146-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb146-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_wrap</span>(.<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>) </a>
-<a class="sourceLine" id="cb146-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb146-6" data-line-number="6"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb146-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre>
+<pre class="sourceCode r" id="cb147"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_wrap</span>(.<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>) </a>
+<a class="sourceLine" id="cb147-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb147-6" data-line-number="6"><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x=</span>Price, <span class="dt">y=</span>Horsepower, <span class="dt">color=</span>Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre>
 <p>다음과 같이 plot을 특정 변수에 저장하고 <code>+</code> 기호로 추가 레이어를 구성할 수 있으며 facet 그래프에서 scale=“free” 옵션으로 각 판넬의 x 또는 y축에 scale이 다르게 보여지게 할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb147"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">p &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight, <span class="dt">y=</span>MPG.highway)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb147-2" data-line-number="2">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a>
-<a class="sourceLine" id="cb147-3" data-line-number="3">p</a>
-<a class="sourceLine" id="cb147-4" data-line-number="4">p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb147-5" data-line-number="5">p2 &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>)</a>
-<a class="sourceLine" id="cb147-6" data-line-number="6">p2</a></code></pre>
+<pre class="sourceCode r" id="cb148"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1">p &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight, <span class="dt">y=</span>MPG.highway)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a>
+<a class="sourceLine" id="cb148-2" data-line-number="2">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a>
+<a class="sourceLine" id="cb148-3" data-line-number="3">p</a>
+<a class="sourceLine" id="cb148-4" data-line-number="4">p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb148-5" data-line-number="5">p2 &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>)</a>
+<a class="sourceLine" id="cb148-6" data-line-number="6">p2</a></code></pre>
 <p>Heatmap은 geom_tile 함수를 사용하시면 됩니다.</p>
-<pre class="sourceCode r" id="cb148"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
-<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="kw">str</span>(Cars93)</a>
-<a class="sourceLine" id="cb148-3" data-line-number="3">Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">rescale_price =</span> <span class="kw">scale</span>(Horsepower)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb148-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Model, <span class="dt">y=</span>Manufacturer)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb148-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> rescale_price), <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb148-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb149"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
+<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="kw">str</span>(Cars93)</a>
+<a class="sourceLine" id="cb149-3" data-line-number="3">Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">rescale_price =</span> <span class="kw">scale</span>(Horsepower)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb149-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Model, <span class="dt">y=</span>Manufacturer)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb149-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> rescale_price), <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb149-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a></code></pre>
 </div>
-<div id="reshape-scaling-sapply-tibble-row-and-column-names" class="section level3">
-<h3><span class="header-section-number">5.5.5</span> reshape, scaling, sapply, tibble row and column names</h3>
+<div id="reshape-scaling-tibble-row-and-column-names" class="section level3">
+<h3><span class="header-section-number">5.5.5</span> reshape, scaling, tibble row and column names</h3>
 <p>앞서 5.3.4절에서는 <code>reshape</code> 함수를 이용해서 long 형이나 wide 형의 데이터들을 서로 형태를 전환하는 방법을 배웠습니다. 그러나 reshape 함수보다는 <code>reshape2</code> 패키지의 <code>melt</code>함수를 사용하는 것이 좀 더 직관적이어서 많이 사용되고 있습니다. long 형 데이터의 경우 id, variable, value 세가지 변수만 기억하면 되겠습니다. wide형 데이터를 잘 생각해 보면 id, variable, 그리고 value 이 세가지 요인이 주요 구성 요소임을 알 수 있습니다. data.frame 에 대한 <code>melt</code> 함수의 경우 (help 참고) <code>id.vars</code> 와 <code>measure.vars</code> 파라메터들을 제어해서 사용될 ID나 변수를 선택할 수 있고 value.name을 이용해서 value가 들어갈 변수 이름을 설정할 수 있습니다. 따로 설정하지 않으면 “value”라는 이름으로 저장 됩니다.</p>
 <p><img src="images/05/04.png" /></p>
 <p><strong>[EXERCISE]</strong> Cars93 데이터에서 numeric 인 변수들만을 뽑아서 별도의 데이터셋을 만들고 NA 제거, Price 기준으로 내림차순 정렬을 수행한 후 상위 30개 데이터만을 가지고 heatmap을 그리시오</p>
+<pre class="sourceCode r" id="cb150"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb150-4" data-line-number="4"><span class="kw">str</span>(Cars93)</a>
+<a class="sourceLine" id="cb150-5" data-line-number="5"><span class="co">#mydata &lt;- Cars93 %&gt;% select(Price, EngineSize, Horsepower, Length, Wheelbase, Width, Luggage.room, Weight) </span></a>
+<a class="sourceLine" id="cb150-6" data-line-number="6">mydata &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-7" data-line-number="7"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-8" data-line-number="8"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Price)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id=</span><span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(Price))) <span class="op">%&gt;%</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb150-10" data-line-number="10"><span class="st">  </span><span class="kw">head</span>(<span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb150-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb150-12" data-line-number="12">mydata_mlt &lt;-<span class="st"> </span><span class="kw">melt</span>(mydata, <span class="dt">id.vars=</span><span class="st">&quot;id&quot;</span>)</a>
+<a class="sourceLine" id="cb150-13" data-line-number="13"><span class="kw">ggplot</span>(mydata_mlt, <span class="kw">aes</span>(<span class="dt">x=</span>id, <span class="dt">y=</span>variable, <span class="dt">fill=</span>value)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-15" data-line-number="15"><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a>
+<a class="sourceLine" id="cb150-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb150-17" data-line-number="17">## boxplot</a>
+<a class="sourceLine" id="cb150-18" data-line-number="18"><span class="kw">ggplot</span>(mydata_mlt, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre>
+<pre class="sourceCode r" id="cb151"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw">library</span>(viridis)</a>
+<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb151-3" data-line-number="3"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb151-4" data-line-number="4"><span class="kw">library</span>(UsingR)</a>
+<a class="sourceLine" id="cb151-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb151-6" data-line-number="6">mydata2 &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-7" data-line-number="7"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-8" data-line-number="8"><span class="st">  </span><span class="kw">apply</span>(<span class="dv">2</span>, scale) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-9" data-line-number="9"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-10" data-line-number="10"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Price)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id=</span><span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(Price))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-12" data-line-number="12"><span class="st">  </span><span class="kw">head</span>(<span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb151-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb151-14" data-line-number="14">mydata_mlt2 &lt;-<span class="st"> </span><span class="kw">melt</span>(mydata2, <span class="dt">id.vars=</span><span class="st">&quot;id&quot;</span>)</a>
+<a class="sourceLine" id="cb151-15" data-line-number="15">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mydata_mlt2, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>id, <span class="dt">fill=</span>value)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) </a>
+<a class="sourceLine" id="cb151-17" data-line-number="17">p</a>
+<a class="sourceLine" id="cb151-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb151-19" data-line-number="19">p <span class="op">+</span><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a>
+<a class="sourceLine" id="cb151-20" data-line-number="20">p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_viridis</span>() </a>
+<a class="sourceLine" id="cb151-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb151-22" data-line-number="22">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_viridis</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-23" data-line-number="23"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb151-24" data-line-number="24">p</a></code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오</p>
 
 </div>
