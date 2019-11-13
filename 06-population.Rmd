@@ -270,16 +270,89 @@ $$
 위에서 구한 기댓값이 실제 나오는지 주사위를 던져서  같은 값이 나오는지를 시뮬레이션하는 코드를 작성하시오. 
 
 ```{r eval=F}
-x <- sample(1:6, size = 10, replace=T)
-#...
+## analytic solution
+x <- 1:6
+xp <- rep(1/6, 6)
+sum(x*xp)
+
+
+## simulation
+n <- 1000
+barx <- rep(0, n)
+for(i in 1:n){
+  x <- sample(1:6, size = i, replace=T)
+  barx[i] <- mean(x)
+}
+plot(barx)
+
+## simulation 2nd
+i <- 1:1000
+barx2 <- sapply(i, function(x){mean(sample(1:6, size=x, replace=T))})
+plot(barx2)
+
 ```
 
 
 **[EXERCISE]** 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 $X$를 녹색 공의 갯수라 하자, $X$의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오. 또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오. 
 
-```{r eval=F}
+$$
+\begin{split}
+P(X=0) = (3/5)\times(3/5) = 0.36 \\
+P(X=1) = (2/5)\times(3/5) + (3/5) \times (2/5) = 0.48\\
+P(X=2) = (2/5) \times (2/5) =  0.16 \\
+\end{split}
+$$
+
+```{r, eval=F}
+x <- c(0, 1, 2)
+xp <- c(0.36, 0.48, 0.16)
+ex <- sum(x*xp)
+ex
+
+## 
+```
+
+
+반복 허용하지 않을 경우
+
+$$
+\begin{split}
+P(X=0) = (3/5)\times(2/4) = 0.3  \\
+P(X=1) = (2/5)\times(3/4) + (3/5) \times (2/4) = 0.6 \\
+P(X=2) = (2/5) \times (1/4) = 0.1  \\
+\end{split}
+$$
+
+
+```{r, eval=F}
+x <- c(0, 1, 2)
+xp <- c((3/5)*(2/4),
+  (2/5)*(3/4) + (3/5)*(2/4),
+  (2/5)*(1/4))
+ex <- sum(x*xp)
+ex
+
+## 
+```
+
+다음은 시뮬레이션 코드입니다. sapply 를 사용한 코드로 변환해 보시기 바랍니다. 
+
+```{r, eval=F}
+library(dplyr)
+
+n <- 1000
+x <- rep("", n)
+pocket <- c("G", "G", "R", "R", "R")
+#x <- sample(pocket, 2, replace=T) %>% paste(collapse = "")
+for(i in 1:n){
+  x[i] <- sample(pocket, 2, replace=T) %>% paste(collapse = "")
+}
+xtab <- table(x)
+sum(c(2, 1, 1, 0)*(xtab/sum(xtab)))
+
 
 ```
+
 
 
 ## Sampling distribution
@@ -295,11 +368,41 @@ $$
 
 **[EXERCISE]** 1, 2, 3 세 개의 숫자가 각각 적힌 공이 주머니에 있다. 여기서 하나의 공을 뽑을 때 나오는 숫자를 확률변수 $X$라 할 때 $X$의 기댓값과 분산을 구하시오 (공식 이용, 코드 작성).
 
-**[EXERCISE]** 위 예제에서 임의 복원 추출 방법으로 두 개의 표본을 추출하는 경우를 생각해보자. 이 경우 확률변수  $X$의 기댓값과 분산을 구하시오
+
+```{r, eval=F}
+
+x <- 1:3
+xp <- rep(1/3, 3)
+ex <- sum(x*xp)
+vx <- sum(x^2*xp) - (sum(x*xp))^2
+c(ex, vx)
+
+
+```
+
+
+**[EXERCISE]** 위 예제에서 임의 복원 추출 방법으로 두 개의 표본을 추출하는 경우를 생각해보자. 이 경우 확률변수  $X$를 두 수의 합을 나타낸다고 가정할 경우 기댓값과 분산을 구하는 코드를 작성하시오. 
+
+```{r, eval=F}
+
+x <- data.frame(x1=rep(1:3, times=3), x2=rep(1:3, each=3))
+px <- table(rowSums(x))/length(rowSums(x))
+k <- as.numeric(names(px))
+ex <- sum(k*px)
+xp <- sum(k^2*px) - ex^2
+c(ex, vx)
+
+barplot(px)
+```
+
+
 
 위 예제의 경우는 모집단을 알고 있는 경우입니다. 만약 주머니 안에 몇개의 공이 있는지 어떤 수가 써 있는지 모르는 경우를 생각하면 주머니에서 임의 복원 추출을 통해 모수 (모평균)를 추정해야 합니다. 즉 표본평균의 기댓값을 구해야 하므로 임의 복원추출 시행과 그 표본들의 평균을 구하는 여러번의 반복 작업으로 모평균을 추정할 수 있습니다.  
 
 **[EXERCISE]** 위 예제에서 주머니 안에 몇 개의 공이 있는지 모른다고 가정하자. 임의 복원 추출 방법으로 $n$개의 표본을 추출하고 확률변수  $X$의 기댓값과 분산을 구하시오 
+
+
+![](images/06/07.png)
 
 
 ### Probability distributions 
@@ -328,7 +431,72 @@ R에서는 4가지 타입의 분포 정보를 활용할 수 있는 함수를 제
 * "q" 함수는 분포의 사분위값 반환
 * "r" 함수는 분포에서 임의 표본 추출 
 
-**[EXERCISE]** 다음 파라미터를 갖는 uniform, normal, poisson, expoential, chi-squared 분포에서 임의로 1000개의 표본을 추출한 후 dataset을 만들고 데이터들의 분포를 히스토그램을 이용하여 확인하시오 
+
+
+### Bernoulli random variables
+
+* 확률 변수 X 가 (0, 1) 두 값만을 가질 경우의 확률 분포 (success=1, failure=0)
+* 확률 변수 X의 pmf는 $P(X=1) = p$ 로 나타내며 이 분포는 $ Bernoulli(p) $ 로 타나냄 (파라메터: $p$)
+* 베르누이 확률 변수의 iid 샘플을 가리켜 (베르누이 시행) Bernoulli trial 이라함
+
+$$
+\mu = p \\
+\sigma^2 = p(1-p)
+$$
+
+
+### Binomial random variables
+
+* 확률변수 X는 $n$번의 베르누이 시행에서 성공의 개수를 나타냄 
+* 이항분포를 나타내는 파라메터는 $n$ 과 성공확률 $p$ 이며 $ Binomial(n, p) $ 로 나타냄
+* 가능한 경우의 수 $k=0, 1, 2, .., n$ 이므로 $X$의 분포는 
+
+$$
+P(X=k) = {n \choose k} p^k (1-p)^{n-k} \\
+\mu = np \\
+\sigma^2 = npq
+$$
+
+
+**[EXERCISE]** 동전을 10번 던질 경우 X를 앞면이 나오는 경우의 수라 하면 $X=5$ 일 경우의 확률 $P(X=5)$와 $P(X<6)$의 값을 구하시오
+
+
+**[EXERCISE]** 동전을 100번 던질 경우 모든 경우의 수에 대한 확률을 구하고 이를 그래프로 나타내시오. 
+
+
+### Normal random variables
+
+* 정규확률변수 $X$의 분포는 연속적인 종모양 (Bell-shaped) 형태를 가진 분포로 pdf상의 y값은 밀도로 해석 
+* 정규분포를 나타내는 파라메터는 종모양의 중심인 $\mu$와 분산 $\sigam^2$ 두 개임이며 $ Normal(\mu, \sigma) $ 또는 $N(\mu, \sigma)$ 로 나타냄
+
+$$
+f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^2} 
+$$
+다음은 ```rnorm```과 ```dnorm```을 활용한 예제 입니다. 
+
+```{r, eval=F}
+library(ggplot2)
+
+n <- 100
+x <- rnorm(n, mean=175, sd=2)
+xbar <- mean(x)
+s <- sd(x)
+xbarsd <- xbar + c(-1, 1)*s
+hist(x, br=30, probability = T);lines(density(x), col="red", lwd=3);abline(v=xbarsd, col="red", lwd=3, lty=2)
+
+xx <- seq(min(x), max(x), length.out=100)
+y <- dnorm(xx, mean(x), sd(x))
+plot(xx, y)
+
+
+df <- data.frame(x)
+ggplot(df, aes(x=x)) + 
+  #geom_histogram(aes(y=..density..)) +
+  geom_histogram() +
+  geom_density(fill="#FF6666", )
+
+```
+
 
 
 
