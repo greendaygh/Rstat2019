@@ -477,23 +477,28 @@ $$
 ```{r, eval=F}
 library(ggplot2)
 
-n <- 100
+n <- 1000
 x <- rnorm(n, mean=175, sd=2)
 xbar <- mean(x)
 s <- sd(x)
 xbarsd <- xbar + c(-1, 1)*s
 hist(x, br=30, probability = T);lines(density(x), col="red", lwd=3);abline(v=xbarsd, col="red", lwd=3, lty=2)
+```
 
+
+
+
+```{r, eval=F}
 xx <- seq(min(x), max(x), length.out=100)
 y <- dnorm(xx, mean(x), sd(x))
 plot(xx, y)
 
 
-df <- data.frame(x)
+bdf <- data.frame(x)
 ggplot(df, aes(x=x)) + 
-  #geom_histogram(aes(y=..density..)) +
-  geom_histogram() +
-  geom_density(fill="#FF6666", )
+  geom_histogram(aes(y=..density..)) +
+  #geom_histogram() +
+  geom_density(color="#FF6666")
 
 ```
 

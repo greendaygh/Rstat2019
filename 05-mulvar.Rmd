@@ -478,9 +478,12 @@ x*2
 
 x <- list(a=1:10, b=exp(-3:3), logic=c(T,T,F,T))
 sapply(x, quantile)
+quantile(x$a)
 
 x <- data.frame(a=1:7, b=exp(-3:3), logic=c(T,T,F,T,T,T,F))
 sapply(x, class)
+
+x
 ```
 
 
@@ -1063,6 +1066,7 @@ ggplot(mydata_mlt, aes(x=id, y=variable, fill=value)) +
   geom_tile(colour = "white") + 
   scale_fill_gradient(low = "white", high = "steelblue")
 
+head(mydata_mlt)
 ## boxplot
 ggplot(mydata_mlt, aes(x=variable, y=value)) + 
   geom_boxplot()
@@ -1096,6 +1100,7 @@ p + scale_fill_viridis()
 p <- p + scale_fill_viridis() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 p
+Cars93 %>% head
 ```
 
 **[EXERCISE]** 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오. 
@@ -1104,7 +1109,8 @@ p
 library(viridis)
 library(tibble)
 
-mydata2 <- Cars93 %>% select(which(sapply(., class)=="numeric" | sapply(., class)=="integer"), Make) %>% 
+mydata2 <- Cars93 %>% 
+  select(which(sapply(., class)=="numeric" | sapply(., class)=="integer"), Make) %>% 
   filter_all(function(x){!is.na(x)}) %>% 
   mutate_if(is.numeric, function(x){x/sum(x)})  %>% 
   as.data.frame() %>% 

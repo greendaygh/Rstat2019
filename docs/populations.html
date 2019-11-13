@@ -616,23 +616,22 @@ f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^
 다음은 <code>rnorm</code>과 <code>dnorm</code>을 활용한 예제 입니다.</p>
 <pre class="sourceCode r" id="cb163"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb163-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb163-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb163-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
 <a class="sourceLine" id="cb163-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb163-5" data-line-number="5">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
 <a class="sourceLine" id="cb163-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
 <a class="sourceLine" id="cb163-7" data-line-number="7">xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</a>
-<a class="sourceLine" id="cb163-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb163-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb163-10" data-line-number="10">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb163-11" data-line-number="11">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
-<a class="sourceLine" id="cb163-12" data-line-number="12"><span class="kw">plot</span>(xx, y)</a>
-<a class="sourceLine" id="cb163-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb163-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb163-15" data-line-number="15">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
-<a class="sourceLine" id="cb163-16" data-line-number="16"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb163-17" data-line-number="17"><span class="st">  </span><span class="co">#geom_histogram(aes(y=..density..)) +</span></a>
-<a class="sourceLine" id="cb163-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb163-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill=</span><span class="st">&quot;#FF6666&quot;</span>, )</a></code></pre>
+<a class="sourceLine" id="cb163-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb164"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
+<a class="sourceLine" id="cb164-3" data-line-number="3"><span class="kw">plot</span>(xx, y)</a>
+<a class="sourceLine" id="cb164-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb164-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb164-6" data-line-number="6">bdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
+<a class="sourceLine" id="cb164-7" data-line-number="7"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb164-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb164-9" data-line-number="9"><span class="st">  </span><span class="co">#geom_histogram() +</span></a>
+<a class="sourceLine" id="cb164-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
 
 </div>
 </div>

@@ -618,9 +618,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb114-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb114-5" data-line-number="5">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">b=</span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">logic=</span><span class="kw">c</span>(T,T,F,T))</a>
 <a class="sourceLine" id="cb114-6" data-line-number="6"><span class="kw">sapply</span>(x, quantile)</a>
-<a class="sourceLine" id="cb114-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb114-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dt">b=</span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">logic=</span><span class="kw">c</span>(T,T,F,T,T,T,F))</a>
-<a class="sourceLine" id="cb114-9" data-line-number="9"><span class="kw">sapply</span>(x, class)</a></code></pre>
+<a class="sourceLine" id="cb114-7" data-line-number="7"><span class="kw">quantile</span>(x<span class="op">$</span>a)</a>
+<a class="sourceLine" id="cb114-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb114-9" data-line-number="9">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dt">b=</span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">logic=</span><span class="kw">c</span>(T,T,F,T,T,T,F))</a>
+<a class="sourceLine" id="cb114-10" data-line-number="10"><span class="kw">sapply</span>(x, class)</a>
+<a class="sourceLine" id="cb114-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb114-12" data-line-number="12">x</a></code></pre>
 </div>
 <div id="dplyr---pipe-operator" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> dplyr - pipe operator</h3>
@@ -986,9 +989,10 @@ scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scal
 <a class="sourceLine" id="cb150-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb150-15" data-line-number="15"><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;steelblue&quot;</span>)</a>
 <a class="sourceLine" id="cb150-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb150-17" data-line-number="17">## boxplot</a>
-<a class="sourceLine" id="cb150-18" data-line-number="18"><span class="kw">ggplot</span>(mydata_mlt, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre>
+<a class="sourceLine" id="cb150-17" data-line-number="17"><span class="kw">head</span>(mydata_mlt)</a>
+<a class="sourceLine" id="cb150-18" data-line-number="18">## boxplot</a>
+<a class="sourceLine" id="cb150-19" data-line-number="19"><span class="kw">ggplot</span>(mydata_mlt, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-20" data-line-number="20"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre>
 <p>위 그래프는 우리가 원하는대로 그래프가 출력되지 않았습니다. 원인은 스케일이 다르기 때문인데 이는 boxplot을 그려보면 알 수 있습니다. 이에 우선 scaling 을 수행해 보도록 하고 결과를 다시 heatmap을 이용해 표현해 보겠습니다.</p>
 <pre class="sourceCode r" id="cb151"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw">library</span>(viridis)</a>
 <a class="sourceLine" id="cb151-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
@@ -1013,7 +1017,8 @@ scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scal
 <a class="sourceLine" id="cb151-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb151-22" data-line-number="22">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_viridis</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb151-23" data-line-number="23"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb151-24" data-line-number="24">p</a></code></pre>
+<a class="sourceLine" id="cb151-24" data-line-number="24">p</a>
+<a class="sourceLine" id="cb151-25" data-line-number="25">Cars93 <span class="op">%&gt;%</span><span class="st"> </span>head</a></code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오.</p>
 
 </div>
