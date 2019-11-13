@@ -1105,7 +1105,7 @@ Cars93 %>% head
 
 **[EXERCISE]** 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오. 
 
-```{r, eval=F, echo=F}
+```{r, eval=F}
 library(viridis)
 library(tibble)
 

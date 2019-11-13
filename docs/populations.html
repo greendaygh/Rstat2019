@@ -287,13 +287,13 @@ P(A \text{ OR } B) &amp; = P(A) + P(B) - P(A ~ \text{AND} ~ B)
 \]</span></p>
 <p>여기서 만약 사건 A와 B가 배반사건 일 경우 A 또는 B가 일어날 확률은 <span class="math inline">\(P(A) + P(B)\)</span> 이며 만약 두 사건이 독립일 경우 A와 B가 동시에 일어날 확률은 <span class="math inline">\(P(A)p(B)\)</span> 입니다. 독립이라는 것은 하나의 사건이 일어날 확률이 다른 사건이 일어날 확률에 영향을 주지 않는 경우를 말합니다.</p>
 <p><strong>[EXERCISE]</strong> 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오</p>
-<pre class="sourceCode r" id="cb152"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
-<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
-<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb152-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
+<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
+<a class="sourceLine" id="cb153-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb153-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
 <p>위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다.</p>
-<pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb153-2" data-line-number="2">smoke</a></code></pre>
+<pre class="sourceCode r" id="cb154"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb154-2" data-line-number="2">smoke</a></code></pre>
 <p>survey의 smoke를 pupulation 데이터라고 가정하고 <span class="math inline">\(X\)</span>를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) <span class="math inline">\(X\)</span> 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 <span class="math inline">\(P()\)</span>를 사용하여 <span class="math inline">\(P(X)\)</span> 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다.</p>
 <p><span class="math display">\[ 
 P(X=\text{&quot;Never&quot;}) =  \\
@@ -301,9 +301,9 @@ P(X=\text{&quot;Heavy&quot;}) = \\
 P(X=\text{&quot;Occas&quot;}) = \\
 P(X=\text{&quot;Regul&quot;}) = 
 \]</span></p>
-<pre class="sourceCode r" id="cb154"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb154-2" data-line-number="2">smoke</a>
-<a class="sourceLine" id="cb154-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
+<pre class="sourceCode r" id="cb155"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
+<a class="sourceLine" id="cb155-2" data-line-number="2">smoke</a>
+<a class="sourceLine" id="cb155-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
 </div>
 </div>
 <div id="discrete-random-variable" class="section level2">
@@ -401,12 +401,12 @@ VAR(X) =
 <div id="continuous-random-variable" class="section level2">
 <h2><span class="header-section-number">6.3</span> Continuous random variable</h2>
 <p>연속 데이터의 경우에는 <span class="math inline">\(P(X=k)\)</span> 와 같은 개념이 불가능하므로 다른 방식의 확률에 대한 정의가 필요합니다. 이 경우에는 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 확률의 범위를 지정하는 방식이 쓰입니다. 이는 <span class="math inline">\(F(b) = P(X&lt;b)\)</span> 함수나 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 크기에 해당하는 a, b, 그리고 <span class="math inline">\(f(x)\)</span>로 둘러쌓이는 함수 <span class="math inline">\(f(x)\)</span>로 구현될 수 있습니다. 위 함수 <span class="math inline">\(f(x)\)</span>를 확률변수 <span class="math inline">\(X\)</span>의 밀도라 하며 <span class="math inline">\(F(x)\)</span>와의 관계는 다음 그림과 같습니다.</p>
-<pre class="sourceCode r" id="cb155"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
-<a class="sourceLine" id="cb155-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
-<a class="sourceLine" id="cb155-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb155-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb155-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
-<a class="sourceLine" id="cb155-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb156"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
+<a class="sourceLine" id="cb156-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
+<a class="sourceLine" id="cb156-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb156-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb156-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
+<a class="sourceLine" id="cb156-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
 <div id="probability-density-function" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Probability density function</h3>
 <p>여기서 <span class="math inline">\(f(x)\)</span>는 확률 변수의 분포를 나타내는 함수로써 확률 밀도 함수(probability density function, PDF)라 하고 확률 밀도 함수<span class="math inline">\(f(x)\)</span>와 구간 [a, b]에 대해서 확률변수 X가 구간에 포함될 확률은 <span class="math inline">\(P(a &lt; X \le b)\)</span>은 <span class="math inline">\(\int^a_b f(x) dx\)</span> 입니다. 일반적으로 PDF는 다음 두 조건을 만족해야 합니다.</p>
@@ -448,9 +448,9 @@ f(x) = \frac{d}{dx} F(x)
 <p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 넣고 다시 꺼내는 복원 추출의 경우의 표본들도 마찬가지로 iid 입니다. 그런데 다시 넣지 않고 꺼내는 경우는 어떨까요?</p>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우를 생각해 보자. 확률변수 <span class="math inline">\(X_i\)</span>를 <span class="math inline">\(i\)</span>번째 뽑은 공의 색이라 할 때 <span class="math inline">\(X_1\)</span> 의 확률 분포와 <span class="math inline">\(X_2\)</span>의 확률 분포는? 반복을 허용하지 않는 경우의 확률 분포는?</p>
 <p>R에서는 <code>sample</code> 함수를 사용해서 복원추출 과정을 시뮬레이션 할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb156"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb156-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
-<a class="sourceLine" id="cb156-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
+<pre class="sourceCode r" id="cb157"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb157-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
+<a class="sourceLine" id="cb157-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
 <p><strong>[EXERCISE]</strong> 하나의 주사위를 한 번 굴릴 경우 확률변수 <span class="math inline">\(X\)</span>를 나오는 주사위 값이라 하면 <span class="math inline">\(X\)</span>의 기댓값을 구하시오.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -461,25 +461,25 @@ E[X] = ?
 \end{split}
 \]</span></p>
 <p>위에서 구한 기댓값이 실제 나오는지 주사위를 던져서 같은 값이 나오는지를 시뮬레이션하는 코드를 작성하시오.</p>
-<pre class="sourceCode r" id="cb157"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1">## analytic solution</a>
-<a class="sourceLine" id="cb157-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb157-3" data-line-number="3">xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb157-4" data-line-number="4"><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb157-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb157-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb157-7" data-line-number="7">## simulation</a>
-<a class="sourceLine" id="cb157-8" data-line-number="8">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb157-9" data-line-number="9">barx &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</a>
-<a class="sourceLine" id="cb157-10" data-line-number="10"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
-<a class="sourceLine" id="cb157-11" data-line-number="11">  x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> i, <span class="dt">replace=</span>T)</a>
-<a class="sourceLine" id="cb157-12" data-line-number="12">  barx[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb157-13" data-line-number="13">}</a>
-<a class="sourceLine" id="cb157-14" data-line-number="14"><span class="kw">plot</span>(barx)</a>
-<a class="sourceLine" id="cb157-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb157-16" data-line-number="16">## simulation 2nd</a>
-<a class="sourceLine" id="cb157-17" data-line-number="17">i &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb157-18" data-line-number="18">barx2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(i, <span class="cf">function</span>(x){<span class="kw">mean</span>(<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span>x, <span class="dt">replace=</span>T))})</a>
-<a class="sourceLine" id="cb157-19" data-line-number="19"><span class="kw">plot</span>(barx2)</a></code></pre>
+<pre class="sourceCode r" id="cb158"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">## analytic solution</a>
+<a class="sourceLine" id="cb158-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb158-3" data-line-number="3">xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb158-4" data-line-number="4"><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
+<a class="sourceLine" id="cb158-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb158-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb158-7" data-line-number="7">## simulation</a>
+<a class="sourceLine" id="cb158-8" data-line-number="8">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb158-9" data-line-number="9">barx &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</a>
+<a class="sourceLine" id="cb158-10" data-line-number="10"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
+<a class="sourceLine" id="cb158-11" data-line-number="11">  x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> i, <span class="dt">replace=</span>T)</a>
+<a class="sourceLine" id="cb158-12" data-line-number="12">  barx[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
+<a class="sourceLine" id="cb158-13" data-line-number="13">}</a>
+<a class="sourceLine" id="cb158-14" data-line-number="14"><span class="kw">plot</span>(barx)</a>
+<a class="sourceLine" id="cb158-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb158-16" data-line-number="16">## simulation 2nd</a>
+<a class="sourceLine" id="cb158-17" data-line-number="17">i &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb158-18" data-line-number="18">barx2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(i, <span class="cf">function</span>(x){<span class="kw">mean</span>(<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span>x, <span class="dt">replace=</span>T))})</a>
+<a class="sourceLine" id="cb158-19" data-line-number="19"><span class="kw">plot</span>(barx2)</a></code></pre>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 <span class="math inline">\(X\)</span>를 녹색 공의 갯수라 하자, <span class="math inline">\(X\)</span>의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오. 또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -488,12 +488,12 @@ P(X=1) = (2/5)\times(3/5) + (3/5) \times (2/5) = 0.48\\
 P(X=2) = (2/5) \times (2/5) =  0.16 \\
 \end{split}
 \]</span></p>
-<pre class="sourceCode r" id="cb158"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb158-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.36</span>, <span class="fl">0.48</span>, <span class="fl">0.16</span>)</a>
-<a class="sourceLine" id="cb158-3" data-line-number="3">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb158-4" data-line-number="4">ex</a>
-<a class="sourceLine" id="cb158-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb158-6" data-line-number="6">## </a></code></pre>
+<pre class="sourceCode r" id="cb159"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb159-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.36</span>, <span class="fl">0.48</span>, <span class="fl">0.16</span>)</a>
+<a class="sourceLine" id="cb159-3" data-line-number="3">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
+<a class="sourceLine" id="cb159-4" data-line-number="4">ex</a>
+<a class="sourceLine" id="cb159-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb159-6" data-line-number="6">## </a></code></pre>
 <p>반복 허용하지 않을 경우</p>
 <p><span class="math display">\[
 \begin{split}
@@ -502,26 +502,26 @@ P(X=1) = (2/5)\times(3/4) + (3/5) \times (2/4) = 0.6 \\
 P(X=2) = (2/5) \times (1/4) = 0.1  \\
 \end{split}
 \]</span></p>
-<pre class="sourceCode r" id="cb159"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb159-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">c</span>((<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb159-3" data-line-number="3">  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb159-4" data-line-number="4">  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb159-5" data-line-number="5">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb159-6" data-line-number="6">ex</a>
-<a class="sourceLine" id="cb159-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb159-8" data-line-number="8">## </a></code></pre>
+<pre class="sourceCode r" id="cb160"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb160-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">c</span>((<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb160-3" data-line-number="3">  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb160-4" data-line-number="4">  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb160-5" data-line-number="5">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
+<a class="sourceLine" id="cb160-6" data-line-number="6">ex</a>
+<a class="sourceLine" id="cb160-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb160-8" data-line-number="8">## </a></code></pre>
 <p>다음은 시뮬레이션 코드입니다. sapply 를 사용한 코드로 변환해 보시기 바랍니다.</p>
-<pre class="sourceCode r" id="cb160"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb160-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb160-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb160-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;&quot;</span>, n)</a>
-<a class="sourceLine" id="cb160-5" data-line-number="5">pocket &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>)</a>
-<a class="sourceLine" id="cb160-6" data-line-number="6"><span class="co">#x &lt;- sample(pocket, 2, replace=T) %&gt;% paste(collapse = &quot;&quot;)</span></a>
-<a class="sourceLine" id="cb160-7" data-line-number="7"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
-<a class="sourceLine" id="cb160-8" data-line-number="8">  x[i] &lt;-<span class="st"> </span><span class="kw">sample</span>(pocket, <span class="dv">2</span>, <span class="dt">replace=</span>T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb160-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb160-10" data-line-number="10">xtab &lt;-<span class="st"> </span><span class="kw">table</span>(x)</a>
-<a class="sourceLine" id="cb160-11" data-line-number="11"><span class="kw">sum</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)<span class="op">*</span>(xtab<span class="op">/</span><span class="kw">sum</span>(xtab)))</a></code></pre>
+<pre class="sourceCode r" id="cb161"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb161-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb161-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb161-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;&quot;</span>, n)</a>
+<a class="sourceLine" id="cb161-5" data-line-number="5">pocket &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>)</a>
+<a class="sourceLine" id="cb161-6" data-line-number="6"><span class="co">#x &lt;- sample(pocket, 2, replace=T) %&gt;% paste(collapse = &quot;&quot;)</span></a>
+<a class="sourceLine" id="cb161-7" data-line-number="7"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
+<a class="sourceLine" id="cb161-8" data-line-number="8">  x[i] &lt;-<span class="st"> </span><span class="kw">sample</span>(pocket, <span class="dv">2</span>, <span class="dt">replace=</span>T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb161-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb161-10" data-line-number="10">xtab &lt;-<span class="st"> </span><span class="kw">table</span>(x)</a>
+<a class="sourceLine" id="cb161-11" data-line-number="11"><span class="kw">sum</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)<span class="op">*</span>(xtab<span class="op">/</span><span class="kw">sum</span>(xtab)))</a></code></pre>
 </div>
 <div id="sampling-distribution" class="section level2">
 <h2><span class="header-section-number">6.5</span> Sampling distribution</h2>
@@ -532,20 +532,20 @@ SD(\bar{X}) = \sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}
 \]</span>
 즉, 표본평균의 기댓값은 모평균과 같고 표본평균의 표준편차는 모평균의 표준편차와 관계가 있으나 더 작습니다. 이러한 특성 때문에 <span class="math inline">\(\bar{X}\)</span>를 모평균의 추정에 사용할 수 있습니다.</p>
 <p><strong>[EXERCISE]</strong> 1, 2, 3 세 개의 숫자가 각각 적힌 공이 주머니에 있다. 여기서 하나의 공을 뽑을 때 나오는 숫자를 확률변수 <span class="math inline">\(X\)</span>라 할 때 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오 (공식 이용, 코드 작성).</p>
-<pre class="sourceCode r" id="cb161"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb161-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb161-3" data-line-number="3">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb161-4" data-line-number="4">vx &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span><span class="op">*</span>xp) <span class="op">-</span><span class="st"> </span>(<span class="kw">sum</span>(x<span class="op">*</span>xp))<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb161-5" data-line-number="5"><span class="kw">c</span>(ex, vx)</a></code></pre>
+<pre class="sourceCode r" id="cb162"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb162-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb162-3" data-line-number="3">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
+<a class="sourceLine" id="cb162-4" data-line-number="4">vx &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span><span class="op">*</span>xp) <span class="op">-</span><span class="st"> </span>(<span class="kw">sum</span>(x<span class="op">*</span>xp))<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb162-5" data-line-number="5"><span class="kw">c</span>(ex, vx)</a></code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제에서 임의 복원 추출 방법으로 두 개의 표본을 추출하는 경우를 생각해보자. 이 경우 확률변수 <span class="math inline">\(X\)</span>를 두 수의 합을 나타낸다고 가정할 경우 기댓값과 분산을 구하는 코드를 작성하시오.</p>
-<pre class="sourceCode r" id="cb162"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">times=</span><span class="dv">3</span>), <span class="dt">x2=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each=</span><span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb162-2" data-line-number="2">px &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">rowSums</span>(x))<span class="op">/</span><span class="kw">length</span>(<span class="kw">rowSums</span>(x))</a>
-<a class="sourceLine" id="cb162-3" data-line-number="3">k &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">names</span>(px))</a>
-<a class="sourceLine" id="cb162-4" data-line-number="4">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">*</span>px)</a>
-<a class="sourceLine" id="cb162-5" data-line-number="5">xp &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">^</span><span class="dv">2</span><span class="op">*</span>px) <span class="op">-</span><span class="st"> </span>ex<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb162-6" data-line-number="6"><span class="kw">c</span>(ex, vx)</a>
-<a class="sourceLine" id="cb162-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb162-8" data-line-number="8"><span class="kw">barplot</span>(px)</a></code></pre>
+<pre class="sourceCode r" id="cb163"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">times=</span><span class="dv">3</span>), <span class="dt">x2=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each=</span><span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb163-2" data-line-number="2">px &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">rowSums</span>(x))<span class="op">/</span><span class="kw">length</span>(<span class="kw">rowSums</span>(x))</a>
+<a class="sourceLine" id="cb163-3" data-line-number="3">k &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">names</span>(px))</a>
+<a class="sourceLine" id="cb163-4" data-line-number="4">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">*</span>px)</a>
+<a class="sourceLine" id="cb163-5" data-line-number="5">xp &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">^</span><span class="dv">2</span><span class="op">*</span>px) <span class="op">-</span><span class="st"> </span>ex<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb163-6" data-line-number="6"><span class="kw">c</span>(ex, vx)</a>
+<a class="sourceLine" id="cb163-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb163-8" data-line-number="8"><span class="kw">barplot</span>(px)</a></code></pre>
 <p>위 예제의 경우는 모집단을 알고 있는 경우입니다. 만약 주머니 안에 몇개의 공이 있는지 어떤 수가 써 있는지 모르는 경우를 생각하면 주머니에서 임의 복원 추출을 통해 모수 (모평균)를 추정해야 합니다. 즉 표본평균의 기댓값을 구해야 하므로 임의 복원추출 시행과 그 표본들의 평균을 구하는 여러번의 반복 작업으로 모평균을 추정할 수 있습니다.</p>
 <p><strong>[EXERCISE]</strong> 위 예제에서 주머니 안에 몇 개의 공이 있는지 모른다고 가정하자. 임의 복원 추출 방법으로 <span class="math inline">\(n\)</span>개의 표본을 추출하고 확률변수 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오</p>
 <p><img src="images/06/07.png" /></p>
@@ -614,24 +614,24 @@ P(X=k) = {n \choose k} p^k (1-p)^{n-k} \\
 f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^2} 
 \]</span>
 다음은 <code>rnorm</code>과 <code>dnorm</code>을 활용한 예제 입니다.</p>
-<pre class="sourceCode r" id="cb163"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb163-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb163-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb163-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb163-5" data-line-number="5">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb163-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
-<a class="sourceLine" id="cb163-7" data-line-number="7">xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</a>
-<a class="sourceLine" id="cb163-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
-<pre class="sourceCode r" id="cb164"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb164-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
-<a class="sourceLine" id="cb164-3" data-line-number="3"><span class="kw">plot</span>(xx, y)</a>
-<a class="sourceLine" id="cb164-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb164-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb164-6" data-line-number="6">bdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
-<a class="sourceLine" id="cb164-7" data-line-number="7"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb164-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb164-9" data-line-number="9"><span class="st">  </span><span class="co">#geom_histogram() +</span></a>
-<a class="sourceLine" id="cb164-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb164"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb164-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb164-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb164-5" data-line-number="5">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
+<a class="sourceLine" id="cb164-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb164-7" data-line-number="7">xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</a>
+<a class="sourceLine" id="cb164-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb165"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
+<a class="sourceLine" id="cb165-3" data-line-number="3"><span class="kw">plot</span>(xx, y)</a>
+<a class="sourceLine" id="cb165-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb165-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb165-6" data-line-number="6">bdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
+<a class="sourceLine" id="cb165-7" data-line-number="7"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb165-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb165-9" data-line-number="9"><span class="st">  </span><span class="co">#geom_histogram() +</span></a>
+<a class="sourceLine" id="cb165-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
 
 </div>
 </div>

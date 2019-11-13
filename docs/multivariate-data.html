@@ -1020,6 +1020,30 @@ scale_colour_brewer, scale_alpha, scale_colour_gradient, scale_colour_grey, scal
 <a class="sourceLine" id="cb151-24" data-line-number="24">p</a>
 <a class="sourceLine" id="cb151-25" data-line-number="25">Cars93 <span class="op">%&gt;%</span><span class="st"> </span>head</a></code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제에서 id 대신 Cars93 의 Make 변수 값을 사용해서 다시 plot을 그리시오.</p>
+<pre class="sourceCode r" id="cb152"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">library</span>(viridis)</a>
+<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="kw">library</span>(tibble)</a>
+<a class="sourceLine" id="cb152-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb152-4" data-line-number="4">mydata2 &lt;-<span class="st"> </span>Cars93 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="kw">which</span>(<span class="kw">sapply</span>(., class)<span class="op">==</span><span class="st">&quot;numeric&quot;</span> <span class="op">|</span><span class="st"> </span><span class="kw">sapply</span>(., class)<span class="op">==</span><span class="st">&quot;integer&quot;</span>), Make) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-6" data-line-number="6"><span class="st">  </span><span class="kw">filter_all</span>(<span class="cf">function</span>(x){<span class="op">!</span><span class="kw">is.na</span>(x)}) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x){x<span class="op">/</span><span class="kw">sum</span>(x)})  <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-8" data-line-number="8"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-9" data-line-number="9"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Price)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-10" data-line-number="10"><span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="st">&quot;Make&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb152-11" data-line-number="11"><span class="st">  </span><span class="kw">rownames_to_column</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rowname=</span><span class="kw">factor</span>(rowname, <span class="dt">levels=</span>rowname[<span class="kw">order</span>(Price)])) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-13" data-line-number="13"><span class="st">  </span><span class="kw">head</span>(<span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb152-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb152-15" data-line-number="15">mydata_mlt2 &lt;-<span class="st"> </span><span class="kw">melt</span>(mydata2, <span class="dt">id.vars=</span><span class="st">&quot;rowname&quot;</span>)</a>
+<a class="sourceLine" id="cb152-16" data-line-number="16">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mydata_mlt2, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>rowname, <span class="dt">fill=</span>value)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb152-18" data-line-number="18"><span class="st">  </span><span class="kw">scale_fill_viridis</span>(<span class="dt">name=</span><span class="st">&quot;Scaled value&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb152-19" data-line-number="19"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb152-20" data-line-number="20"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Variables&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb152-21" data-line-number="21"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Make&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb152-22" data-line-number="22"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>) </a>
+<a class="sourceLine" id="cb152-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb152-24" data-line-number="24">p</a></code></pre>
 
 </div>
 </div>
