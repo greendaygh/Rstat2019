@@ -467,7 +467,7 @@ $$
 ### Normal random variables
 
 * 정규확률변수 $X$의 분포는 연속적인 종모양 (Bell-shaped) 형태를 가진 분포로 pdf상의 y값은 밀도로 해석 
-* 정규분포를 나타내는 파라메터는 종모양의 중심인 $\mu$와 분산 $\sigam^2$ 두 개임이며 $ Normal(\mu, \sigma) $ 또는 $N(\mu, \sigma)$ 로 나타냄
+* 정규분포를 나타내는 파라메터는 종모양의 중심인 $\mu$와 분산 $\sigma^2$ 두 개임이며 $ Normal(\mu, \sigma) $ 또는 $N(\mu, \sigma)$ 로 나타냄
 
 $$
 f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^2} 
