@@ -613,47 +613,62 @@ P(X=k) = {n \choose k} p^k (1-p)^{n-k} \\
 <a class="sourceLine" id="cb164-2" data-line-number="2"><span class="kw">choose</span>(<span class="dv">10</span>, <span class="dv">5</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10-5</span>)</a>
 <a class="sourceLine" id="cb164-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb164-4" data-line-number="4"><span class="co"># using dbinom function</span></a>
-<a class="sourceLine" id="cb164-5" data-line-number="5"><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a></code></pre>
+<a class="sourceLine" id="cb164-5" data-line-number="5"><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb164-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb164-7" data-line-number="7"><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb164-8" data-line-number="8"><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb164-9" data-line-number="9"><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb164-10" data-line-number="10"><span class="kw">dbinom</span>(<span class="dv">3</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb164-11" data-line-number="11"><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb164-12" data-line-number="12"><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb164-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb164-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb164-15" data-line-number="15"><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a></code></pre>
+<pre class="sourceCode r" id="cb165"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">## pdf </a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb165-3" data-line-number="3">x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</a>
+<a class="sourceLine" id="cb165-4" data-line-number="4">x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</a>
+<a class="sourceLine" id="cb165-5" data-line-number="5"><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a></code></pre>
 <p>ggplot을 이용해서 이항분포를 그려봅니다. 히스토그램의 y축은 빈도 수를 나타내지만 이를 확률로 나타낼수도 있고 이 경우 y값은 dbinom의 값과 같습니다.</p>
-<pre class="sourceCode r" id="cb165"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb165-2" data-line-number="2"><span class="kw">library</span>(reshape2)</a>
-<a class="sourceLine" id="cb165-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb165-4" data-line-number="4">x_trials &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1000</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb165-5" data-line-number="5"><span class="kw">hist</span>(x_trials, <span class="dt">br=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb165-6" data-line-number="6">## distribution</a>
-<a class="sourceLine" id="cb165-7" data-line-number="7"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x_trials), <span class="kw">aes</span>(<span class="dt">x=</span>x_trials)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</a>
-<a class="sourceLine" id="cb165-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb165-9" data-line-number="9">## pdf </a>
-<a class="sourceLine" id="cb165-10" data-line-number="10">x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb165-11" data-line-number="11">x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</a>
-<a class="sourceLine" id="cb165-12" data-line-number="12">x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</a>
-<a class="sourceLine" id="cb165-13" data-line-number="13"><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a>
-<a class="sourceLine" id="cb165-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb165-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb165-16" data-line-number="16">x_tab &lt;-<span class="st"> </span><span class="kw">table</span>(x_trials)</a>
-<a class="sourceLine" id="cb165-17" data-line-number="17">x_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x_dist, x_tab<span class="op">/</span><span class="kw">sum</span>(x_tab))</a>
-<a class="sourceLine" id="cb165-18" data-line-number="18">x_df2 &lt;-<span class="st"> </span><span class="kw">melt</span>(x_df, <span class="dt">id.vars=</span><span class="st">&quot;x_trials&quot;</span>)</a>
-<a class="sourceLine" id="cb165-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb165-20" data-line-number="20"><span class="kw">ggplot</span>(x_df2, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>value, <span class="dt">fill=</span>variable)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb165-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) </a></code></pre>
+<pre class="sourceCode r" id="cb166"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb166-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb166-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb166-5" data-line-number="5">## pdf </a>
+<a class="sourceLine" id="cb166-6" data-line-number="6">x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb166-7" data-line-number="7">x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</a>
+<a class="sourceLine" id="cb166-8" data-line-number="8">x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</a>
+<a class="sourceLine" id="cb166-9" data-line-number="9"><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a>
+<a class="sourceLine" id="cb166-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb166-11" data-line-number="11">x_trials &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1000</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb166-12" data-line-number="12"><span class="kw">hist</span>(x_trials, <span class="dt">br=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb166-13" data-line-number="13">## distribution</a>
+<a class="sourceLine" id="cb166-14" data-line-number="14"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x_trials), <span class="kw">aes</span>(<span class="dt">x=</span>x_trials)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</a>
+<a class="sourceLine" id="cb166-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb166-16" data-line-number="16">x_tab &lt;-<span class="st"> </span><span class="kw">table</span>(x_trials)</a>
+<a class="sourceLine" id="cb166-17" data-line-number="17">x_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x_dist, x_tab<span class="op">/</span><span class="kw">sum</span>(x_tab))</a>
+<a class="sourceLine" id="cb166-18" data-line-number="18">x_df2 &lt;-<span class="st"> </span><span class="kw">melt</span>(x_df, <span class="dt">id.vars=</span><span class="st">&quot;x_trials&quot;</span>)</a>
+<a class="sourceLine" id="cb166-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb166-20" data-line-number="20"><span class="kw">ggplot</span>(x_df2, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>value, <span class="dt">fill=</span>variable)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb166-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) </a></code></pre>
 <p>위 그래프에서 Freq는 bar로 x_dist는 line으로 나타내 보겠습니다.</p>
-<pre class="sourceCode r" id="cb166"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">x_df</a>
-<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="kw">ggplot</span>(x_df, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb166-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb166-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.numeric</span>(x_trials), <span class="dt">y=</span>Freq), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb166-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>Freq), <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb166-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="op">~</span>., <span class="st">&quot;Freq&quot;</span>))</a></code></pre>
+<pre class="sourceCode r" id="cb167"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">x_df</a>
+<a class="sourceLine" id="cb167-2" data-line-number="2"><span class="kw">ggplot</span>(x_df, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb167-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb167-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.numeric</span>(x_trials), <span class="dt">y=</span>Freq), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb167-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>Freq), <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb167-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="op">~</span>., <span class="st">&quot;Freq&quot;</span>))</a></code></pre>
 <p>위 예제에서 앞면이 6번 이하로 나올 확률을 구하면 $ P(X 6) = _{k 6} P(X=k) $ 이므로 다음과 같습니다. 따라서 $ P(X 7) = 1- P(X 6)$ 입니다.</p>
-<pre class="sourceCode r" id="cb167"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2"><span class="kw">pbinom</span>(<span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb168"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb168-2" data-line-number="2"><span class="kw">pbinom</span>(<span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a></code></pre>
 <p>즉, pbinom을 이용해서 누적함수 분포를 쉽게 그릴 수 있습니다.</p>
-<pre class="sourceCode r" id="cb168"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb168-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">pbinom</span>(x, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb168-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb168-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb168-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb168-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb168-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb169"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb169-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">pbinom</span>(x, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb169-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb169-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb169-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb169-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb169-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre>
 </div>
 <div id="normal-random-variables" class="section level3">
 <h3><span class="header-section-number">6.5.4</span> Normal random variables</h3>
@@ -665,71 +680,90 @@ P(X=k) = {n \choose k} p^k (1-p)^{n-k} \\
 f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^2} 
 \]</span>
 다음은 <code>rnorm</code>과 <code>dnorm</code>을 활용한 예제 입니다.</p>
-<pre class="sourceCode r" id="cb169"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb169-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb169-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb169-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb169-5" data-line-number="5">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb169-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
-<a class="sourceLine" id="cb169-7" data-line-number="7">xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</a>
-<a class="sourceLine" id="cb169-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb170"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb170-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb170-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb170-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb170-5" data-line-number="5">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
+<a class="sourceLine" id="cb170-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb170-7" data-line-number="7">xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</a>
+<a class="sourceLine" id="cb170-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
 <p>다음 두 개의 normal desities를 가정해서 그래프를 그려봅시다. 하나는 <span class="math inline">\(f(x|\mu=0, \sigma=1)\)</span>이고 다른 하나는 <span class="math inline">\(f(x|\mu=4, \sigma=1/2)\)</span> 입니다.</p>
-<pre class="sourceCode r" id="cb170"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb170-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb170-3" data-line-number="3"><span class="kw">plot</span>(x,y)</a>
-<a class="sourceLine" id="cb170-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb170-5" data-line-number="5">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb170-6" data-line-number="6">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dt">mean=</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb170-7" data-line-number="7"><span class="kw">plot</span>(x2, y2)</a></code></pre>
+<pre class="sourceCode r" id="cb171"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb171-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="kw">plot</span>(x,y)</a>
+<a class="sourceLine" id="cb171-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb171-5" data-line-number="5">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb171-6" data-line-number="6">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dt">mean=</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb171-7" data-line-number="7"><span class="kw">plot</span>(x2, y2)</a></code></pre>
 <p>ggplot을 이용해서 두 그래프를 하나의 화면에 그려봅니다.</p>
-<pre class="sourceCode r" id="cb171"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y1, y2)</a>
-<a class="sourceLine" id="cb171-2" data-line-number="2">dat</a>
-<a class="sourceLine" id="cb171-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb171-4" data-line-number="4"><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
-<a class="sourceLine" id="cb171-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb171-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x2, y2)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb171-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb172"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y1, y2)</a>
+<a class="sourceLine" id="cb172-2" data-line-number="2">dat</a>
+<a class="sourceLine" id="cb172-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb172-4" data-line-number="4"><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
+<a class="sourceLine" id="cb172-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb172-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x2, y2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb172-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)</a></code></pre>
 <p>연속형 확률분포에서 y 값은 특정 x 값에 대한 density라 했고 x의 범위에 대한 면적의 넓이가 확률 입니다. N(0, 1) 분포에서 누적확률 0.5인 곳은 x=0 이며 pnorm 함수로 다음과 같이 확인이 가능합니다. 즉 정규분포에서도 앞서 이항분포에서와 같이 pnorm 함수를 이용해서 누적확률을 구할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb172"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb173"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
 <p>qnorm은 pnorm의 역함수로 생각하면 되겠습니다. 즉, 정규분포 N(0, 1)에서 확률이 0.5가 되는 곳의 x값을 구하기 위해서는 다음과 같이 코드를 작성하면 되겠습니다.</p>
-<pre class="sourceCode r" id="cb173"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb174"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
 <p><strong>[EXERCISE]</strong> N(0, 1) 분포에서 (누적) 확률이 0.95가 되는 곳의 x값을 구하고 그래프를 그린 후 geom_polygon 함수를 이용하여 해당 영역을 색칠 하시오.</p>
+<pre class="sourceCode r" id="cb175"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="kw">library</span>(reshape2, <span class="dt">quietly =</span> T, <span class="dt">warn.conflicts =</span> F)</a></code></pre>
 <pre><code>## Warning: package &#39;reshape2&#39; was built under R version 3.5.3</code></pre>
-<p><img src="Rstat_files/figure-html/unnamed-chunk-171-1.png" width="672" /></p>
-<p>몇 가지 옵션을 추가한 그래프 입니다.</p>
-<pre class="sourceCode r" id="cb175"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">onesd_x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">onesd_y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(onesd_x, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb175-3" data-line-number="3">onesd_dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>, onesd_x, onesd_x), <span class="dt">y=</span><span class="kw">c</span>(onesd_y, onesd_y, <span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb175-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb175-5" data-line-number="5">## dashed line </a>
-<a class="sourceLine" id="cb175-6" data-line-number="6">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>onesd_dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)</a>
-<a class="sourceLine" id="cb175-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb175-8" data-line-number="8">## text label</a>
-<a class="sourceLine" id="cb175-9" data-line-number="9">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;sd=1&quot;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> onesd_y<span class="fl">+0.02</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb175-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb175-11" data-line-number="11">## arrow with text </a>
-<a class="sourceLine" id="cb175-12" data-line-number="12">p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Normal distribution with mean 0 and sd 1&quot;</span>, <span class="dt">x=</span><span class="st">&quot;X&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb175-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">face=</span><span class="st">&quot;bold.italic&quot;</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb175-14" data-line-number="14">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>),</a>
-<a class="sourceLine" id="cb175-15" data-line-number="15">        <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb175-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.2</span>, <span class="dt">xend =</span> x.val, <span class="dt">yend =</span> <span class="kw">dnorm</span>(x.val, <span class="dv">0</span>, <span class="dv">1</span>)), </a>
-<a class="sourceLine" id="cb175-17" data-line-number="17">          <span class="dt">arrow =</span> <span class="kw">arrow</span>(),</a>
-<a class="sourceLine" id="cb175-18" data-line-number="18">          <span class="dt">color=</span><span class="st">&#39;orange&#39;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb175-19" data-line-number="19"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;x=&quot;</span>, <span class="kw">round</span>(x.val, <span class="dv">3</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.22</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb177"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb177-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb177-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
+<a class="sourceLine" id="cb177-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb177-5" data-line-number="5">x.val &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb177-6" data-line-number="6">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, x.val, <span class="dt">length.out=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb177-7" data-line-number="7">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb177-8" data-line-number="8">x2 &lt;-<span class="st"> </span><span class="kw">c</span>(x2, x.val)</a>
+<a class="sourceLine" id="cb177-9" data-line-number="9">y2 &lt;-<span class="st"> </span><span class="kw">c</span>(y2, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb177-10" data-line-number="10">dat2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x2, y2)</a>
+<a class="sourceLine" id="cb177-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb177-12" data-line-number="12">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
+<a class="sourceLine" id="cb177-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb177-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb177-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>dat2, <span class="kw">aes</span>(<span class="dt">x=</span>x2, <span class="dt">y=</span>y2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb177-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</a>
+<a class="sourceLine" id="cb177-17" data-line-number="17">p</a></code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
-<p>다음은 간단히 표준정규분포에서 표본을 추출 한 후 히스토그램과 적합 곡선 (pdf 추정 곡선)을 표현한 그래프 입니다.</p>
-<pre class="sourceCode r" id="cb176"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1">nsample &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb176-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample)</a>
-<a class="sourceLine" id="cb176-3" data-line-number="3">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb176-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
-<a class="sourceLine" id="cb176-5" data-line-number="5"><span class="kw">plot</span>(xx, y)</a></code></pre>
+<p>몇 가지 옵션을 추가한 그래프 입니다.</p>
+<pre class="sourceCode r" id="cb178"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">onesd_x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb178-2" data-line-number="2">onesd_y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(onesd_x, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb178-3" data-line-number="3">onesd_dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>, onesd_x, onesd_x), <span class="dt">y=</span><span class="kw">c</span>(onesd_y, onesd_y, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb178-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb178-5" data-line-number="5">## dashed line </a>
+<a class="sourceLine" id="cb178-6" data-line-number="6">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>onesd_dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)</a>
+<a class="sourceLine" id="cb178-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb178-8" data-line-number="8">## text label</a>
+<a class="sourceLine" id="cb178-9" data-line-number="9">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;sd=1&quot;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> onesd_y<span class="fl">+0.02</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb178-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb178-11" data-line-number="11">## arrow with text </a>
+<a class="sourceLine" id="cb178-12" data-line-number="12">p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Normal distribution with mean 0 and sd 1&quot;</span>, <span class="dt">x=</span><span class="st">&quot;X&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">face=</span><span class="st">&quot;bold.italic&quot;</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb178-14" data-line-number="14">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>),</a>
+<a class="sourceLine" id="cb178-15" data-line-number="15">        <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.2</span>, <span class="dt">xend =</span> x.val, <span class="dt">yend =</span> <span class="kw">dnorm</span>(x.val, <span class="dv">0</span>, <span class="dv">1</span>)), </a>
+<a class="sourceLine" id="cb178-17" data-line-number="17">          <span class="dt">arrow =</span> <span class="kw">arrow</span>(),</a>
+<a class="sourceLine" id="cb178-18" data-line-number="18">          <span class="dt">color=</span><span class="st">&#39;orange&#39;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-19" data-line-number="19"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;x=&quot;</span>, <span class="kw">round</span>(x.val, <span class="dv">3</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.22</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
-<pre class="sourceCode r" id="cb177"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
-<a class="sourceLine" id="cb177-2" data-line-number="2"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb177-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb177-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
+<p>다음은 간단히 표준정규분포에서 표본을 추출 한 후 히스토그램과 적합 곡선 (pdf 추정 곡선)을 표현한 그래프 입니다.</p>
+<pre class="sourceCode r" id="cb179"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">nsample &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb179-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample)</a>
+<a class="sourceLine" id="cb179-3" data-line-number="3">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb179-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
+<a class="sourceLine" id="cb179-5" data-line-number="5"><span class="kw">plot</span>(xx, y)</a></code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
+<pre class="sourceCode r" id="cb180"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
+<a class="sourceLine" id="cb180-2" data-line-number="2"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb180-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb180-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="Rstat_files/figure-html/unnamed-chunk-173-2.png" width="672" /></p>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-174-2.png" width="672" /></p>
 
 </div>
 </div>

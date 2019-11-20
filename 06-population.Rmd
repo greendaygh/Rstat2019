@@ -470,7 +470,29 @@ choose(10, 5) * (1/2)^5 * (1/2)^(10-5)
 
 # using dbinom function
 dbinom(5, size=10, prob=1/2)
+
+dbinom(0, size=10, prob=1/2) +
+dbinom(1, size=10, prob=1/2) +
+dbinom(2, size=10, prob=1/2) +
+dbinom(3, size=10, prob=1/2) +
+dbinom(4, size=10, prob=1/2) +
+dbinom(5, size=10, prob=1/2)
+
+
+sum(dbinom(0:5, size=10, prob=1/2))
+
 ```
+
+```{r, eval=F}
+## pdf 
+x<-0:10
+x_dist <- choose(10, x) * (1/2)^x * (1/2)^(10-x)
+x_dist_df <- data.frame(x, x_dist)
+ggplot(x_dist_df, aes(x=x, y=x_dist)) + geom_bar(stat="identity") 
+
+```
+
+
 
 ggplot을 이용해서 이항분포를 그려봅니다. 히스토그램의 y축은 빈도 수를 나타내지만 이를 확률로 나타낼수도 있고 이 경우 y값은 dbinom의 값과 같습니다.  
 
@@ -478,10 +500,6 @@ ggplot을 이용해서 이항분포를 그려봅니다. 히스토그램의 y축�
 library(ggplot2)
 library(reshape2)
 
-x_trials <- rbinom(1000, size=10, prob=1/2)
-hist(x_trials, br=100)
-## distribution
-ggplot(data.frame(x_trials), aes(x=x_trials)) + geom_bar()
 
 ## pdf 
 x<-0:10
@@ -489,6 +507,10 @@ x_dist <- choose(10, x) * (1/2)^x * (1/2)^(10-x)
 x_dist_df <- data.frame(x, x_dist)
 ggplot(x_dist_df, aes(x=x, y=x_dist)) + geom_bar(stat="identity") 
 
+x_trials <- rbinom(1000, size=10, prob=1/2)
+hist(x_trials, br=100)
+## distribution
+ggplot(data.frame(x_trials), aes(x=x_trials)) + geom_bar()
 
 x_tab <- table(x_trials)
 x_df <- data.frame(x_dist, x_tab/sum(x_tab))
@@ -596,7 +618,7 @@ qnorm(0.5, 0, 1)
 
 **[EXERCISE]** N(0, 1) 분포에서 (누적) 확률이 0.95가 되는 곳의 x값을 구하고 그래프를 그린 후 geom_polygon 함수를 이용하여 해당 영역을 색칠 하시오. 
 
-```{r, eval=T, echo=F}
+```{r, eval=T, echo=T}
 library(ggplot2, quietly = T)
 library(reshape2, quietly = T, warn.conflicts = F)
 
