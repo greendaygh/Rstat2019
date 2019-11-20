@@ -709,61 +709,87 @@ f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^
 <p>qnorm은 pnorm의 역함수로 생각하면 되겠습니다. 즉, 정규분포 N(0, 1)에서 확률이 0.5가 되는 곳의 x값을 구하기 위해서는 다음과 같이 코드를 작성하면 되겠습니다.</p>
 <pre class="sourceCode r" id="cb174"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
 <p><strong>[EXERCISE]</strong> N(0, 1) 분포에서 (누적) 확률이 0.95가 되는 곳의 x값을 구하고 그래프를 그린 후 geom_polygon 함수를 이용하여 해당 영역을 색칠 하시오.</p>
-<pre class="sourceCode r" id="cb175"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="kw">library</span>(reshape2, <span class="dt">quietly =</span> T, <span class="dt">warn.conflicts =</span> F)</a></code></pre>
+<p>다음은 수업시간에 진행했던 노트 입니다.</p>
+<pre class="sourceCode bash" id="cb175"><code class="sourceCode bash"><a class="sourceLine" id="cb175-1" data-line-number="1">표준정규분포 <span class="ex">N</span>(0, 1)</a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb175-3" data-line-number="3"><span class="ex">1.</span> x값 -4부터 4까지 0.1 간격으로 생성 (seq 함수)</a>
+<a class="sourceLine" id="cb175-4" data-line-number="4"><span class="ex">2.</span> y 값은 dnorm 으로 x값에 대한 y값 저장</a>
+<a class="sourceLine" id="cb175-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb175-6" data-line-number="6"><span class="ex">3.</span> x1에 저장 <span class="op">&lt;</span>- 확률 0.95인 x값? qnorm</a>
+<a class="sourceLine" id="cb175-7" data-line-number="7"><span class="ex">4.</span> y1 은 x1에 해당하는 density 값 (dnorm)</a>
+<a class="sourceLine" id="cb175-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb175-9" data-line-number="9"><span class="ex">5.</span> 색칠할 구간의 (테두리) 좌표 <span class="ex">x2</span>와 y2 </a>
+<a class="sourceLine" id="cb175-10" data-line-number="10"><span class="ex">x2</span>는 -4부터 x1까지 0.1간격으로 생성 seq()</a>
+<a class="sourceLine" id="cb175-11" data-line-number="11"><span class="ex">y2</span>는 x2의 density 값 dnorm으로 </a>
+<a class="sourceLine" id="cb175-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb175-13" data-line-number="13"><span class="ex">6.</span> 마지막 점 추가 </a>
+<a class="sourceLine" id="cb175-14" data-line-number="14"><span class="ex">x2</span> <span class="op">&lt;</span>- c(x2, x1)</a>
+<a class="sourceLine" id="cb175-15" data-line-number="15"><span class="ex">y2</span> <span class="op">&lt;</span>- c(y2, 0)</a>
+<a class="sourceLine" id="cb175-16" data-line-number="16"> </a>
+<a class="sourceLine" id="cb175-17" data-line-number="17"><span class="ex">7.</span> data.frame 만들기 </a>
+<a class="sourceLine" id="cb175-18" data-line-number="18"><span class="ex">dat1</span> <span class="op">&lt;</span>- data.frame(x, y)</a>
+<a class="sourceLine" id="cb175-19" data-line-number="19"><span class="ex">dat2</span> <span class="op">&lt;</span>- data.frame(x2, y2)</a>
+<a class="sourceLine" id="cb175-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb175-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb175-22" data-line-number="22"><span class="ex">8.</span> ggplot 분포 그리기</a>
+<a class="sourceLine" id="cb175-23" data-line-number="23"><span class="ex">ggplot</span>(dat1, aes(x=x, y=y)) <span class="ex">+</span></a>
+<a class="sourceLine" id="cb175-24" data-line-number="24">   <span class="fu">geom_line()</span> <span class="ex">+</span></a>
+<a class="sourceLine" id="cb175-25" data-line-number="25">   <span class="ex">geom_polygon</span>(data=dat2, aes(x=x2, y=y2)) </a></code></pre>
+<pre class="sourceCode r" id="cb176"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</a>
+<a class="sourceLine" id="cb176-2" data-line-number="2"><span class="kw">library</span>(reshape2, <span class="dt">quietly =</span> T, <span class="dt">warn.conflicts =</span> F)</a></code></pre>
 <pre><code>## Warning: package &#39;reshape2&#39; was built under R version 3.5.3</code></pre>
-<pre class="sourceCode r" id="cb177"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb177-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb177-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
-<a class="sourceLine" id="cb177-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb177-5" data-line-number="5">x.val &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb177-6" data-line-number="6">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, x.val, <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb177-7" data-line-number="7">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb177-8" data-line-number="8">x2 &lt;-<span class="st"> </span><span class="kw">c</span>(x2, x.val)</a>
-<a class="sourceLine" id="cb177-9" data-line-number="9">y2 &lt;-<span class="st"> </span><span class="kw">c</span>(y2, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb177-10" data-line-number="10">dat2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x2, y2)</a>
-<a class="sourceLine" id="cb177-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb177-12" data-line-number="12">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
-<a class="sourceLine" id="cb177-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb177-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb177-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>dat2, <span class="kw">aes</span>(<span class="dt">x=</span>x2, <span class="dt">y=</span>y2)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb177-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</a>
-<a class="sourceLine" id="cb177-17" data-line-number="17">p</a></code></pre>
-<p><img src="Rstat_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
-<p>몇 가지 옵션을 추가한 그래프 입니다.</p>
-<pre class="sourceCode r" id="cb178"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">onesd_x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb178-2" data-line-number="2">onesd_y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(onesd_x, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb178-3" data-line-number="3">onesd_dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>, onesd_x, onesd_x), <span class="dt">y=</span><span class="kw">c</span>(onesd_y, onesd_y, <span class="dv">0</span>))</a>
+<pre class="sourceCode r" id="cb178"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb178-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb178-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
 <a class="sourceLine" id="cb178-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb178-5" data-line-number="5">## dashed line </a>
-<a class="sourceLine" id="cb178-6" data-line-number="6">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>onesd_dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)</a>
-<a class="sourceLine" id="cb178-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb178-8" data-line-number="8">## text label</a>
-<a class="sourceLine" id="cb178-9" data-line-number="9">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;sd=1&quot;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> onesd_y<span class="fl">+0.02</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb178-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb178-11" data-line-number="11">## arrow with text </a>
-<a class="sourceLine" id="cb178-12" data-line-number="12">p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Normal distribution with mean 0 and sd 1&quot;</span>, <span class="dt">x=</span><span class="st">&quot;X&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">face=</span><span class="st">&quot;bold.italic&quot;</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb178-14" data-line-number="14">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>),</a>
-<a class="sourceLine" id="cb178-15" data-line-number="15">        <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.2</span>, <span class="dt">xend =</span> x.val, <span class="dt">yend =</span> <span class="kw">dnorm</span>(x.val, <span class="dv">0</span>, <span class="dv">1</span>)), </a>
-<a class="sourceLine" id="cb178-17" data-line-number="17">          <span class="dt">arrow =</span> <span class="kw">arrow</span>(),</a>
-<a class="sourceLine" id="cb178-18" data-line-number="18">          <span class="dt">color=</span><span class="st">&#39;orange&#39;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-19" data-line-number="19"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;x=&quot;</span>, <span class="kw">round</span>(x.val, <span class="dv">3</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.22</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre>
+<a class="sourceLine" id="cb178-5" data-line-number="5">x.val &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb178-6" data-line-number="6">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, x.val, <span class="dt">length.out=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb178-7" data-line-number="7">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb178-8" data-line-number="8">x2 &lt;-<span class="st"> </span><span class="kw">c</span>(x2, x.val)</a>
+<a class="sourceLine" id="cb178-9" data-line-number="9">y2 &lt;-<span class="st"> </span><span class="kw">c</span>(y2, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb178-10" data-line-number="10">dat2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x2, y2)</a>
+<a class="sourceLine" id="cb178-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb178-12" data-line-number="12">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>dat2, <span class="kw">aes</span>(<span class="dt">x=</span>x2, <span class="dt">y=</span>y2)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</a>
+<a class="sourceLine" id="cb178-17" data-line-number="17">p</a></code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
-<p>다음은 간단히 표준정규분포에서 표본을 추출 한 후 히스토그램과 적합 곡선 (pdf 추정 곡선)을 표현한 그래프 입니다.</p>
-<pre class="sourceCode r" id="cb179"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">nsample &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb179-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample)</a>
-<a class="sourceLine" id="cb179-3" data-line-number="3">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb179-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
-<a class="sourceLine" id="cb179-5" data-line-number="5"><span class="kw">plot</span>(xx, y)</a></code></pre>
+<p>몇 가지 옵션을 추가한 그래프 입니다.</p>
+<pre class="sourceCode r" id="cb179"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">onesd_x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb179-2" data-line-number="2">onesd_y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(onesd_x, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb179-3" data-line-number="3">onesd_dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>, onesd_x, onesd_x), <span class="dt">y=</span><span class="kw">c</span>(onesd_y, onesd_y, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb179-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb179-5" data-line-number="5">## dashed line </a>
+<a class="sourceLine" id="cb179-6" data-line-number="6">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>onesd_dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)</a>
+<a class="sourceLine" id="cb179-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb179-8" data-line-number="8">## text label</a>
+<a class="sourceLine" id="cb179-9" data-line-number="9">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;sd=1&quot;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> onesd_y<span class="fl">+0.02</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb179-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb179-11" data-line-number="11">## arrow with text </a>
+<a class="sourceLine" id="cb179-12" data-line-number="12">p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Normal distribution with mean 0 and sd 1&quot;</span>, <span class="dt">x=</span><span class="st">&quot;X&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb179-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">face=</span><span class="st">&quot;bold.italic&quot;</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb179-14" data-line-number="14">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>),</a>
+<a class="sourceLine" id="cb179-15" data-line-number="15">        <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb179-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.2</span>, <span class="dt">xend =</span> x.val, <span class="dt">yend =</span> <span class="kw">dnorm</span>(x.val, <span class="dv">0</span>, <span class="dv">1</span>)), </a>
+<a class="sourceLine" id="cb179-17" data-line-number="17">          <span class="dt">arrow =</span> <span class="kw">arrow</span>(),</a>
+<a class="sourceLine" id="cb179-18" data-line-number="18">          <span class="dt">color=</span><span class="st">&#39;orange&#39;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb179-19" data-line-number="19"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;x=&quot;</span>, <span class="kw">round</span>(x.val, <span class="dv">3</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.22</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
-<pre class="sourceCode r" id="cb180"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
-<a class="sourceLine" id="cb180-2" data-line-number="2"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb180-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb180-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
+<p>다음은 간단히 표준정규분포에서 표본을 추출 한 후 히스토그램과 적합 곡선 (pdf 추정 곡선)을 표현한 그래프 입니다.</p>
+<pre class="sourceCode r" id="cb180"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">nsample &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb180-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample)</a>
+<a class="sourceLine" id="cb180-3" data-line-number="3">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb180-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
+<a class="sourceLine" id="cb180-5" data-line-number="5"><span class="kw">plot</span>(xx, y)</a></code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
+<pre class="sourceCode r" id="cb181"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
+<a class="sourceLine" id="cb181-2" data-line-number="2"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb181-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb181-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="Rstat_files/figure-html/unnamed-chunk-174-2.png" width="672" /></p>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-175-2.png" width="672" /></p>
 
 </div>
 </div>
