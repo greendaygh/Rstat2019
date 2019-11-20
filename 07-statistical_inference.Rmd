@@ -154,8 +154,8 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 $$
 우리가 언급하는 통계량들은 대부분 unbiased 입니다. 불편추정량 (unbiased estimator)이라 부르며 다음과 같은 것들이 있습니다. 
 
-* $E(\hat{x}) = \mu$
-* $E(\hat{p}) = p$
+* $E(\bar{x}) = \mu$
+* $E(\bar{p}) = p$
 * $E(s^2) = \sigma^2$
 
 
