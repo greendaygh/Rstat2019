@@ -15,8 +15,8 @@
 ![](images/07/01.PNG)
 [UsingR for introductory statistics, 243 페이지]
 
-* 임의 표본에 대해서 $\bar{x}$가 $\mu$ 근처에 분포
-* 임의 표본에 대해서 $\bar{x}$의 분산이 $\bar{x}/\sqrt{n}$ 로 표현 (표본들의 분산보다 작음)
+* 어떤 임의 표본에 대해서 $\bar{x}$의 표본분포는 $\mu$ 근처에 위치
+* 어떤 임의 표본에 대해서 $\bar{x}$의 표본분포의 표준편차는 $\sigma/\sqrt{n}$ 로 표현 ($\sigma$는 모분산, 표본들의 분산보다 작음)
 * 모분포가 정규분포이면 $\bar{x}$도 정규분포 (반복이 많아질수록, 중심극한정리)
 * 시뮬레이션으로 이론 확인 
 
@@ -101,6 +101,16 @@ ggplot(dat, aes(x, y)) +
   geom_point() +
   scale_y_continuous(limits=c(0, 1.1)) +
   geom_point(data=dat_mean, aes(y=as.numeric(as.character(g)), x=mean), colour="blue", size=5, shape=15)
+
+str(dat_mean)
+as.numeric(as.character(dat_mean$g))
+
+
+ggplot() + 
+  geom_point(data=dat, aes(x, y)) +
+  geom_point(data=dat_mean, aes(x=mean, y=as.numeric(as.character(dat_mean$g))), colour="blue", size=5, shape=15) +
+  theme_bw()
+  
   
 
 ```
@@ -126,28 +136,73 @@ Randomization distribution 상태로 데이터를 다시 두 그룹으로 나누
 
 **[EXERCISE]** 두 그룹 데이터에서 임으로 10명을 두 번 뽑아 그 평균의 차이를 계산하시오 
 
-```{r, eval=F, echo=F}
+```{r, eval=T, echo=F}
 
+caf <- c(245, 246, 246, 248, 248, 248, 250, 250, 250, 252)
+no_caf <- c(242, 242, 242, 244, 244, 245, 246, 247, 248, 248)
+random_data <- c(caf, no_caf) 
+obs <- mean(caf) - mean(no_caf)
+
+x <- sample(random_data, 10, replace=T)
+y <- sample(random_data, 10, replace=T)
+
+mean(x) - mean(y)
 ```
 
 
 **[EXERCISE]** 위 예제의 과정을 1000번 반복하고 각 차이값의 분포를 그리시오 
 
-```{r, eval=F, echo=F}
+```{r, eval=T, echo=F}
+suppressWarnings(suppressMessages(library(ggplot2, quietly = T)))
+suppressWarnings(suppressMessages(library(dplyr, quietly = T)))
+
+caf <- c(245, 246, 246, 248, 248, 248, 250, 250, 250, 252)
+no_caf <- c(242, 242, 242, 244, 244, 245, 246, 247, 248, 248)
+random_data <- c(caf, no_caf) 
+
+z <- rep(0, 1000)
+for(i in 1:1000){
+  x <- sample(random_data, 10, replace=T)
+  y <- sample(random_data, 10, replace=T)
+  z[i] <- mean(x) - mean(y)
+}
+hist(z, br=100, xlim=c(-4,4))
+dat <- data.frame(z, y, x)
+ggplot(dat, aes(x=z)) + geom_histogram()
+
+#obs <- mean(caf)-mean(no_caf)
+#res <- replicate(2000, {
+#  ind <- sample(1:20, 10, replace=F)
+#  mean(the_data$values[ind]) - mean(the_data$values[-ind])
+#})
+#hist(res, br=100)
+#abline(v=obs, col="red", lty=2)
+
 
 ```
 
 
 **[EXERCISE]** 분포에서 실제 관측한 3.5 값의 위치를 표시하고 관측값보다 더 극단적인 경우가 나올 경우의 비율을 계산하시오 
 
-```{r, eval=F, echo=F}
+```{r, eval=T, echo=F}
+
+empval <- sum(dat$z > obs)/length(dat$z)
+
+ggplot(dat, aes(x=z)) + 
+  geom_histogram() +
+  geom_vline(xintercept = obs, color="white", linetype = "dashed") +
+  geom_segment(aes(x = obs+0.2, y = 30, xend = obs+0.2, yend = 5), 
+               arrow = arrow(), 
+               size=2) +
+  annotate("text", label = empval, x = obs+0.2, y = 35, size = 5)
+
 
 ```
 
 
 ## Estimation and confidence interval 
 
-앞서 예제에서 두 그룹간 평균의 차이가 통계량 (statistic) 입니다. 통계량은 모수 (parameter)를 추정하기 위한 값으로 볼 수 있고 이 값이 얼마나 모수와 가까운지, 즉 차이가 0에 가까운지 판단하는 것은 통계적 추정에서 가장 중요한 부분 중 하나 입니다. 일반적으로 $\mu, \sigma$ 등 모수는 $\theta$로 표현하고 $\theta$를 추정하기위한 통계량은 $\hat{\theta}$로 표현합니다. 다음 식으로 우리가 계산한 통계량이 얼마나 믿을만 한지에 대한 판단을 할 수 있습니다. 
+앞서 예제에서 두 그룹간 평균의 차이가 통계량 (statistic) 입니다. 통계량은 모수 (parameter)를 추정하기 위한 값으로 볼 수 있고 이 값이 얼마나 모수와 가까운지, 즉 차이가 0에 가까운지 판단하는 것은 통계적 추정에서 가장 중요한 부분 중 하나 입니다. 일반적으로 $\mu, \sigma$ 등 모수는 $\theta$로 표현하고 $\theta$를 추정하기위한 통계량은 $\hat{\theta}$로 표현합니다. 다음 식으로 우리가 계산한 통계량이 얼마나 모수에 가까운지는 다음 식으로 알 수 있습니다. 
 
 $$
 E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = \text{variance} + \text{bias}^2
@@ -157,6 +212,82 @@ $$
 * $E(\bar{x}) = \mu$
 * $E(\bar{p}) = p$
 * $E(s^2) = \sigma^2$
+
+예를 들어 A poll asking a random sample of 1003 whether marriages between same-sex couples should be recognized by law as valid. 55% said yes, 이 경우 A randomly selected person would responding yes with p  = 0.55 입니다. 여기서 어디에 대부분의 데이터가 모여있는가? 라는 질문을 할 수 있고 이는 데이터의 95%가 어느 범위에 있는가? 라는 질문과 같습니다. 이를 위해 다음 시뮬레이션을 수행할 수 있습니다. 
+
+```{r, eval=T, echo=F}
+
+p <- 0.55
+n <- 1003
+x <- rbinom(1000, n, p)
+mean(x)
+hist(x, br=100)
+quantile(x, c(0.025, 0.975))
+
+```
+
+그러나 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 구간을 구해야 합니다. 
+
+```{r, eval=T, echo=F}
+## ===============
+x <- rbinom(2, n, p)
+mean(x)
+hist(x, br=100)
+
+```
+
+다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 $\sqrt{n}$으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 $\sigma$ 대신 $s$를 사용한 경우를 말합니다.  
+
+
+![](images/07/02.PNG)
+
+
+
+
+
+```{r, eval=T, echo=T}
+
+mu <- 100
+sigma <- 16
+M <- 1000
+n <- 4
+res <- replicate(M, {
+	x <- rnorm(n, mu, sigma)
+	se <- (mean(x)-mu) / sd(x)/sqrt(n)
+	(mean(x) - mu)/se
+})
+
+quantile(res, c(0.025, 0.975))
+hist(res, br=100)
+```
+
+
+```{r, eval=T, echo=F}
+
+ggplot(data.frame(res), aes(x=res)) + 
+  geom_histogram()
+
+```
+
+
+![](images/07/03.PNG)
+
+
+![](images/07/04.PNG)
+
+
+
+## Bootstrap 
+
+![](images/07/05.PNG)
+
+
+![](images/07/06.PNG)
+
+
+![](images/07/07.PNG)
+
+
 
 
 

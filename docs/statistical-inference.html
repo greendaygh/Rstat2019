@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-20" />
+<meta name="date" content="2019-11-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -250,6 +250,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="7.2" data-path="statistical-inference.html"><a href="statistical-inference.html#simulation"><i class="fa fa-check"></i><b>7.2</b> Simulation</a></li>
 <li class="chapter" data-level="7.3" data-path="statistical-inference.html"><a href="statistical-inference.html#significance-tests"><i class="fa fa-check"></i><b>7.3</b> Significance tests</a></li>
 <li class="chapter" data-level="7.4" data-path="statistical-inference.html"><a href="statistical-inference.html#estimation-and-confidence-interval"><i class="fa fa-check"></i><b>7.4</b> Estimation and confidence interval</a></li>
+<li class="chapter" data-level="7.5" data-path="statistical-inference.html"><a href="statistical-inference.html#bootstrap"><i class="fa fa-check"></i><b>7.5</b> Bootstrap</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -286,8 +287,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p><img src="images/07/01.PNG" />
 [UsingR for introductory statistics, 243 페이지]</p>
 <ul>
-<li>임의 표본에 대해서 <span class="math inline">\(\bar{x}\)</span>가 <span class="math inline">\(\mu\)</span> 근처에 분포</li>
-<li>임의 표본에 대해서 <span class="math inline">\(\bar{x}\)</span>의 분산이 <span class="math inline">\(\bar{x}/\sqrt{n}\)</span> 로 표현 (표본들의 분산보다 작음)</li>
+<li>어떤 임의 표본에 대해서 <span class="math inline">\(\bar{x}\)</span>의 표본분포는 <span class="math inline">\(\mu\)</span> 근처에 위치</li>
+<li>어떤 임의 표본에 대해서 <span class="math inline">\(\bar{x}\)</span>의 표본분포의 표준편차는 <span class="math inline">\(\sigma/\sqrt{n}\)</span> 로 표현 (<span class="math inline">\(\sigma\)</span>는 모분산, 표본들의 분산보다 작음)</li>
 <li>모분포가 정규분포이면 <span class="math inline">\(\bar{x}\)</span>도 정규분포 (반복이 많아질수록, 중심극한정리)</li>
 <li>시뮬레이션으로 이론 확인</li>
 </ul>
@@ -337,26 +338,43 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <a class="sourceLine" id="cb184-20" data-line-number="20"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb184-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat_mean, <span class="kw">aes</span>(<span class="dt">y=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(g)), <span class="dt">x=</span>mean), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>)</a></code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
+<pre class="sourceCode r" id="cb185"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw">str</span>(dat_mean)</a></code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10 obs. of  2 variables:
+##  $ g   : Factor w/ 10 levels &quot;0.1&quot;,&quot;0.2&quot;,&quot;0.3&quot;,..: 1 2 3 4 5 6 7 8 9 10
+##  $ mean: num  0.2508 -0.0839 -0.226 0.146 0.1888 ...</code></pre>
+<pre class="sourceCode r" id="cb187"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1"><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))</a></code></pre>
+<pre><code>##  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<pre class="sourceCode r" id="cb189"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb189-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb189-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat_mean, <span class="kw">aes</span>(<span class="dt">x=</span>mean, <span class="dt">y=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb189-4" data-line-number="4"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-179-2.png" width="672" /></p>
 <p><strong>[EXERCISE]</strong> 위 예제와 함께 표준정규분포 곡선과 <span class="math inline">\(\bar{x}\)</span>의 분포를 모두 같이 그리시오</p>
 </div>
 <div id="significance-tests" class="section level2">
 <h2><span class="header-section-number">7.3</span> Significance tests</h2>
 <p>두 그룹의 데이터 (표본)을 가지고 있을 때 두 그룹이 통계적으로 차이가 있는지를 검증하는 방법으로 (코흐트 데이터, Case-control 데이터) 시뮬레이션에 의한 방법을 먼저 소개하고 이 후 분포를 기준으로 통계적 검증을 알아보겠습니다.</p>
 <p>카페인(커피)이 초초한 상태를 유발하는가? 라는 질문에 답하기 위해서 보통 두 그룹의 평균의 차이를 비교합니다.</p>
-<pre class="sourceCode r" id="cb185"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">coff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">246</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">252</span>)</a>
-<a class="sourceLine" id="cb185-2" data-line-number="2">nocoff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">244</span>, <span class="dv">244</span>, <span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">247</span>, <span class="dv">248</span>, <span class="dv">248</span>)</a>
-<a class="sourceLine" id="cb185-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(coff, nocoff)</a>
-<a class="sourceLine" id="cb185-4" data-line-number="4">obs &lt;-<span class="st"> </span><span class="kw">with</span>(dat, <span class="kw">mean</span>(coff) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(nocoff))</a>
-<a class="sourceLine" id="cb185-5" data-line-number="5">obs</a></code></pre>
+<pre class="sourceCode r" id="cb190"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">coff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">246</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">252</span>)</a>
+<a class="sourceLine" id="cb190-2" data-line-number="2">nocoff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">244</span>, <span class="dv">244</span>, <span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">247</span>, <span class="dv">248</span>, <span class="dv">248</span>)</a>
+<a class="sourceLine" id="cb190-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(coff, nocoff)</a>
+<a class="sourceLine" id="cb190-4" data-line-number="4">obs &lt;-<span class="st"> </span><span class="kw">with</span>(dat, <span class="kw">mean</span>(coff) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(nocoff))</a>
+<a class="sourceLine" id="cb190-5" data-line-number="5">obs</a></code></pre>
 <pre><code>## [1] 3.5</code></pre>
 <p>Randomization distribution 상태로 데이터를 다시 두 그룹으로 나누어 차이를 계산하고 이 과정을 반복해서 분포를 그려보겠습니다.</p>
 <p><strong>[EXERCISE]</strong> 두 그룹 데이터에서 임으로 10명을 두 번 뽑아 그 평균의 차이를 계산하시오</p>
+<pre><code>## [1] 0</code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제의 과정을 1000번 반복하고 각 차이값의 분포를 그리시오</p>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-182-2.png" width="672" /></p>
 <p><strong>[EXERCISE]</strong> 분포에서 실제 관측한 3.5 값의 위치를 표시하고 관측값보다 더 극단적인 경우가 나올 경우의 비율을 계산하시오</p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
 </div>
 <div id="estimation-and-confidence-interval" class="section level2">
 <h2><span class="header-section-number">7.4</span> Estimation and confidence interval</h2>
-<p>앞서 예제에서 두 그룹간 평균의 차이가 통계량 (statistic) 입니다. 통계량은 모수 (parameter)를 추정하기 위한 값으로 볼 수 있고 이 값이 얼마나 모수와 가까운지, 즉 차이가 0에 가까운지 판단하는 것은 통계적 추정에서 가장 중요한 부분 중 하나 입니다. 일반적으로 <span class="math inline">\(\mu, \sigma\)</span> 등 모수는 <span class="math inline">\(\theta\)</span>로 표현하고 <span class="math inline">\(\theta\)</span>를 추정하기위한 통계량은 <span class="math inline">\(\hat{\theta}\)</span>로 표현합니다. 다음 식으로 우리가 계산한 통계량이 얼마나 믿을만 한지에 대한 판단을 할 수 있습니다.</p>
+<p>앞서 예제에서 두 그룹간 평균의 차이가 통계량 (statistic) 입니다. 통계량은 모수 (parameter)를 추정하기 위한 값으로 볼 수 있고 이 값이 얼마나 모수와 가까운지, 즉 차이가 0에 가까운지 판단하는 것은 통계적 추정에서 가장 중요한 부분 중 하나 입니다. 일반적으로 <span class="math inline">\(\mu, \sigma\)</span> 등 모수는 <span class="math inline">\(\theta\)</span>로 표현하고 <span class="math inline">\(\theta\)</span>를 추정하기위한 통계량은 <span class="math inline">\(\hat{\theta}\)</span>로 표현합니다. 다음 식으로 우리가 계산한 통계량이 얼마나 모수에 가까운지는 다음 식으로 알 수 있습니다.</p>
 <p><span class="math display">\[
 E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = \text{variance} + \text{bias}^2
 \]</span>
@@ -366,6 +384,41 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <li><span class="math inline">\(E(\bar{p}) = p\)</span></li>
 <li><span class="math inline">\(E(s^2) = \sigma^2\)</span></li>
 </ul>
+<p>예를 들어 A poll asking a random sample of 1003 whether marriages between same-sex couples should be recognized by law as valid. 55% said yes, 이 경우 A randomly selected person would responding yes with p = 0.55 입니다. 여기서 어디에 대부분의 데이터가 모여있는가? 라는 질문을 할 수 있고 이는 데이터의 95%가 어느 범위에 있는가? 라는 질문과 같습니다. 이를 위해 다음 시뮬레이션을 수행할 수 있습니다.</p>
+<pre><code>## [1] 552.175</code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<pre><code>##    2.5%   97.5% 
+## 521.000 582.025</code></pre>
+<p>그러나 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 구간을 구해야 합니다.</p>
+<pre><code>## [1] 568.5</code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p>다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 <span class="math inline">\(\sqrt{n}\)</span>으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 <span class="math inline">\(\sigma\)</span> 대신 <span class="math inline">\(s\)</span>를 사용한 경우를 말합니다.</p>
+<p><img src="images/07/02.PNG" /></p>
+<pre class="sourceCode r" id="cb198"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb198-2" data-line-number="2">sigma &lt;-<span class="st"> </span><span class="dv">16</span></a>
+<a class="sourceLine" id="cb198-3" data-line-number="3">M &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb198-4" data-line-number="4">n &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb198-5" data-line-number="5">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(M, {</a>
+<a class="sourceLine" id="cb198-6" data-line-number="6">    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mu, sigma)</a>
+<a class="sourceLine" id="cb198-7" data-line-number="7">    se &lt;-<span class="st"> </span>(<span class="kw">mean</span>(x)<span class="op">-</span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb198-8" data-line-number="8">    (<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>se</a>
+<a class="sourceLine" id="cb198-9" data-line-number="9">})</a>
+<a class="sourceLine" id="cb198-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb198-11" data-line-number="11"><span class="kw">quantile</span>(res, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</a></code></pre>
+<pre><code>##      2.5%     97.5% 
+##  8.206454 56.083108</code></pre>
+<pre class="sourceCode r" id="cb200"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="kw">hist</span>(res, <span class="dt">br=</span><span class="dv">100</span>)</a></code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Rstat_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
+<p><img src="images/07/03.PNG" /></p>
+<p><img src="images/07/04.PNG" /></p>
+</div>
+<div id="bootstrap" class="section level2">
+<h2><span class="header-section-number">7.5</span> Bootstrap</h2>
+<p><img src="images/07/05.PNG" /></p>
+<p><img src="images/07/06.PNG" /></p>
+<p><img src="images/07/07.PNG" /></p>
 
 </div>
 </div>
