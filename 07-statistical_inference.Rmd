@@ -229,7 +229,6 @@ quantile(x, c(0.025, 0.975))
 그러나 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 구간을 구해야 합니다. 
 
 ```{r, eval=T, echo=T}
-## ===============
 x <- rbinom(2, n, p)
 ## mean(x)
 hist(x, br=100)
@@ -239,12 +238,13 @@ hist(x, br=100)
 여기서 다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 $\sqrt{n}$으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 $\sigma$ 대신 $s$를 사용한 경우를 말합니다.  
 
 $$
-\bar{x} = \mu \text{ vs. } \bar{x} - \mu =0 
+\begin{split}
+\bar{x} &= \mu \to \bar{x} - \mu =0 \\
 
-z = \frac{\bar{x} - \mu}{\sigma / \sqrt{n}} ~ N(0,1) 
+z &= \frac{\bar{x} - \mu}{\sigma / \sqrt{n}} \sim N(0,1) \\
 
-t = \frac{\bar{x} - \mu}{s/\sqrt{n}} ~ T
-
+t &= \frac{\bar{x} - \mu}{s/\sqrt{n}} \sim T
+\end{split}
 $$
 
 
