@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Statistical inference | R로 배우는 기초통계</title>
   <meta name="description" content="이 강의는 2019년 2학기 UST에서 진행하는 일반강의 입니다." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16.5 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Statistical inference | R로 배우는 기초통계" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-27" />
+<meta name="date" content="2019-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,20 +53,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -71,38 +80,40 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -121,14 +132,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="./"> [2019 UST lecture] R statistics </a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction 강의 개요</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal--"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references--"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation---"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule--"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#references---1"><i class="fa fa-check"></i><b>1.5</b> References 참고 자료</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction 강의 개요</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal-강의-목표"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references-참고-자료"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation-평가-세부-항목"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule-강의-계획"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#references-참고-자료-1"><i class="fa fa-check"></i><b>1.5</b> References 참고 자료</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>2</b> R basics</a><ul>
+<li class="chapter" data-level="2" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>2</b> R basics</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="r-basics.html"><a href="r-basics.html#what-is-r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What is R / Rstudio</a></li>
 <li class="chapter" data-level="2.2" data-path="r-basics.html"><a href="r-basics.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio installation</a></li>
 <li class="chapter" data-level="2.3" data-path="r-basics.html"><a href="r-basics.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a></li>
@@ -147,16 +160,19 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="2.16" data-path="r-basics.html"><a href="r-basics.html#data-sets"><i class="fa fa-check"></i><b>2.16</b> Data sets</a></li>
 <li class="chapter" data-level="2.17" data-path="r-basics.html"><a href="r-basics.html#cheatsheet"><i class="fa fa-check"></i><b>2.17</b> Cheatsheet</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="univariat-data.html"><a href="univariat-data.html"><i class="fa fa-check"></i><b>3</b> Univariat data</a><ul>
+<li class="chapter" data-level="3" data-path="univariat-data.html"><a href="univariat-data.html"><i class="fa fa-check"></i><b>3</b> Univariat data</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="univariat-data.html"><a href="univariat-data.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
 <li class="chapter" data-level="3.2" data-path="univariat-data.html"><a href="univariat-data.html#data-vectors"><i class="fa fa-check"></i><b>3.2</b> Data vectors</a></li>
-<li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a><ul>
+<li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#example---recoding-values"><i class="fa fa-check"></i><b>3.3.1</b> Example - Recoding values</a></li>
 <li class="chapter" data-level="3.3.2" data-path="univariat-data.html"><a href="univariat-data.html#example---average-distance-from-center"><i class="fa fa-check"></i><b>3.3.2</b> Example - Average distance from center</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="univariat-data.html"><a href="univariat-data.html#functions-1"><i class="fa fa-check"></i><b>3.4</b> Functions</a></li>
 <li class="chapter" data-level="3.5" data-path="univariat-data.html"><a href="univariat-data.html#numeric-summaries"><i class="fa fa-check"></i><b>3.5</b> Numeric summaries</a></li>
-<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a><ul>
+<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a>
+<ul>
 <li class="chapter" data-level="3.6.1" data-path="univariat-data.html"><a href="univariat-data.html#sample-mean"><i class="fa fa-check"></i><b>3.6.1</b> Sample mean</a></li>
 <li class="chapter" data-level="3.6.2" data-path="univariat-data.html"><a href="univariat-data.html#measure-of-position"><i class="fa fa-check"></i><b>3.6.2</b> Measure of Position</a></li>
 </ul></li>
@@ -165,45 +181,54 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="3.9" data-path="univariat-data.html"><a href="univariat-data.html#viewing-the-shape"><i class="fa fa-check"></i><b>3.9</b> Viewing the shape</a></li>
 <li class="chapter" data-level="3.10" data-path="univariat-data.html"><a href="univariat-data.html#categorical-data"><i class="fa fa-check"></i><b>3.10</b> Categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="bivariate-data.html"><a href="bivariate-data.html"><i class="fa fa-check"></i><b>4</b> Bivariate data</a><ul>
-<li class="chapter" data-level="4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a><ul>
+<li class="chapter" data-level="4" data-path="bivariate-data.html"><a href="bivariate-data.html"><i class="fa fa-check"></i><b>4</b> Bivariate data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="bivariate-data.html"><a href="bivariate-data.html#independence-samples"><i class="fa fa-check"></i><b>4.1.1</b> Independence samples</a></li>
 <li class="chapter" data-level="4.1.2" data-path="bivariate-data.html"><a href="bivariate-data.html#plot"><i class="fa fa-check"></i><b>4.1.2</b> plot</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-manipulation"><i class="fa fa-check"></i><b>4.2</b> Data manipulation</a><ul>
+<li class="chapter" data-level="4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-manipulation"><i class="fa fa-check"></i><b>4.2</b> Data manipulation</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="bivariate-data.html"><a href="bivariate-data.html#list"><i class="fa fa-check"></i><b>4.2.1</b> List</a></li>
 <li class="chapter" data-level="4.2.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-frame"><i class="fa fa-check"></i><b>4.2.2</b> Data frame</a></li>
 <li class="chapter" data-level="4.2.3" data-path="bivariate-data.html"><a href="bivariate-data.html#model-formulas"><i class="fa fa-check"></i><b>4.2.3</b> Model formulas</a></li>
 <li class="chapter" data-level="4.2.4" data-path="bivariate-data.html"><a href="bivariate-data.html#example-3-1"><i class="fa fa-check"></i><b>4.2.4</b> Example 3-1</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#paired-data"><i class="fa fa-check"></i><b>4.3</b> Paired data</a><ul>
+<li class="chapter" data-level="4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#paired-data"><i class="fa fa-check"></i><b>4.3</b> Paired data</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="bivariate-data.html"><a href="bivariate-data.html#pearson-correlation"><i class="fa fa-check"></i><b>4.3.1</b> Pearson Correlation</a></li>
 <li class="chapter" data-level="4.3.2" data-path="bivariate-data.html"><a href="bivariate-data.html#spearman-correlation-coefficient"><i class="fa fa-check"></i><b>4.3.2</b> Spearman correlation coefficient</a></li>
 <li class="chapter" data-level="4.3.3" data-path="bivariate-data.html"><a href="bivariate-data.html#correlation-causation-and-association"><i class="fa fa-check"></i><b>4.3.3</b> Correlation, causation and association</a></li>
 <li class="chapter" data-level="4.3.4" data-path="bivariate-data.html"><a href="bivariate-data.html#trends"><i class="fa fa-check"></i><b>4.3.4</b> Trends</a></li>
 <li class="chapter" data-level="4.3.5" data-path="bivariate-data.html"><a href="bivariate-data.html#the-method-of-least-squares"><i class="fa fa-check"></i><b>4.3.5</b> The method of least squares</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#bivariate-categorical-data"><i class="fa fa-check"></i><b>4.4</b> Bivariate categorical data</a><ul>
+<li class="chapter" data-level="4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#bivariate-categorical-data"><i class="fa fa-check"></i><b>4.4</b> Bivariate categorical data</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#contingency-tables"><i class="fa fa-check"></i><b>4.4.1</b> Contingency tables</a></li>
 <li class="chapter" data-level="4.4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#marginal-distributions"><i class="fa fa-check"></i><b>4.4.2</b> Marginal distributions</a></li>
 <li class="chapter" data-level="4.4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#conditional-distributions"><i class="fa fa-check"></i><b>4.4.3</b> Conditional distributions</a></li>
 <li class="chapter" data-level="4.4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#graphical-summaries-of-contingency-tables"><i class="fa fa-check"></i><b>4.4.4</b> Graphical summaries of contingency tables</a></li>
 <li class="chapter" data-level="4.4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#measures-of-association-for-categorical-data"><i class="fa fa-check"></i><b>4.4.5</b> Measures of association for categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#homeworks"><i class="fa fa-check"></i><b>4.5</b> Homeworks</a><ul>
+<li class="chapter" data-level="4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#homeworks"><i class="fa fa-check"></i><b>4.5</b> Homeworks</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="bivariate-data.html"><a href="bivariate-data.html#hw3-1"><i class="fa fa-check"></i><b>4.5.1</b> HW3-1</a></li>
 <li class="chapter" data-level="4.5.2" data-path="bivariate-data.html"><a href="bivariate-data.html#hw3-2"><i class="fa fa-check"></i><b>4.5.2</b> HW3-2</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-data.html"><a href="multivariate-data.html"><i class="fa fa-check"></i><b>5</b> Multivariate data</a><ul>
+<li class="chapter" data-level="5" data-path="multivariate-data.html"><a href="multivariate-data.html"><i class="fa fa-check"></i><b>5</b> Multivariate data</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
-<li class="chapter" data-level="5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#data-structures-in-r"><i class="fa fa-check"></i><b>5.2</b> Data structures in R</a><ul>
+<li class="chapter" data-level="5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#data-structures-in-r"><i class="fa fa-check"></i><b>5.2</b> Data structures in R</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="multivariate-data.html"><a href="multivariate-data.html#vectors"><i class="fa fa-check"></i><b>5.2.1</b> Vectors</a></li>
 <li class="chapter" data-level="5.2.2" data-path="multivariate-data.html"><a href="multivariate-data.html#lists"><i class="fa fa-check"></i><b>5.2.2</b> Lists</a></li>
 <li class="chapter" data-level="5.2.3" data-path="multivariate-data.html"><a href="multivariate-data.html#matrices"><i class="fa fa-check"></i><b>5.2.3</b> Matrices</a></li>
 <li class="chapter" data-level="5.2.4" data-path="multivariate-data.html"><a href="multivariate-data.html#data.frame"><i class="fa fa-check"></i><b>5.2.4</b> data.frame</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-i"><i class="fa fa-check"></i><b>5.3</b> Working with data frame I</a><ul>
+<li class="chapter" data-level="5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-i"><i class="fa fa-check"></i><b>5.3</b> Working with data frame I</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="multivariate-data.html"><a href="multivariate-data.html#some-exercises"><i class="fa fa-check"></i><b>5.3.1</b> some exercises</a></li>
 <li class="chapter" data-level="5.3.2" data-path="multivariate-data.html"><a href="multivariate-data.html#subset-and-filter"><i class="fa fa-check"></i><b>5.3.2</b> subset and filter</a></li>
 <li class="chapter" data-level="5.3.3" data-path="multivariate-data.html"><a href="multivariate-data.html#transforming"><i class="fa fa-check"></i><b>5.3.3</b> transforming</a></li>
@@ -211,13 +236,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.3.5" data-path="multivariate-data.html"><a href="multivariate-data.html#merging-data"><i class="fa fa-check"></i><b>5.3.5</b> merging data</a></li>
 <li class="chapter" data-level="5.3.6" data-path="multivariate-data.html"><a href="multivariate-data.html#split"><i class="fa fa-check"></i><b>5.3.6</b> split</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-ii"><i class="fa fa-check"></i><b>5.4</b> working with data frame II</a><ul>
+<li class="chapter" data-level="5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-ii"><i class="fa fa-check"></i><b>5.4</b> working with data frame II</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="multivariate-data.html"><a href="multivariate-data.html#apply"><i class="fa fa-check"></i><b>5.4.1</b> apply</a></li>
 <li class="chapter" data-level="5.4.2" data-path="multivariate-data.html"><a href="multivariate-data.html#map-and-apply-function-family"><i class="fa fa-check"></i><b>5.4.2</b> map and apply function family</a></li>
 <li class="chapter" data-level="5.4.3" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---pipe-operator"><i class="fa fa-check"></i><b>5.4.3</b> dplyr - pipe operator</a></li>
 <li class="chapter" data-level="5.4.4" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---important-functions"><i class="fa fa-check"></i><b>5.4.4</b> dplyr - Important functions</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a><ul>
+<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-with-basic-graph-functions"><i class="fa fa-check"></i><b>5.5.1</b> Bar graph with basic graph functions</a></li>
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
@@ -225,27 +252,33 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, tibble row and column names</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
-<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="populations.html"><a href="populations.html#random-variable"><i class="fa fa-check"></i><b>6.1.1</b> Random variable</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a><ul>
+<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="populations.html"><a href="populations.html#probability-mass-function"><i class="fa fa-check"></i><b>6.2.1</b> Probability mass function</a></li>
 <li class="chapter" data-level="6.2.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-discrete-r.v."><i class="fa fa-check"></i><b>6.2.2</b> Mean and standard deviation of discrete R.V.</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a><ul>
+<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="populations.html"><a href="populations.html#probability-density-function"><i class="fa fa-check"></i><b>6.3.1</b> Probability density function</a></li>
 <li class="chapter" data-level="6.3.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-continuous-r.v."><i class="fa fa-check"></i><b>6.3.2</b> Mean and standard deviation of continuous R.V.</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="populations.html"><a href="populations.html#sampling-from-a-population"><i class="fa fa-check"></i><b>6.4</b> Sampling from a population</a></li>
-<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a><ul>
+<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="populations.html"><a href="populations.html#probability-distributions"><i class="fa fa-check"></i><b>6.5.1</b> Probability distributions</a></li>
 <li class="chapter" data-level="6.5.2" data-path="populations.html"><a href="populations.html#bernoulli-random-variables"><i class="fa fa-check"></i><b>6.5.2</b> Bernoulli random variables</a></li>
 <li class="chapter" data-level="6.5.3" data-path="populations.html"><a href="populations.html#binomial-random-variables"><i class="fa fa-check"></i><b>6.5.3</b> Binomial random variables</a></li>
 <li class="chapter" data-level="6.5.4" data-path="populations.html"><a href="populations.html#normal-random-variables"><i class="fa fa-check"></i><b>6.5.4</b> Normal random variables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>7</b> Statistical inference</a><ul>
+<li class="chapter" data-level="7" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>7</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="statistical-inference.html"><a href="statistical-inference.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
 <li class="chapter" data-level="7.2" data-path="statistical-inference.html"><a href="statistical-inference.html#simulation"><i class="fa fa-check"></i><b>7.2</b> Simulation</a></li>
 <li class="chapter" data-level="7.3" data-path="statistical-inference.html"><a href="statistical-inference.html#significance-tests"><i class="fa fa-check"></i><b>7.3</b> Significance tests</a></li>
@@ -300,54 +333,54 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p><strong>[EXERCISE]</strong> 표준정규분포로부터 16개의 표본을 뽑아 평균을 구하고 각 표본과 평균 값들을 y=1 위치에 점으로 표현하시오 (rnorm사용)</p>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
 <p><strong>[EXERCISE]</strong> 위 예제를 두 번 반복하되 두 번째 데이터는 y=0.9 위치에 표현하시오</p>
-<pre class="sourceCode r" id="cb183"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</a>
-<a class="sourceLine" id="cb183-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb183-3" data-line-number="3">nsample &lt;-<span class="st"> </span><span class="dv">16</span></a>
-<a class="sourceLine" id="cb183-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample<span class="op">*</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb183-5" data-line-number="5">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, nsample), <span class="kw">rep</span>(<span class="fl">0.9</span>, nsample))</a>
-<a class="sourceLine" id="cb183-6" data-line-number="6">g &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, nsample), <span class="kw">rep</span>(<span class="dv">2</span>, nsample)))</a>
-<a class="sourceLine" id="cb183-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb183-8" data-line-number="8">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y, g)</a>
-<a class="sourceLine" id="cb183-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb183-10" data-line-number="10"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb183-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb183-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">mean</span>(x[<span class="dv">1</span><span class="op">:</span>nsample]), <span class="dt">y=</span><span class="dv">1</span>), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb183-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">mean</span>(x[(nsample<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw">length</span>(x)]), <span class="dt">y=</span><span class="fl">0.9</span>), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb183-14" data-line-number="14"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</a></code></pre>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="statistical-inference.html#cb183-1"></a><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</span>
+<span id="cb183-2"><a href="statistical-inference.html#cb183-2"></a></span>
+<span id="cb183-3"><a href="statistical-inference.html#cb183-3"></a>nsample &lt;-<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb183-4"><a href="statistical-inference.html#cb183-4"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample<span class="op">*</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb183-5"><a href="statistical-inference.html#cb183-5"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, nsample), <span class="kw">rep</span>(<span class="fl">0.9</span>, nsample))</span>
+<span id="cb183-6"><a href="statistical-inference.html#cb183-6"></a>g &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, nsample), <span class="kw">rep</span>(<span class="dv">2</span>, nsample)))</span>
+<span id="cb183-7"><a href="statistical-inference.html#cb183-7"></a></span>
+<span id="cb183-8"><a href="statistical-inference.html#cb183-8"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y, g)</span>
+<span id="cb183-9"><a href="statistical-inference.html#cb183-9"></a></span>
+<span id="cb183-10"><a href="statistical-inference.html#cb183-10"></a><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb183-11"><a href="statistical-inference.html#cb183-11"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb183-12"><a href="statistical-inference.html#cb183-12"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">mean</span>(x[<span class="dv">1</span><span class="op">:</span>nsample]), <span class="dt">y=</span><span class="dv">1</span>), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></span>
+<span id="cb183-13"><a href="statistical-inference.html#cb183-13"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">mean</span>(x[(nsample<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw">length</span>(x)]), <span class="dt">y=</span><span class="fl">0.9</span>), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></span>
+<span id="cb183-14"><a href="statistical-inference.html#cb183-14"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
 <p><strong>[EXERCISE]</strong> 위 예제를 10번 반복하되 각 반복 데이터는 각각 y=1, 0.9, 0.8, …, 0.1 위치에 표현하시오</p>
-<pre class="sourceCode r" id="cb184"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)))</a>
-<a class="sourceLine" id="cb184-2" data-line-number="2"><span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> T)))</a>
-<a class="sourceLine" id="cb184-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb184-4" data-line-number="4">nsample &lt;-<span class="st"> </span><span class="dv">16</span></a>
-<a class="sourceLine" id="cb184-5" data-line-number="5">nrep &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb184-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb184-7" data-line-number="7">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample<span class="op">*</span>nrep, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb184-8" data-line-number="8">tmpy &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dt">length.out=</span>nrep)</a>
-<a class="sourceLine" id="cb184-9" data-line-number="9">y &lt;-<span class="st"> </span><span class="kw">rep</span>(tmpy, <span class="dt">each=</span>nsample)</a>
-<a class="sourceLine" id="cb184-10" data-line-number="10">## ?rep</a>
-<a class="sourceLine" id="cb184-11" data-line-number="11">g &lt;-<span class="st"> </span><span class="kw">factor</span>(y)</a>
-<a class="sourceLine" id="cb184-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb184-13" data-line-number="13">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y, g)</a>
-<a class="sourceLine" id="cb184-14" data-line-number="14">dat_mean &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb184-15" data-line-number="15"><span class="st">  </span><span class="kw">group_by</span>(g) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb184-16" data-line-number="16"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(x))</a>
-<a class="sourceLine" id="cb184-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb184-18" data-line-number="18"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb184-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb184-20" data-line-number="20"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb184-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat_mean, <span class="kw">aes</span>(<span class="dt">y=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(g)), <span class="dt">x=</span>mean), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>)</a></code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="statistical-inference.html#cb184-1"></a><span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)))</span>
+<span id="cb184-2"><a href="statistical-inference.html#cb184-2"></a><span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> T)))</span>
+<span id="cb184-3"><a href="statistical-inference.html#cb184-3"></a></span>
+<span id="cb184-4"><a href="statistical-inference.html#cb184-4"></a>nsample &lt;-<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb184-5"><a href="statistical-inference.html#cb184-5"></a>nrep &lt;-<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb184-6"><a href="statistical-inference.html#cb184-6"></a></span>
+<span id="cb184-7"><a href="statistical-inference.html#cb184-7"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample<span class="op">*</span>nrep, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb184-8"><a href="statistical-inference.html#cb184-8"></a>tmpy &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dt">length.out=</span>nrep)</span>
+<span id="cb184-9"><a href="statistical-inference.html#cb184-9"></a>y &lt;-<span class="st"> </span><span class="kw">rep</span>(tmpy, <span class="dt">each=</span>nsample)</span>
+<span id="cb184-10"><a href="statistical-inference.html#cb184-10"></a><span class="co">## ?rep</span></span>
+<span id="cb184-11"><a href="statistical-inference.html#cb184-11"></a>g &lt;-<span class="st"> </span><span class="kw">factor</span>(y)</span>
+<span id="cb184-12"><a href="statistical-inference.html#cb184-12"></a></span>
+<span id="cb184-13"><a href="statistical-inference.html#cb184-13"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y, g)</span>
+<span id="cb184-14"><a href="statistical-inference.html#cb184-14"></a>dat_mean &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb184-15"><a href="statistical-inference.html#cb184-15"></a><span class="st">  </span><span class="kw">group_by</span>(g) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb184-16"><a href="statistical-inference.html#cb184-16"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(x))</span>
+<span id="cb184-17"><a href="statistical-inference.html#cb184-17"></a></span>
+<span id="cb184-18"><a href="statistical-inference.html#cb184-18"></a><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb184-19"><a href="statistical-inference.html#cb184-19"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb184-20"><a href="statistical-inference.html#cb184-20"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>)) <span class="op">+</span></span>
+<span id="cb184-21"><a href="statistical-inference.html#cb184-21"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat_mean, <span class="kw">aes</span>(<span class="dt">y=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(g)), <span class="dt">x=</span>mean), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
-<pre class="sourceCode r" id="cb185"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw">str</span>(dat_mean)</a></code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="statistical-inference.html#cb185-1"></a><span class="kw">str</span>(dat_mean)</span></code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10 obs. of  2 variables:
 ##  $ g   : Factor w/ 10 levels &quot;0.1&quot;,&quot;0.2&quot;,&quot;0.3&quot;,..: 1 2 3 4 5 6 7 8 9 10
-##  $ mean: num  0.2508 -0.0839 -0.226 0.146 0.1888 ...</code></pre>
-<pre class="sourceCode r" id="cb187"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1"><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))</a></code></pre>
+##  $ mean: num  0.1122 0.5426 0.0401 0.0783 -0.1814 ...</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="statistical-inference.html#cb187-1"></a><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))</span></code></pre></div>
 <pre><code>##  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
-<pre class="sourceCode r" id="cb189"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb189-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb189-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat_mean, <span class="kw">aes</span>(<span class="dt">x=</span>mean, <span class="dt">y=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb189-4" data-line-number="4"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="statistical-inference.html#cb189-1"></a><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb189-2"><a href="statistical-inference.html#cb189-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb189-3"><a href="statistical-inference.html#cb189-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>dat_mean, <span class="kw">aes</span>(<span class="dt">x=</span>mean, <span class="dt">y=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))), <span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">15</span>) <span class="op">+</span></span>
+<span id="cb189-4"><a href="statistical-inference.html#cb189-4"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-179-2.png" width="672" /></p>
 <p><strong>[EXERCISE]</strong> 위 예제와 함께 표준정규분포 곡선과 <span class="math inline">\(\bar{x}\)</span>의 분포를 모두 같이 그리시오</p>
 </div>
@@ -355,15 +388,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h2><span class="header-section-number">7.3</span> Significance tests</h2>
 <p>두 그룹의 데이터 (표본)을 가지고 있을 때 두 그룹이 통계적으로 차이가 있는지를 검증하는 방법으로 (코흐트 데이터, Case-control 데이터) 시뮬레이션에 의한 방법을 먼저 소개하고 이 후 분포를 기준으로 통계적 검증을 알아보겠습니다.</p>
 <p>카페인(커피)이 초초한 상태를 유발하는가? 라는 질문에 답하기 위해서 보통 두 그룹의 평균의 차이를 비교합니다.</p>
-<pre class="sourceCode r" id="cb190"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">coff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">246</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">252</span>)</a>
-<a class="sourceLine" id="cb190-2" data-line-number="2">nocoff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">244</span>, <span class="dv">244</span>, <span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">247</span>, <span class="dv">248</span>, <span class="dv">248</span>)</a>
-<a class="sourceLine" id="cb190-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(coff, nocoff)</a>
-<a class="sourceLine" id="cb190-4" data-line-number="4">obs &lt;-<span class="st"> </span><span class="kw">with</span>(dat, <span class="kw">mean</span>(coff) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(nocoff))</a>
-<a class="sourceLine" id="cb190-5" data-line-number="5">obs</a></code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="statistical-inference.html#cb190-1"></a>coff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">246</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">248</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">250</span>, <span class="dv">252</span>)</span>
+<span id="cb190-2"><a href="statistical-inference.html#cb190-2"></a>nocoff &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">242</span>, <span class="dv">244</span>, <span class="dv">244</span>, <span class="dv">245</span>, <span class="dv">246</span>, <span class="dv">247</span>, <span class="dv">248</span>, <span class="dv">248</span>)</span>
+<span id="cb190-3"><a href="statistical-inference.html#cb190-3"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(coff, nocoff)</span>
+<span id="cb190-4"><a href="statistical-inference.html#cb190-4"></a>obs &lt;-<span class="st"> </span><span class="kw">with</span>(dat, <span class="kw">mean</span>(coff) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(nocoff))</span>
+<span id="cb190-5"><a href="statistical-inference.html#cb190-5"></a>obs</span></code></pre></div>
 <pre><code>## [1] 3.5</code></pre>
 <p>Randomization distribution 상태로 데이터를 다시 두 그룹으로 나누어 차이를 계산하고 이 과정을 반복해서 분포를 그려보겠습니다.</p>
 <p><strong>[EXERCISE]</strong> 두 그룹 데이터에서 임으로 10명을 두 번 뽑아 그 평균의 차이를 계산하시오</p>
-<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] -1.2</code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제의 과정을 1000번 반복하고 각 차이값의 분포를 그리시오</p>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -385,29 +418,29 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <li><span class="math inline">\(E(s^2) = \sigma^2\)</span></li>
 </ul>
 <p>예를 들어 A poll asking a random sample of 1003 whether marriages between same-sex couples should be recognized by law as valid. 55% said yes, 이 경우 A randomly selected person would responding yes with p = 0.55 입니다. 여기서 어디에 대부분의 데이터가 모여있는가? 라는 질문을 할 수 있고 이는 데이터의 95%가 어느 범위에 있는가? 라는 질문과 같습니다. 이를 위해 다음 시뮬레이션을 수행할 수 있습니다.</p>
-<pre><code>## [1] 552.175</code></pre>
+<pre><code>## [1] 551.526</code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
 <pre><code>##    2.5%   97.5% 
-## 521.000 582.025</code></pre>
+## 519.975 582.000</code></pre>
 <p>그러나 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 구간을 구해야 합니다.</p>
-<pre><code>## [1] 568.5</code></pre>
+<pre><code>## [1] 551</code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 <p>다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 <span class="math inline">\(\sqrt{n}\)</span>으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 <span class="math inline">\(\sigma\)</span> 대신 <span class="math inline">\(s\)</span>를 사용한 경우를 말합니다.</p>
 <p><img src="images/07/02.PNG" /></p>
-<pre class="sourceCode r" id="cb198"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb198-2" data-line-number="2">sigma &lt;-<span class="st"> </span><span class="dv">16</span></a>
-<a class="sourceLine" id="cb198-3" data-line-number="3">M &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb198-4" data-line-number="4">n &lt;-<span class="st"> </span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb198-5" data-line-number="5">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(M, {</a>
-<a class="sourceLine" id="cb198-6" data-line-number="6">    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mu, sigma)</a>
-<a class="sourceLine" id="cb198-7" data-line-number="7">    se &lt;-<span class="st"> </span>(<span class="kw">mean</span>(x)<span class="op">-</span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
-<a class="sourceLine" id="cb198-8" data-line-number="8">    (<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>se</a>
-<a class="sourceLine" id="cb198-9" data-line-number="9">})</a>
-<a class="sourceLine" id="cb198-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb198-11" data-line-number="11"><span class="kw">quantile</span>(res, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</a></code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="statistical-inference.html#cb198-1"></a>mu &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb198-2"><a href="statistical-inference.html#cb198-2"></a>sigma &lt;-<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb198-3"><a href="statistical-inference.html#cb198-3"></a>M &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb198-4"><a href="statistical-inference.html#cb198-4"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
+<span id="cb198-5"><a href="statistical-inference.html#cb198-5"></a>res &lt;-<span class="st"> </span><span class="kw">replicate</span>(M, {</span>
+<span id="cb198-6"><a href="statistical-inference.html#cb198-6"></a>    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mu, sigma)</span>
+<span id="cb198-7"><a href="statistical-inference.html#cb198-7"></a>    se &lt;-<span class="st"> </span>(<span class="kw">mean</span>(x)<span class="op">-</span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb198-8"><a href="statistical-inference.html#cb198-8"></a>    (<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>se</span>
+<span id="cb198-9"><a href="statistical-inference.html#cb198-9"></a>})</span>
+<span id="cb198-10"><a href="statistical-inference.html#cb198-10"></a></span>
+<span id="cb198-11"><a href="statistical-inference.html#cb198-11"></a><span class="kw">quantile</span>(res, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-##  8.206454 56.083108</code></pre>
-<pre class="sourceCode r" id="cb200"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="kw">hist</span>(res, <span class="dt">br=</span><span class="dv">100</span>)</a></code></pre>
+##  8.758342 58.313237</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="statistical-inference.html#cb200-1"></a><span class="kw">hist</span>(res, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
@@ -419,6 +452,26 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <p><img src="images/07/05.PNG" /></p>
 <p><img src="images/07/06.PNG" /></p>
 <p><img src="images/07/07.PNG" /></p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="statistical-inference.html#cb202-1"></a>obs &lt;-<span class="st"> </span><span class="kw">mean</span>(Medicare<span class="op">$</span>Average.Covered.Charges<span class="op">-</span>Medicare<span class="op">$</span>Average.Total.Payments)</span>
+<span id="cb202-2"><a href="statistical-inference.html#cb202-2"></a></span>
+<span id="cb202-3"><a href="statistical-inference.html#cb202-3"></a>dat &lt;-<span class="st"> </span><span class="kw">c</span>(Medicare<span class="op">$</span>Average.Covered.Charges, Medicare<span class="op">$</span>Average.Total.Payments)</span>
+<span id="cb202-4"><a href="statistical-inference.html#cb202-4"></a>n &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb202-5"><a href="statistical-inference.html#cb202-5"></a>dif &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</span>
+<span id="cb202-6"><a href="statistical-inference.html#cb202-6"></a>dif</span>
+<span id="cb202-7"><a href="statistical-inference.html#cb202-7"></a></span>
+<span id="cb202-8"><a href="statistical-inference.html#cb202-8"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb202-9"><a href="statistical-inference.html#cb202-9"></a>  dif[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">sample</span>(dat, <span class="dv">10000</span>, T) <span class="op">-</span><span class="st"> </span><span class="kw">sample</span>(dat, <span class="dv">10000</span>, T))</span>
+<span id="cb202-10"><a href="statistical-inference.html#cb202-10"></a>}</span>
+<span id="cb202-11"><a href="statistical-inference.html#cb202-11"></a>dif</span>
+<span id="cb202-12"><a href="statistical-inference.html#cb202-12"></a><span class="kw">hist</span>(dif)</span>
+<span id="cb202-13"><a href="statistical-inference.html#cb202-13"></a>dat_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(dif)</span>
+<span id="cb202-14"><a href="statistical-inference.html#cb202-14"></a><span class="kw">head</span>(dat_df)</span>
+<span id="cb202-15"><a href="statistical-inference.html#cb202-15"></a><span class="kw">ggplot</span>(dat_df, <span class="kw">aes</span>(<span class="dt">x=</span>dif)) <span class="op">+</span></span>
+<span id="cb202-16"><a href="statistical-inference.html#cb202-16"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></span>
+<span id="cb202-17"><a href="statistical-inference.html#cb202-17"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label=</span>obs, <span class="dt">x=</span><span class="dv">1000</span>, <span class="dt">y=</span><span class="dv">75</span>, obs)</span>
+<span id="cb202-18"><a href="statistical-inference.html#cb202-18"></a></span>
+<span id="cb202-19"><a href="statistical-inference.html#cb202-19"></a><span class="kw">sum</span>(dif <span class="op">&gt;</span><span class="st"> </span>obs)</span>
+<span id="cb202-20"><a href="statistical-inference.html#cb202-20"></a><span class="kw">hist</span>(dif)</span></code></pre></div>
 
 </div>
 </div>
@@ -433,11 +486,13 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -445,12 +500,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -462,6 +516,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

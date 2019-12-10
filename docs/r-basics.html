@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 R basics | R로 배우는 기초통계</title>
   <meta name="description" content="이 강의는 2019년 2학기 UST에서 진행하는 일반강의 입니다." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16.5 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 R basics | R로 배우는 기초통계" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-27" />
+<meta name="date" content="2019-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,20 +53,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -71,38 +80,40 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -121,14 +132,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="./"> [2019 UST lecture] R statistics </a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction 강의 개요</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal--"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references--"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation---"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule--"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#references---1"><i class="fa fa-check"></i><b>1.5</b> References 참고 자료</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction 강의 개요</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal-강의-목표"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references-참고-자료"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation-평가-세부-항목"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule-강의-계획"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#references-참고-자료-1"><i class="fa fa-check"></i><b>1.5</b> References 참고 자료</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>2</b> R basics</a><ul>
+<li class="chapter" data-level="2" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>2</b> R basics</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="r-basics.html"><a href="r-basics.html#what-is-r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What is R / Rstudio</a></li>
 <li class="chapter" data-level="2.2" data-path="r-basics.html"><a href="r-basics.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio installation</a></li>
 <li class="chapter" data-level="2.3" data-path="r-basics.html"><a href="r-basics.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a></li>
@@ -147,16 +160,19 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="2.16" data-path="r-basics.html"><a href="r-basics.html#data-sets"><i class="fa fa-check"></i><b>2.16</b> Data sets</a></li>
 <li class="chapter" data-level="2.17" data-path="r-basics.html"><a href="r-basics.html#cheatsheet"><i class="fa fa-check"></i><b>2.17</b> Cheatsheet</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="univariat-data.html"><a href="univariat-data.html"><i class="fa fa-check"></i><b>3</b> Univariat data</a><ul>
+<li class="chapter" data-level="3" data-path="univariat-data.html"><a href="univariat-data.html"><i class="fa fa-check"></i><b>3</b> Univariat data</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="univariat-data.html"><a href="univariat-data.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
 <li class="chapter" data-level="3.2" data-path="univariat-data.html"><a href="univariat-data.html#data-vectors"><i class="fa fa-check"></i><b>3.2</b> Data vectors</a></li>
-<li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a><ul>
+<li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#example---recoding-values"><i class="fa fa-check"></i><b>3.3.1</b> Example - Recoding values</a></li>
 <li class="chapter" data-level="3.3.2" data-path="univariat-data.html"><a href="univariat-data.html#example---average-distance-from-center"><i class="fa fa-check"></i><b>3.3.2</b> Example - Average distance from center</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="univariat-data.html"><a href="univariat-data.html#functions-1"><i class="fa fa-check"></i><b>3.4</b> Functions</a></li>
 <li class="chapter" data-level="3.5" data-path="univariat-data.html"><a href="univariat-data.html#numeric-summaries"><i class="fa fa-check"></i><b>3.5</b> Numeric summaries</a></li>
-<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a><ul>
+<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a>
+<ul>
 <li class="chapter" data-level="3.6.1" data-path="univariat-data.html"><a href="univariat-data.html#sample-mean"><i class="fa fa-check"></i><b>3.6.1</b> Sample mean</a></li>
 <li class="chapter" data-level="3.6.2" data-path="univariat-data.html"><a href="univariat-data.html#measure-of-position"><i class="fa fa-check"></i><b>3.6.2</b> Measure of Position</a></li>
 </ul></li>
@@ -165,45 +181,54 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="3.9" data-path="univariat-data.html"><a href="univariat-data.html#viewing-the-shape"><i class="fa fa-check"></i><b>3.9</b> Viewing the shape</a></li>
 <li class="chapter" data-level="3.10" data-path="univariat-data.html"><a href="univariat-data.html#categorical-data"><i class="fa fa-check"></i><b>3.10</b> Categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="bivariate-data.html"><a href="bivariate-data.html"><i class="fa fa-check"></i><b>4</b> Bivariate data</a><ul>
-<li class="chapter" data-level="4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a><ul>
+<li class="chapter" data-level="4" data-path="bivariate-data.html"><a href="bivariate-data.html"><i class="fa fa-check"></i><b>4</b> Bivariate data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="bivariate-data.html"><a href="bivariate-data.html#independence-samples"><i class="fa fa-check"></i><b>4.1.1</b> Independence samples</a></li>
 <li class="chapter" data-level="4.1.2" data-path="bivariate-data.html"><a href="bivariate-data.html#plot"><i class="fa fa-check"></i><b>4.1.2</b> plot</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-manipulation"><i class="fa fa-check"></i><b>4.2</b> Data manipulation</a><ul>
+<li class="chapter" data-level="4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-manipulation"><i class="fa fa-check"></i><b>4.2</b> Data manipulation</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="bivariate-data.html"><a href="bivariate-data.html#list"><i class="fa fa-check"></i><b>4.2.1</b> List</a></li>
 <li class="chapter" data-level="4.2.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-frame"><i class="fa fa-check"></i><b>4.2.2</b> Data frame</a></li>
 <li class="chapter" data-level="4.2.3" data-path="bivariate-data.html"><a href="bivariate-data.html#model-formulas"><i class="fa fa-check"></i><b>4.2.3</b> Model formulas</a></li>
 <li class="chapter" data-level="4.2.4" data-path="bivariate-data.html"><a href="bivariate-data.html#example-3-1"><i class="fa fa-check"></i><b>4.2.4</b> Example 3-1</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#paired-data"><i class="fa fa-check"></i><b>4.3</b> Paired data</a><ul>
+<li class="chapter" data-level="4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#paired-data"><i class="fa fa-check"></i><b>4.3</b> Paired data</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="bivariate-data.html"><a href="bivariate-data.html#pearson-correlation"><i class="fa fa-check"></i><b>4.3.1</b> Pearson Correlation</a></li>
 <li class="chapter" data-level="4.3.2" data-path="bivariate-data.html"><a href="bivariate-data.html#spearman-correlation-coefficient"><i class="fa fa-check"></i><b>4.3.2</b> Spearman correlation coefficient</a></li>
 <li class="chapter" data-level="4.3.3" data-path="bivariate-data.html"><a href="bivariate-data.html#correlation-causation-and-association"><i class="fa fa-check"></i><b>4.3.3</b> Correlation, causation and association</a></li>
 <li class="chapter" data-level="4.3.4" data-path="bivariate-data.html"><a href="bivariate-data.html#trends"><i class="fa fa-check"></i><b>4.3.4</b> Trends</a></li>
 <li class="chapter" data-level="4.3.5" data-path="bivariate-data.html"><a href="bivariate-data.html#the-method-of-least-squares"><i class="fa fa-check"></i><b>4.3.5</b> The method of least squares</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#bivariate-categorical-data"><i class="fa fa-check"></i><b>4.4</b> Bivariate categorical data</a><ul>
+<li class="chapter" data-level="4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#bivariate-categorical-data"><i class="fa fa-check"></i><b>4.4</b> Bivariate categorical data</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#contingency-tables"><i class="fa fa-check"></i><b>4.4.1</b> Contingency tables</a></li>
 <li class="chapter" data-level="4.4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#marginal-distributions"><i class="fa fa-check"></i><b>4.4.2</b> Marginal distributions</a></li>
 <li class="chapter" data-level="4.4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#conditional-distributions"><i class="fa fa-check"></i><b>4.4.3</b> Conditional distributions</a></li>
 <li class="chapter" data-level="4.4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#graphical-summaries-of-contingency-tables"><i class="fa fa-check"></i><b>4.4.4</b> Graphical summaries of contingency tables</a></li>
 <li class="chapter" data-level="4.4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#measures-of-association-for-categorical-data"><i class="fa fa-check"></i><b>4.4.5</b> Measures of association for categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#homeworks"><i class="fa fa-check"></i><b>4.5</b> Homeworks</a><ul>
+<li class="chapter" data-level="4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#homeworks"><i class="fa fa-check"></i><b>4.5</b> Homeworks</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="bivariate-data.html"><a href="bivariate-data.html#hw3-1"><i class="fa fa-check"></i><b>4.5.1</b> HW3-1</a></li>
 <li class="chapter" data-level="4.5.2" data-path="bivariate-data.html"><a href="bivariate-data.html#hw3-2"><i class="fa fa-check"></i><b>4.5.2</b> HW3-2</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-data.html"><a href="multivariate-data.html"><i class="fa fa-check"></i><b>5</b> Multivariate data</a><ul>
+<li class="chapter" data-level="5" data-path="multivariate-data.html"><a href="multivariate-data.html"><i class="fa fa-check"></i><b>5</b> Multivariate data</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
-<li class="chapter" data-level="5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#data-structures-in-r"><i class="fa fa-check"></i><b>5.2</b> Data structures in R</a><ul>
+<li class="chapter" data-level="5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#data-structures-in-r"><i class="fa fa-check"></i><b>5.2</b> Data structures in R</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="multivariate-data.html"><a href="multivariate-data.html#vectors"><i class="fa fa-check"></i><b>5.2.1</b> Vectors</a></li>
 <li class="chapter" data-level="5.2.2" data-path="multivariate-data.html"><a href="multivariate-data.html#lists"><i class="fa fa-check"></i><b>5.2.2</b> Lists</a></li>
 <li class="chapter" data-level="5.2.3" data-path="multivariate-data.html"><a href="multivariate-data.html#matrices"><i class="fa fa-check"></i><b>5.2.3</b> Matrices</a></li>
 <li class="chapter" data-level="5.2.4" data-path="multivariate-data.html"><a href="multivariate-data.html#data.frame"><i class="fa fa-check"></i><b>5.2.4</b> data.frame</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-i"><i class="fa fa-check"></i><b>5.3</b> Working with data frame I</a><ul>
+<li class="chapter" data-level="5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-i"><i class="fa fa-check"></i><b>5.3</b> Working with data frame I</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="multivariate-data.html"><a href="multivariate-data.html#some-exercises"><i class="fa fa-check"></i><b>5.3.1</b> some exercises</a></li>
 <li class="chapter" data-level="5.3.2" data-path="multivariate-data.html"><a href="multivariate-data.html#subset-and-filter"><i class="fa fa-check"></i><b>5.3.2</b> subset and filter</a></li>
 <li class="chapter" data-level="5.3.3" data-path="multivariate-data.html"><a href="multivariate-data.html#transforming"><i class="fa fa-check"></i><b>5.3.3</b> transforming</a></li>
@@ -211,13 +236,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.3.5" data-path="multivariate-data.html"><a href="multivariate-data.html#merging-data"><i class="fa fa-check"></i><b>5.3.5</b> merging data</a></li>
 <li class="chapter" data-level="5.3.6" data-path="multivariate-data.html"><a href="multivariate-data.html#split"><i class="fa fa-check"></i><b>5.3.6</b> split</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-ii"><i class="fa fa-check"></i><b>5.4</b> working with data frame II</a><ul>
+<li class="chapter" data-level="5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-ii"><i class="fa fa-check"></i><b>5.4</b> working with data frame II</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="multivariate-data.html"><a href="multivariate-data.html#apply"><i class="fa fa-check"></i><b>5.4.1</b> apply</a></li>
 <li class="chapter" data-level="5.4.2" data-path="multivariate-data.html"><a href="multivariate-data.html#map-and-apply-function-family"><i class="fa fa-check"></i><b>5.4.2</b> map and apply function family</a></li>
 <li class="chapter" data-level="5.4.3" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---pipe-operator"><i class="fa fa-check"></i><b>5.4.3</b> dplyr - pipe operator</a></li>
 <li class="chapter" data-level="5.4.4" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---important-functions"><i class="fa fa-check"></i><b>5.4.4</b> dplyr - Important functions</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a><ul>
+<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-with-basic-graph-functions"><i class="fa fa-check"></i><b>5.5.1</b> Bar graph with basic graph functions</a></li>
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
@@ -225,27 +252,33 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, tibble row and column names</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
-<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="populations.html"><a href="populations.html#random-variable"><i class="fa fa-check"></i><b>6.1.1</b> Random variable</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a><ul>
+<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="populations.html"><a href="populations.html#probability-mass-function"><i class="fa fa-check"></i><b>6.2.1</b> Probability mass function</a></li>
 <li class="chapter" data-level="6.2.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-discrete-r.v."><i class="fa fa-check"></i><b>6.2.2</b> Mean and standard deviation of discrete R.V.</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a><ul>
+<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="populations.html"><a href="populations.html#probability-density-function"><i class="fa fa-check"></i><b>6.3.1</b> Probability density function</a></li>
 <li class="chapter" data-level="6.3.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-continuous-r.v."><i class="fa fa-check"></i><b>6.3.2</b> Mean and standard deviation of continuous R.V.</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="populations.html"><a href="populations.html#sampling-from-a-population"><i class="fa fa-check"></i><b>6.4</b> Sampling from a population</a></li>
-<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a><ul>
+<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="populations.html"><a href="populations.html#probability-distributions"><i class="fa fa-check"></i><b>6.5.1</b> Probability distributions</a></li>
 <li class="chapter" data-level="6.5.2" data-path="populations.html"><a href="populations.html#bernoulli-random-variables"><i class="fa fa-check"></i><b>6.5.2</b> Bernoulli random variables</a></li>
 <li class="chapter" data-level="6.5.3" data-path="populations.html"><a href="populations.html#binomial-random-variables"><i class="fa fa-check"></i><b>6.5.3</b> Binomial random variables</a></li>
 <li class="chapter" data-level="6.5.4" data-path="populations.html"><a href="populations.html#normal-random-variables"><i class="fa fa-check"></i><b>6.5.4</b> Normal random variables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>7</b> Statistical inference</a><ul>
+<li class="chapter" data-level="7" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>7</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="statistical-inference.html"><a href="statistical-inference.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
 <li class="chapter" data-level="7.2" data-path="statistical-inference.html"><a href="statistical-inference.html#simulation"><i class="fa fa-check"></i><b>7.2</b> Simulation</a></li>
 <li class="chapter" data-level="7.3" data-path="statistical-inference.html"><a href="statistical-inference.html#significance-tests"><i class="fa fa-check"></i><b>7.3</b> Significance tests</a></li>
@@ -287,7 +320,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="r-rstudio-installation" class="section level2">
 <h2><span class="header-section-number">2.2</span> R / Rstudio installation</h2>
 <ul>
-<li>Install R first and then install RStudio second</li>
+<li><p>Install R first and then install RStudio second</p></li>
 <li><p>R
 <img src="images/01-01.PNG" /><br />
 <img src="images/01-02.PNG" /><br />
@@ -309,14 +342,14 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="keyboard-shortcuts" class="section level2">
 <h2><span class="header-section-number">2.4</span> Keyboard shortcuts</h2>
 <ul>
-<li>참고사이트
+<li><p>참고사이트</p>
 <ul>
 <li><a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts" class="uri">https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts</a></li>
 <li>Tools –&gt; Keyboard shortcut Quick Reference (Alt + Shift + K)</li>
 </ul></li>
-<li>코드편집창 이동 (Ctrl+1) 콘솔창 이동(Ctrl+2)</li>
-<li>한 줄 실행 (Ctrl+Enter)</li>
-<li>주석처리 (Ctrl + Shift + C)
+<li><p>코드편집창 이동 (Ctrl+1) 콘솔창 이동(Ctrl+2)</p></li>
+<li><p>한 줄 실행 (Ctrl+Enter)</p></li>
+<li><p>주석처리 (Ctrl + Shift + C)</p>
 <ul>
 <li>Starting with a hashmark (‘#’), everything to the end of the line is a comment</li>
 </ul></li>
@@ -332,8 +365,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>단축키 Ctrl + Shift + C 사용</li>
 </ul></li>
 </ul>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># x &lt;- 10</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># y &lt;- 20</span></a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-basics.html#cb1-1"></a><span class="co"># x &lt;- 10</span></span>
+<span id="cb1-2"><a href="r-basics.html#cb1-2"></a><span class="co"># y &lt;- 20</span></span></code></pre></div>
 </div>
 <div id="r-programming-basics-and-terminology" class="section level2">
 <h2><span class="header-section-number">2.5</span> R programming basics and terminology</h2>
@@ -363,11 +396,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>시작 전 항상 작업 디렉토리 설정</li>
 <li>예를 들어 c: 아래 새로운 디렉토리 rstat01 을 만들고 작업공간으로 설정</li>
 </ul>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">getwd</span>()</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">dir</span>()</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">rstat01&quot;</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">getwd</span>()</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">dir</span>()</a></code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="r-basics.html#cb2-1"></a><span class="kw">getwd</span>()</span>
+<span id="cb2-2"><a href="r-basics.html#cb2-2"></a><span class="kw">dir</span>()</span>
+<span id="cb2-3"><a href="r-basics.html#cb2-3"></a><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">rstat01&quot;</span>)</span>
+<span id="cb2-4"><a href="r-basics.html#cb2-4"></a><span class="kw">getwd</span>()</span>
+<span id="cb2-5"><a href="r-basics.html#cb2-5"></a><span class="kw">dir</span>()</span></code></pre></div>
 <ul>
 <li>또는 아래와 같이 RStudio 메뉴 에서 설정
 <img src="images/01-12.PNG" /></li>
@@ -378,9 +411,9 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ul>
 <li>콘솔 계산기</li>
 </ul>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">((<span class="dv">2</span> – <span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> – <span class="dv">3</span>)<span class="op">^</span><span class="dv">2</span> )<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>; <span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span></a></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="r-basics.html#cb3-1"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb3-2"><a href="r-basics.html#cb3-2"></a>((<span class="dv">2</span> – <span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> – <span class="dv">3</span>)<span class="op">^</span><span class="dv">2</span> )<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb3-3"><a href="r-basics.html#cb3-3"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>; <span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <ul>
 <li>이전 명령: 콘솔에서 위 아래 화살표</li>
 </ul>
@@ -396,12 +429,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul></li>
 <li>내장 변수 Built-in variables</li>
 </ul>
-<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> – <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">y</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">x &lt;-<span class="st"> &quot;two&quot;</span>  </a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">some_data &lt;-<span class="st"> </span><span class="fl">9.8</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">pi</a></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="r-basics.html#cb4-1"></a>x &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb4-2"><a href="r-basics.html#cb4-2"></a>y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> – <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb4-3"><a href="r-basics.html#cb4-3"></a>y</span>
+<span id="cb4-4"><a href="r-basics.html#cb4-4"></a>x &lt;-<span class="st"> &quot;two&quot;</span>  </span>
+<span id="cb4-5"><a href="r-basics.html#cb4-5"></a>some_data &lt;-<span class="st"> </span><span class="fl">9.8</span></span>
+<span id="cb4-6"><a href="r-basics.html#cb4-6"></a>pi</span></code></pre></div>
 <ul>
 <li>변수이름 작명법
 <ul>
@@ -410,10 +443,10 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>Names are effectively unlimited in length</li>
 </ul></li>
 </ul>
-<pre class="sourceCode r" id="cb5"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">i_use_snake_case &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">otherPeopleUseCamelCase &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">some.people.use.periods &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">And_aFew.People_RENOUNCEconvention &lt;-<span class="st"> </span><span class="dv">4</span></a></code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="r-basics.html#cb5-1"></a>i_use_snake_case &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb5-2"><a href="r-basics.html#cb5-2"></a>otherPeopleUseCamelCase &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb5-3"><a href="r-basics.html#cb5-3"></a>some.people.use.periods &lt;-<span class="st"> </span><span class="dv">3</span></span>
+<span id="cb5-4"><a href="r-basics.html#cb5-4"></a>And_aFew.People_RENOUNCEconvention &lt;-<span class="st"> </span><span class="dv">4</span></span></code></pre></div>
 <ul>
 <li>자동 완성 기능 (Tab completion) in RStudio</li>
 </ul>
@@ -427,29 +460,29 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ul>
 <li>Combine function <code>c()</code>: Concatenating elements end to end</li>
 </ul>
-<pre class="sourceCode r" id="cb6"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.4</span>, <span class="fl">5.6</span>, <span class="fl">3.1</span>, <span class="fl">6.4</span>, <span class="fl">21.7</span>) </a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;X1&quot;</span>, <span class="st">&quot;Y2&quot;</span>,  <span class="st">&quot;X3&quot;</span>,  <span class="st">&quot;Y4&quot;</span>)</a></code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="r-basics.html#cb6-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.4</span>, <span class="fl">5.6</span>, <span class="fl">3.1</span>, <span class="fl">6.4</span>, <span class="fl">21.7</span>) </span>
+<span id="cb6-2"><a href="r-basics.html#cb6-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;X1&quot;</span>, <span class="st">&quot;Y2&quot;</span>,  <span class="st">&quot;X3&quot;</span>,  <span class="st">&quot;Y4&quot;</span>)</span></code></pre></div>
 <ul>
 <li>인덱싱: Subsets of the elements of a vector</li>
 </ul>
-<pre class="sourceCode r" id="cb7"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">x[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">x[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">y[<span class="dv">3</span>]</a></code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="r-basics.html#cb7-1"></a>x[<span class="dv">1</span>]</span>
+<span id="cb7-2"><a href="r-basics.html#cb7-2"></a>x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
+<span id="cb7-3"><a href="r-basics.html#cb7-3"></a>x[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]</span>
+<span id="cb7-4"><a href="r-basics.html#cb7-4"></a>y[<span class="dv">3</span>]</span></code></pre></div>
 </div>
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">2.11</span> Functions</h2>
 <ul>
 <li>Function define</li>
 </ul>
-<pre class="sourceCode r" id="cb8"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">my_sine &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">    y &lt;-<span class="st"> </span><span class="kw">sin</span>(x)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">    <span class="kw">return</span>(y)</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">}</a></code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="r-basics.html#cb8-1"></a>my_sine &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
+<span id="cb8-2"><a href="r-basics.html#cb8-2"></a>    y &lt;-<span class="st"> </span><span class="kw">sin</span>(x)</span>
+<span id="cb8-3"><a href="r-basics.html#cb8-3"></a>    <span class="kw">return</span>(y)</span>
+<span id="cb8-4"><a href="r-basics.html#cb8-4"></a>}</span></code></pre></div>
 <ul>
 <li>Usage</li>
 </ul>
-<pre class="sourceCode r" id="cb9"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">my_sine</span>(pi)</a></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="r-basics.html#cb9-1"></a><span class="kw">my_sine</span>(pi)</span></code></pre></div>
 <ul>
 <li>Terminology
 <ul>
@@ -464,36 +497,36 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>Tab completion</li>
 </ul></li>
 </ul>
-<pre class="sourceCode r" id="cb10"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">x &lt;-<span class="st"> </span>pi</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">sin</span>(x)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">sqrt</span>(x)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">log</span>(x)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">log</span>(x, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">x <span class="op">+</span><span class="st"> </span>x</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw">sum</span>(x)<span class="op">/</span><span class="kw">length</span>(x)</a></code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-basics.html#cb10-1"></a>x &lt;-<span class="st"> </span>pi</span>
+<span id="cb10-2"><a href="r-basics.html#cb10-2"></a><span class="kw">sin</span>(x)</span>
+<span id="cb10-3"><a href="r-basics.html#cb10-3"></a><span class="kw">sqrt</span>(x)</span>
+<span id="cb10-4"><a href="r-basics.html#cb10-4"></a><span class="kw">log</span>(x)</span>
+<span id="cb10-5"><a href="r-basics.html#cb10-5"></a><span class="kw">log</span>(x, <span class="dv">10</span>)</span>
+<span id="cb10-6"><a href="r-basics.html#cb10-6"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb10-7"><a href="r-basics.html#cb10-7"></a>x <span class="op">+</span><span class="st"> </span>x</span>
+<span id="cb10-8"><a href="r-basics.html#cb10-8"></a><span class="kw">mean</span>(x)</span>
+<span id="cb10-9"><a href="r-basics.html#cb10-9"></a><span class="kw">sum</span>(x)<span class="op">/</span><span class="kw">length</span>(x)</span></code></pre></div>
 </div>
 <div id="vectorized-functions" class="section level2">
 <h2><span class="header-section-number">2.12</span> Vectorized functions</h2>
-<pre class="sourceCode r" id="cb11"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">x <span class="op">+</span><span class="st"> </span>x</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">sqrt</span>(x)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw">sin</span>(x)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw">log</span>(x)</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">x<span class="op">-</span><span class="kw">mean</span>(x)</a></code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics.html#cb11-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb11-2"><a href="r-basics.html#cb11-2"></a>x <span class="op">+</span><span class="st"> </span>x</span>
+<span id="cb11-3"><a href="r-basics.html#cb11-3"></a><span class="kw">sqrt</span>(x)</span>
+<span id="cb11-4"><a href="r-basics.html#cb11-4"></a><span class="kw">sin</span>(x)</span>
+<span id="cb11-5"><a href="r-basics.html#cb11-5"></a><span class="kw">log</span>(x)</span>
+<span id="cb11-6"><a href="r-basics.html#cb11-6"></a>x<span class="op">-</span><span class="kw">mean</span>(x)</span></code></pre></div>
 </div>
 <div id="help" class="section level2">
 <h2><span class="header-section-number">2.13</span> Help</h2>
 <ul>
 <li>R의 장점 중 하나 (예제 포함)</li>
 </ul>
-<pre class="sourceCode r" id="cb12"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">?</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">?mean</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">help</span>(<span class="st">&quot;mean&quot;</span>)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw">example</span>(<span class="st">&quot;mean&quot;</span>)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">help.search</span>(<span class="st">&quot;mean&quot;</span>)</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw">help</span>(<span class="dt">package=</span><span class="st">&quot;MASS&quot;</span>)</a></code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="r-basics.html#cb12-1"></a>?</span>
+<span id="cb12-2"><a href="r-basics.html#cb12-2"></a>?mean</span>
+<span id="cb12-3"><a href="r-basics.html#cb12-3"></a><span class="kw">help</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb12-4"><a href="r-basics.html#cb12-4"></a><span class="kw">example</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb12-5"><a href="r-basics.html#cb12-5"></a><span class="kw">help.search</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb12-6"><a href="r-basics.html#cb12-6"></a><span class="kw">help</span>(<span class="dt">package=</span><span class="st">&quot;MASS&quot;</span>)</span></code></pre></div>
 </div>
 <div id="rstudio-workspace" class="section level2">
 <h2><span class="header-section-number">2.14</span> RStudio workspace</h2>
@@ -518,13 +551,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ul>
 <li>UsingR package loading</li>
 </ul>
-<pre class="sourceCode r" id="cb13"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">library</span>(UsingR)</a></code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="r-basics.html#cb13-1"></a><span class="kw">library</span>(UsingR)</span></code></pre></div>
 <ul>
 <li>R 설치 디렉토리</li>
 <li>R 패키지 설치 디렉토리</li>
 </ul>
-<pre class="sourceCode r" id="cb14"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">.libPaths</span>()</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">path.package</span>()</a></code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="r-basics.html#cb14-1"></a><span class="kw">.libPaths</span>()</span>
+<span id="cb14-2"><a href="r-basics.html#cb14-2"></a><span class="kw">path.package</span>()</span></code></pre></div>
 <p><img src="images/01-20.PNG" /></p>
 </div>
 <div id="data-sets" class="section level2">
@@ -534,15 +567,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>R has a datasets package that is loaded automatically</li>
 <li>The data function produces a copy of dataset in user’s workspace</li>
 </ul>
-<pre class="sourceCode r" id="cb15"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">head</span>(rivers)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">length</span>(rivers)</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw">class</span>(rivers)</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="kw">data</span>(rivers)</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;UsingR&quot;</span>)</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="kw">library</span>(HistData)</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="kw">head</span>(Cavendish)</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="kw">str</span>(Cavendish)</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="kw">head</span>(Cavendish<span class="op">$</span>density2)</a></code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="r-basics.html#cb15-1"></a><span class="kw">head</span>(rivers)</span>
+<span id="cb15-2"><a href="r-basics.html#cb15-2"></a><span class="kw">length</span>(rivers)</span>
+<span id="cb15-3"><a href="r-basics.html#cb15-3"></a><span class="kw">class</span>(rivers)</span>
+<span id="cb15-4"><a href="r-basics.html#cb15-4"></a><span class="kw">data</span>(rivers)</span>
+<span id="cb15-5"><a href="r-basics.html#cb15-5"></a><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;UsingR&quot;</span>)</span>
+<span id="cb15-6"><a href="r-basics.html#cb15-6"></a><span class="kw">library</span>(HistData)</span>
+<span id="cb15-7"><a href="r-basics.html#cb15-7"></a><span class="kw">head</span>(Cavendish)</span>
+<span id="cb15-8"><a href="r-basics.html#cb15-8"></a><span class="kw">str</span>(Cavendish)</span>
+<span id="cb15-9"><a href="r-basics.html#cb15-9"></a><span class="kw">head</span>(Cavendish<span class="op">$</span>density2)</span></code></pre></div>
 </div>
 <div id="cheatsheet" class="section level2">
 <h2><span class="header-section-number">2.17</span> Cheatsheet</h2>
@@ -562,11 +595,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -574,12 +609,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -591,6 +625,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

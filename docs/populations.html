@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Populations | R로 배우는 기초통계</title>
   <meta name="description" content="이 강의는 2019년 2학기 UST에서 진행하는 일반강의 입니다." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16.5 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Populations | R로 배우는 기초통계" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="한국생명공학연구원 김하성" />
 
 
-<meta name="date" content="2019-11-27" />
+<meta name="date" content="2019-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,20 +53,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -71,38 +80,40 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -121,14 +132,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="./"> [2019 UST lecture] R statistics </a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction 강의 개요</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal--"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references--"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation---"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule--"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#references---1"><i class="fa fa-check"></i><b>1.5</b> References 참고 자료</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction 강의 개요</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal-강의-목표"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references-참고-자료"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation-평가-세부-항목"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule-강의-계획"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#references-참고-자료-1"><i class="fa fa-check"></i><b>1.5</b> References 참고 자료</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>2</b> R basics</a><ul>
+<li class="chapter" data-level="2" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>2</b> R basics</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="r-basics.html"><a href="r-basics.html#what-is-r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What is R / Rstudio</a></li>
 <li class="chapter" data-level="2.2" data-path="r-basics.html"><a href="r-basics.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio installation</a></li>
 <li class="chapter" data-level="2.3" data-path="r-basics.html"><a href="r-basics.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a></li>
@@ -147,16 +160,19 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="2.16" data-path="r-basics.html"><a href="r-basics.html#data-sets"><i class="fa fa-check"></i><b>2.16</b> Data sets</a></li>
 <li class="chapter" data-level="2.17" data-path="r-basics.html"><a href="r-basics.html#cheatsheet"><i class="fa fa-check"></i><b>2.17</b> Cheatsheet</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="univariat-data.html"><a href="univariat-data.html"><i class="fa fa-check"></i><b>3</b> Univariat data</a><ul>
+<li class="chapter" data-level="3" data-path="univariat-data.html"><a href="univariat-data.html"><i class="fa fa-check"></i><b>3</b> Univariat data</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="univariat-data.html"><a href="univariat-data.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
 <li class="chapter" data-level="3.2" data-path="univariat-data.html"><a href="univariat-data.html#data-vectors"><i class="fa fa-check"></i><b>3.2</b> Data vectors</a></li>
-<li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a><ul>
+<li class="chapter" data-level="3.3" data-path="univariat-data.html"><a href="univariat-data.html#data-type"><i class="fa fa-check"></i><b>3.3</b> Data type</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="univariat-data.html"><a href="univariat-data.html#example---recoding-values"><i class="fa fa-check"></i><b>3.3.1</b> Example - Recoding values</a></li>
 <li class="chapter" data-level="3.3.2" data-path="univariat-data.html"><a href="univariat-data.html#example---average-distance-from-center"><i class="fa fa-check"></i><b>3.3.2</b> Example - Average distance from center</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="univariat-data.html"><a href="univariat-data.html#functions-1"><i class="fa fa-check"></i><b>3.4</b> Functions</a></li>
 <li class="chapter" data-level="3.5" data-path="univariat-data.html"><a href="univariat-data.html#numeric-summaries"><i class="fa fa-check"></i><b>3.5</b> Numeric summaries</a></li>
-<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a><ul>
+<li class="chapter" data-level="3.6" data-path="univariat-data.html"><a href="univariat-data.html#center"><i class="fa fa-check"></i><b>3.6</b> Center</a>
+<ul>
 <li class="chapter" data-level="3.6.1" data-path="univariat-data.html"><a href="univariat-data.html#sample-mean"><i class="fa fa-check"></i><b>3.6.1</b> Sample mean</a></li>
 <li class="chapter" data-level="3.6.2" data-path="univariat-data.html"><a href="univariat-data.html#measure-of-position"><i class="fa fa-check"></i><b>3.6.2</b> Measure of Position</a></li>
 </ul></li>
@@ -165,45 +181,54 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="3.9" data-path="univariat-data.html"><a href="univariat-data.html#viewing-the-shape"><i class="fa fa-check"></i><b>3.9</b> Viewing the shape</a></li>
 <li class="chapter" data-level="3.10" data-path="univariat-data.html"><a href="univariat-data.html#categorical-data"><i class="fa fa-check"></i><b>3.10</b> Categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="bivariate-data.html"><a href="bivariate-data.html"><i class="fa fa-check"></i><b>4</b> Bivariate data</a><ul>
-<li class="chapter" data-level="4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a><ul>
+<li class="chapter" data-level="4" data-path="bivariate-data.html"><a href="bivariate-data.html"><i class="fa fa-check"></i><b>4</b> Bivariate data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="bivariate-data.html"><a href="bivariate-data.html#independence-samples"><i class="fa fa-check"></i><b>4.1.1</b> Independence samples</a></li>
 <li class="chapter" data-level="4.1.2" data-path="bivariate-data.html"><a href="bivariate-data.html#plot"><i class="fa fa-check"></i><b>4.1.2</b> plot</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-manipulation"><i class="fa fa-check"></i><b>4.2</b> Data manipulation</a><ul>
+<li class="chapter" data-level="4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-manipulation"><i class="fa fa-check"></i><b>4.2</b> Data manipulation</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="bivariate-data.html"><a href="bivariate-data.html#list"><i class="fa fa-check"></i><b>4.2.1</b> List</a></li>
 <li class="chapter" data-level="4.2.2" data-path="bivariate-data.html"><a href="bivariate-data.html#data-frame"><i class="fa fa-check"></i><b>4.2.2</b> Data frame</a></li>
 <li class="chapter" data-level="4.2.3" data-path="bivariate-data.html"><a href="bivariate-data.html#model-formulas"><i class="fa fa-check"></i><b>4.2.3</b> Model formulas</a></li>
 <li class="chapter" data-level="4.2.4" data-path="bivariate-data.html"><a href="bivariate-data.html#example-3-1"><i class="fa fa-check"></i><b>4.2.4</b> Example 3-1</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#paired-data"><i class="fa fa-check"></i><b>4.3</b> Paired data</a><ul>
+<li class="chapter" data-level="4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#paired-data"><i class="fa fa-check"></i><b>4.3</b> Paired data</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="bivariate-data.html"><a href="bivariate-data.html#pearson-correlation"><i class="fa fa-check"></i><b>4.3.1</b> Pearson Correlation</a></li>
 <li class="chapter" data-level="4.3.2" data-path="bivariate-data.html"><a href="bivariate-data.html#spearman-correlation-coefficient"><i class="fa fa-check"></i><b>4.3.2</b> Spearman correlation coefficient</a></li>
 <li class="chapter" data-level="4.3.3" data-path="bivariate-data.html"><a href="bivariate-data.html#correlation-causation-and-association"><i class="fa fa-check"></i><b>4.3.3</b> Correlation, causation and association</a></li>
 <li class="chapter" data-level="4.3.4" data-path="bivariate-data.html"><a href="bivariate-data.html#trends"><i class="fa fa-check"></i><b>4.3.4</b> Trends</a></li>
 <li class="chapter" data-level="4.3.5" data-path="bivariate-data.html"><a href="bivariate-data.html#the-method-of-least-squares"><i class="fa fa-check"></i><b>4.3.5</b> The method of least squares</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#bivariate-categorical-data"><i class="fa fa-check"></i><b>4.4</b> Bivariate categorical data</a><ul>
+<li class="chapter" data-level="4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#bivariate-categorical-data"><i class="fa fa-check"></i><b>4.4</b> Bivariate categorical data</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="bivariate-data.html"><a href="bivariate-data.html#contingency-tables"><i class="fa fa-check"></i><b>4.4.1</b> Contingency tables</a></li>
 <li class="chapter" data-level="4.4.2" data-path="bivariate-data.html"><a href="bivariate-data.html#marginal-distributions"><i class="fa fa-check"></i><b>4.4.2</b> Marginal distributions</a></li>
 <li class="chapter" data-level="4.4.3" data-path="bivariate-data.html"><a href="bivariate-data.html#conditional-distributions"><i class="fa fa-check"></i><b>4.4.3</b> Conditional distributions</a></li>
 <li class="chapter" data-level="4.4.4" data-path="bivariate-data.html"><a href="bivariate-data.html#graphical-summaries-of-contingency-tables"><i class="fa fa-check"></i><b>4.4.4</b> Graphical summaries of contingency tables</a></li>
 <li class="chapter" data-level="4.4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#measures-of-association-for-categorical-data"><i class="fa fa-check"></i><b>4.4.5</b> Measures of association for categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#homeworks"><i class="fa fa-check"></i><b>4.5</b> Homeworks</a><ul>
+<li class="chapter" data-level="4.5" data-path="bivariate-data.html"><a href="bivariate-data.html#homeworks"><i class="fa fa-check"></i><b>4.5</b> Homeworks</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="bivariate-data.html"><a href="bivariate-data.html#hw3-1"><i class="fa fa-check"></i><b>4.5.1</b> HW3-1</a></li>
 <li class="chapter" data-level="4.5.2" data-path="bivariate-data.html"><a href="bivariate-data.html#hw3-2"><i class="fa fa-check"></i><b>4.5.2</b> HW3-2</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-data.html"><a href="multivariate-data.html"><i class="fa fa-check"></i><b>5</b> Multivariate data</a><ul>
+<li class="chapter" data-level="5" data-path="multivariate-data.html"><a href="multivariate-data.html"><i class="fa fa-check"></i><b>5</b> Multivariate data</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
-<li class="chapter" data-level="5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#data-structures-in-r"><i class="fa fa-check"></i><b>5.2</b> Data structures in R</a><ul>
+<li class="chapter" data-level="5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#data-structures-in-r"><i class="fa fa-check"></i><b>5.2</b> Data structures in R</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="multivariate-data.html"><a href="multivariate-data.html#vectors"><i class="fa fa-check"></i><b>5.2.1</b> Vectors</a></li>
 <li class="chapter" data-level="5.2.2" data-path="multivariate-data.html"><a href="multivariate-data.html#lists"><i class="fa fa-check"></i><b>5.2.2</b> Lists</a></li>
 <li class="chapter" data-level="5.2.3" data-path="multivariate-data.html"><a href="multivariate-data.html#matrices"><i class="fa fa-check"></i><b>5.2.3</b> Matrices</a></li>
 <li class="chapter" data-level="5.2.4" data-path="multivariate-data.html"><a href="multivariate-data.html#data.frame"><i class="fa fa-check"></i><b>5.2.4</b> data.frame</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-i"><i class="fa fa-check"></i><b>5.3</b> Working with data frame I</a><ul>
+<li class="chapter" data-level="5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-i"><i class="fa fa-check"></i><b>5.3</b> Working with data frame I</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="multivariate-data.html"><a href="multivariate-data.html#some-exercises"><i class="fa fa-check"></i><b>5.3.1</b> some exercises</a></li>
 <li class="chapter" data-level="5.3.2" data-path="multivariate-data.html"><a href="multivariate-data.html#subset-and-filter"><i class="fa fa-check"></i><b>5.3.2</b> subset and filter</a></li>
 <li class="chapter" data-level="5.3.3" data-path="multivariate-data.html"><a href="multivariate-data.html#transforming"><i class="fa fa-check"></i><b>5.3.3</b> transforming</a></li>
@@ -211,13 +236,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.3.5" data-path="multivariate-data.html"><a href="multivariate-data.html#merging-data"><i class="fa fa-check"></i><b>5.3.5</b> merging data</a></li>
 <li class="chapter" data-level="5.3.6" data-path="multivariate-data.html"><a href="multivariate-data.html#split"><i class="fa fa-check"></i><b>5.3.6</b> split</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-ii"><i class="fa fa-check"></i><b>5.4</b> working with data frame II</a><ul>
+<li class="chapter" data-level="5.4" data-path="multivariate-data.html"><a href="multivariate-data.html#working-with-data-frame-ii"><i class="fa fa-check"></i><b>5.4</b> working with data frame II</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="multivariate-data.html"><a href="multivariate-data.html#apply"><i class="fa fa-check"></i><b>5.4.1</b> apply</a></li>
 <li class="chapter" data-level="5.4.2" data-path="multivariate-data.html"><a href="multivariate-data.html#map-and-apply-function-family"><i class="fa fa-check"></i><b>5.4.2</b> map and apply function family</a></li>
 <li class="chapter" data-level="5.4.3" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---pipe-operator"><i class="fa fa-check"></i><b>5.4.3</b> dplyr - pipe operator</a></li>
 <li class="chapter" data-level="5.4.4" data-path="multivariate-data.html"><a href="multivariate-data.html#dplyr---important-functions"><i class="fa fa-check"></i><b>5.4.4</b> dplyr - Important functions</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a><ul>
+<li class="chapter" data-level="5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#multivariate-graphics---ggplot2-package"><i class="fa fa-check"></i><b>5.5</b> Multivariate graphics - ggplot2 package</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-with-basic-graph-functions"><i class="fa fa-check"></i><b>5.5.1</b> Bar graph with basic graph functions</a></li>
 <li class="chapter" data-level="5.5.2" data-path="multivariate-data.html"><a href="multivariate-data.html#bar-graph-ggplot"><i class="fa fa-check"></i><b>5.5.2</b> Bar graph ggplot</a></li>
 <li class="chapter" data-level="5.5.3" data-path="multivariate-data.html"><a href="multivariate-data.html#line-graph-with-ggplot"><i class="fa fa-check"></i><b>5.5.3</b> Line graph with ggplot</a></li>
@@ -225,27 +252,33 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="5.5.5" data-path="multivariate-data.html"><a href="multivariate-data.html#reshape-scaling-tibble-row-and-column-names"><i class="fa fa-check"></i><b>5.5.5</b> reshape, scaling, tibble row and column names</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a><ul>
-<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6" data-path="populations.html"><a href="populations.html"><i class="fa fa-check"></i><b>6</b> Populations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="populations.html"><a href="populations.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="populations.html"><a href="populations.html#random-variable"><i class="fa fa-check"></i><b>6.1.1</b> Random variable</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a><ul>
+<li class="chapter" data-level="6.2" data-path="populations.html"><a href="populations.html#discrete-random-variable"><i class="fa fa-check"></i><b>6.2</b> Discrete random variable</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="populations.html"><a href="populations.html#probability-mass-function"><i class="fa fa-check"></i><b>6.2.1</b> Probability mass function</a></li>
 <li class="chapter" data-level="6.2.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-discrete-r.v."><i class="fa fa-check"></i><b>6.2.2</b> Mean and standard deviation of discrete R.V.</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a><ul>
+<li class="chapter" data-level="6.3" data-path="populations.html"><a href="populations.html#continuous-random-variable"><i class="fa fa-check"></i><b>6.3</b> Continuous random variable</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="populations.html"><a href="populations.html#probability-density-function"><i class="fa fa-check"></i><b>6.3.1</b> Probability density function</a></li>
 <li class="chapter" data-level="6.3.2" data-path="populations.html"><a href="populations.html#mean-and-standard-deviation-of-continuous-r.v."><i class="fa fa-check"></i><b>6.3.2</b> Mean and standard deviation of continuous R.V.</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="populations.html"><a href="populations.html#sampling-from-a-population"><i class="fa fa-check"></i><b>6.4</b> Sampling from a population</a></li>
-<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a><ul>
+<li class="chapter" data-level="6.5" data-path="populations.html"><a href="populations.html#sampling-distribution"><i class="fa fa-check"></i><b>6.5</b> Sampling distribution</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="populations.html"><a href="populations.html#probability-distributions"><i class="fa fa-check"></i><b>6.5.1</b> Probability distributions</a></li>
 <li class="chapter" data-level="6.5.2" data-path="populations.html"><a href="populations.html#bernoulli-random-variables"><i class="fa fa-check"></i><b>6.5.2</b> Bernoulli random variables</a></li>
 <li class="chapter" data-level="6.5.3" data-path="populations.html"><a href="populations.html#binomial-random-variables"><i class="fa fa-check"></i><b>6.5.3</b> Binomial random variables</a></li>
 <li class="chapter" data-level="6.5.4" data-path="populations.html"><a href="populations.html#normal-random-variables"><i class="fa fa-check"></i><b>6.5.4</b> Normal random variables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>7</b> Statistical inference</a><ul>
+<li class="chapter" data-level="7" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>7</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="statistical-inference.html"><a href="statistical-inference.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
 <li class="chapter" data-level="7.2" data-path="statistical-inference.html"><a href="statistical-inference.html#simulation"><i class="fa fa-check"></i><b>7.2</b> Simulation</a></li>
 <li class="chapter" data-level="7.3" data-path="statistical-inference.html"><a href="statistical-inference.html#significance-tests"><i class="fa fa-check"></i><b>7.3</b> Significance tests</a></li>
@@ -294,13 +327,13 @@ P(A \text{ OR } B) &amp; = P(A) + P(B) - P(A ~ \text{AND} ~ B)
 \]</span></p>
 <p>여기서 만약 사건 A와 B가 배반사건 일 경우 A 또는 B가 일어날 확률은 <span class="math inline">\(P(A) + P(B)\)</span> 이며 만약 두 사건이 독립일 경우 A와 B가 동시에 일어날 확률은 <span class="math inline">\(P(A)p(B)\)</span> 입니다. 독립이라는 것은 하나의 사건이 일어날 확률이 다른 사건이 일어날 확률에 영향을 주지 않는 경우를 말합니다.</p>
 <p><strong>[EXERCISE]</strong> 다음 예에서 한 사람을 선택할 경우의 확률과 그 사람이 남자일 확률, 어떤 사람이 heavy smoker일 확률, 그리고 남자이거나 heavy smoker 일 확률을 구하시오</p>
-<pre class="sourceCode r" id="cb153"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</a>
-<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="kw">sum</span>(tbl)</a>
-<a class="sourceLine" id="cb153-3" data-line-number="3"><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb153-4" data-line-number="4"><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</a></code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="populations.html#cb153-1"></a>tbl &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>Sex <span class="op">+</span><span class="st"> </span>Smoke, <span class="dt">data=</span>survey)</span>
+<span id="cb153-2"><a href="populations.html#cb153-2"></a><span class="kw">sum</span>(tbl)</span>
+<span id="cb153-3"><a href="populations.html#cb153-3"></a><span class="kw">margin.table</span>(tbl, <span class="dv">1</span>)</span>
+<span id="cb153-4"><a href="populations.html#cb153-4"></a><span class="kw">margin.table</span>(tbl, <span class="dv">2</span>)</span></code></pre></div>
 <p>위 survey 데이터에서 Univariate 경우만을 생각해 보고 이 때 Random variable 의 개념을 알아봅니다.</p>
-<pre class="sourceCode r" id="cb154"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb154-2" data-line-number="2">smoke</a></code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="populations.html#cb154-1"></a>smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</span>
+<span id="cb154-2"><a href="populations.html#cb154-2"></a>smoke</span></code></pre></div>
 <p>survey의 smoke를 pupulation 데이터라고 가정하고 <span class="math inline">\(X\)</span>를 해당 population에서 랜덤하게 sampling 한 변수라 하면 (확률 변수) <span class="math inline">\(X\)</span> 가 가질 수 있는 값은 4가지 입니다. 그러나 확률변수는 실제 값을 가지고 있지 않고 확률만을 가질 수 있으므로 <span class="math inline">\(P()\)</span>를 사용하여 <span class="math inline">\(P(X)\)</span> 라고 표현합니다. R 코드를 이용하여 다음 확률들을 구해봅시다.</p>
 <p><span class="math display">\[ 
 P(X=\text{&quot;Never&quot;}) =  \\
@@ -308,9 +341,9 @@ P(X=\text{&quot;Heavy&quot;}) = \\
 P(X=\text{&quot;Occas&quot;}) = \\
 P(X=\text{&quot;Regul&quot;}) = 
 \]</span></p>
-<pre class="sourceCode r" id="cb155"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</a>
-<a class="sourceLine" id="cb155-2" data-line-number="2">smoke</a>
-<a class="sourceLine" id="cb155-3" data-line-number="3"><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</a></code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="populations.html#cb155-1"></a>smoke &lt;-<span class="st"> </span>survey<span class="op">$</span>Smoke</span>
+<span id="cb155-2"><a href="populations.html#cb155-2"></a>smoke</span>
+<span id="cb155-3"><a href="populations.html#cb155-3"></a><span class="kw">table</span>(smoke)<span class="op">/</span><span class="kw">length</span>(smoke)</span></code></pre></div>
 </div>
 </div>
 <div id="discrete-random-variable" class="section level2">
@@ -408,12 +441,12 @@ VAR(X) =
 <div id="continuous-random-variable" class="section level2">
 <h2><span class="header-section-number">6.3</span> Continuous random variable</h2>
 <p>연속 데이터의 경우에는 <span class="math inline">\(P(X=k)\)</span> 와 같은 개념이 불가능하므로 다른 방식의 확률에 대한 정의가 필요합니다. 이 경우에는 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 확률의 범위를 지정하는 방식이 쓰입니다. 이는 <span class="math inline">\(F(b) = P(X&lt;b)\)</span> 함수나 <span class="math inline">\(P(a &lt; X \le b)\)</span> 와 같은 크기에 해당하는 a, b, 그리고 <span class="math inline">\(f(x)\)</span>로 둘러쌓이는 함수 <span class="math inline">\(f(x)\)</span>로 구현될 수 있습니다. 위 함수 <span class="math inline">\(f(x)\)</span>를 확률변수 <span class="math inline">\(X\)</span>의 밀도라 하며 <span class="math inline">\(F(x)\)</span>와의 관계는 다음 그림과 같습니다.</p>
-<pre class="sourceCode r" id="cb156"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></a>
-<a class="sourceLine" id="cb156-2" data-line-number="2">fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</a>
-<a class="sourceLine" id="cb156-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb156-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb156-5" data-line-number="5"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </a>
-<a class="sourceLine" id="cb156-6" data-line-number="6"><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a></code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="populations.html#cb156-1"></a><span class="co">#fx &lt;- function(x, lambda){((lambda^x)*exp(-lambda))/factorial(x)}</span></span>
+<span id="cb156-2"><a href="populations.html#cb156-2"></a>fx &lt;-<span class="st"> </span><span class="cf">function</span>(x, lambda){lambda<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>lambda<span class="op">*</span>x)}</span>
+<span id="cb156-3"><a href="populations.html#cb156-3"></a>x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.01</span>)</span>
+<span id="cb156-4"><a href="populations.html#cb156-4"></a>y &lt;-<span class="st"> </span><span class="kw">fx</span>(x, <span class="dv">1</span>)</span>
+<span id="cb156-5"><a href="populations.html#cb156-5"></a><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y); </span>
+<span id="cb156-6"><a href="populations.html#cb156-6"></a><span class="kw">plot</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>); <span class="kw">polygon</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">fx</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>),<span class="dv">1</span>)), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <div id="probability-density-function" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Probability density function</h3>
 <p>여기서 <span class="math inline">\(f(x)\)</span>는 확률 변수의 분포를 나타내는 함수로써 확률 밀도 함수(probability density function, PDF)라 하고 확률 밀도 함수<span class="math inline">\(f(x)\)</span>와 구간 [a, b]에 대해서 확률변수 X가 구간에 포함될 확률은 <span class="math inline">\(P(a &lt; X \le b)\)</span>은 <span class="math inline">\(\int^a_b f(x) dx\)</span> 입니다. 일반적으로 PDF는 다음 두 조건을 만족해야 합니다.</p>
@@ -455,9 +488,9 @@ f(x) = \frac{d}{dx} F(x)
 <p>예로 하나의 동전을 <span class="math inline">\(n\)</span>번 던질 때 <span class="math inline">\(X_i\)</span>를 i번째 던지는 동전의 앞 또는 뒷면이라 하면 <span class="math inline">\(X_1, X_2, ..., X_n\)</span>은 i.i.d. 입니다. 주머니 공 꺼내기 예제에서 공을 넣고 다시 꺼내는 복원 추출의 경우의 표본들도 마찬가지로 iid 입니다. 그런데 다시 넣지 않고 꺼내는 경우는 어떨까요?</p>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 3개의 공을 뽑을 경우를 생각해 보자. 확률변수 <span class="math inline">\(X_i\)</span>를 <span class="math inline">\(i\)</span>번째 뽑은 공의 색이라 할 때 <span class="math inline">\(X_1\)</span> 의 확률 분포와 <span class="math inline">\(X_2\)</span>의 확률 분포는? 반복을 허용하지 않는 경우의 확률 분포는?</p>
 <p>R에서는 <code>sample</code> 함수를 사용해서 복원추출 과정을 시뮬레이션 할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb157"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb157-2" data-line-number="2"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</a>
-<a class="sourceLine" id="cb157-3" data-line-number="3"><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</a></code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="populations.html#cb157-1"></a><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> T)</span>
+<span id="cb157-2"><a href="populations.html#cb157-2"></a><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">replace =</span> F)</span>
+<span id="cb157-3"><a href="populations.html#cb157-3"></a><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
 <p><strong>[EXERCISE]</strong> 하나의 주사위를 한 번 굴릴 경우 확률변수 <span class="math inline">\(X\)</span>를 나오는 주사위 값이라 하면 <span class="math inline">\(X\)</span>의 기댓값을 구하시오.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -468,25 +501,25 @@ E[X] = ?
 \end{split}
 \]</span></p>
 <p>위에서 구한 기댓값이 실제 나오는지 주사위를 던져서 같은 값이 나오는지를 시뮬레이션하는 코드를 작성하시오.</p>
-<pre class="sourceCode r" id="cb158"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">## analytic solution</a>
-<a class="sourceLine" id="cb158-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb158-3" data-line-number="3">xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb158-4" data-line-number="4"><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb158-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb158-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb158-7" data-line-number="7">## simulation</a>
-<a class="sourceLine" id="cb158-8" data-line-number="8">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb158-9" data-line-number="9">barx &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</a>
-<a class="sourceLine" id="cb158-10" data-line-number="10"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
-<a class="sourceLine" id="cb158-11" data-line-number="11">  x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> i, <span class="dt">replace=</span>T)</a>
-<a class="sourceLine" id="cb158-12" data-line-number="12">  barx[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb158-13" data-line-number="13">}</a>
-<a class="sourceLine" id="cb158-14" data-line-number="14"><span class="kw">plot</span>(barx)</a>
-<a class="sourceLine" id="cb158-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb158-16" data-line-number="16">## simulation 2nd</a>
-<a class="sourceLine" id="cb158-17" data-line-number="17">i &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb158-18" data-line-number="18">barx2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(i, <span class="cf">function</span>(x){<span class="kw">mean</span>(<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span>x, <span class="dt">replace=</span>T))})</a>
-<a class="sourceLine" id="cb158-19" data-line-number="19"><span class="kw">plot</span>(barx2)</a></code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="populations.html#cb158-1"></a><span class="co">## analytic solution</span></span>
+<span id="cb158-2"><a href="populations.html#cb158-2"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></span>
+<span id="cb158-3"><a href="populations.html#cb158-3"></a>xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">6</span>)</span>
+<span id="cb158-4"><a href="populations.html#cb158-4"></a><span class="kw">sum</span>(x<span class="op">*</span>xp)</span>
+<span id="cb158-5"><a href="populations.html#cb158-5"></a></span>
+<span id="cb158-6"><a href="populations.html#cb158-6"></a></span>
+<span id="cb158-7"><a href="populations.html#cb158-7"></a><span class="co">## simulation</span></span>
+<span id="cb158-8"><a href="populations.html#cb158-8"></a>n &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb158-9"><a href="populations.html#cb158-9"></a>barx &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</span>
+<span id="cb158-10"><a href="populations.html#cb158-10"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb158-11"><a href="populations.html#cb158-11"></a>  x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size =</span> i, <span class="dt">replace=</span>T)</span>
+<span id="cb158-12"><a href="populations.html#cb158-12"></a>  barx[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</span>
+<span id="cb158-13"><a href="populations.html#cb158-13"></a>}</span>
+<span id="cb158-14"><a href="populations.html#cb158-14"></a><span class="kw">plot</span>(barx)</span>
+<span id="cb158-15"><a href="populations.html#cb158-15"></a></span>
+<span id="cb158-16"><a href="populations.html#cb158-16"></a><span class="co">## simulation 2nd</span></span>
+<span id="cb158-17"><a href="populations.html#cb158-17"></a>i &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">1000</span></span>
+<span id="cb158-18"><a href="populations.html#cb158-18"></a>barx2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(i, <span class="cf">function</span>(x){<span class="kw">mean</span>(<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span>x, <span class="dt">replace=</span>T))})</span>
+<span id="cb158-19"><a href="populations.html#cb158-19"></a><span class="kw">plot</span>(barx2)</span></code></pre></div>
 <p><strong>[EXERCISE]</strong> 3개의 빨간색 공과 2개의 녹색 공이 있는 주머니에서 반복을 허용해서 2개의 공을 뽑을 경우의 확률변수 <span class="math inline">\(X\)</span>를 녹색 공의 갯수라 하자, <span class="math inline">\(X\)</span>의 기댓값과 반복을 허용하지 않고 2개를 뽑을 경우의 기댓값을 구하시오. 또한 위 상황을 시뮬레이션하는 코드를 작성하고 위에서 계산한 기댓값과 같은 값이 나오는지 검증하시오.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -495,12 +528,12 @@ P(X=1) = (2/5)\times(3/5) + (3/5) \times (2/5) = 0.48\\
 P(X=2) = (2/5) \times (2/5) =  0.16 \\
 \end{split}
 \]</span></p>
-<pre class="sourceCode r" id="cb159"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb159-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.36</span>, <span class="fl">0.48</span>, <span class="fl">0.16</span>)</a>
-<a class="sourceLine" id="cb159-3" data-line-number="3">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb159-4" data-line-number="4">ex</a>
-<a class="sourceLine" id="cb159-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb159-6" data-line-number="6">## </a></code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="populations.html#cb159-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb159-2"><a href="populations.html#cb159-2"></a>xp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.36</span>, <span class="fl">0.48</span>, <span class="fl">0.16</span>)</span>
+<span id="cb159-3"><a href="populations.html#cb159-3"></a>ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</span>
+<span id="cb159-4"><a href="populations.html#cb159-4"></a>ex</span>
+<span id="cb159-5"><a href="populations.html#cb159-5"></a></span>
+<span id="cb159-6"><a href="populations.html#cb159-6"></a><span class="co">## </span></span></code></pre></div>
 <p>반복 허용하지 않을 경우</p>
 <p><span class="math display">\[
 \begin{split}
@@ -509,26 +542,26 @@ P(X=1) = (2/5)\times(3/4) + (3/5) \times (2/4) = 0.6 \\
 P(X=2) = (2/5) \times (1/4) = 0.1  \\
 \end{split}
 \]</span></p>
-<pre class="sourceCode r" id="cb160"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb160-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">c</span>((<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb160-3" data-line-number="3">  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb160-4" data-line-number="4">  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb160-5" data-line-number="5">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb160-6" data-line-number="6">ex</a>
-<a class="sourceLine" id="cb160-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb160-8" data-line-number="8">## </a></code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="populations.html#cb160-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb160-2"><a href="populations.html#cb160-2"></a>xp &lt;-<span class="st"> </span><span class="kw">c</span>((<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</span>
+<span id="cb160-3"><a href="populations.html#cb160-3"></a>  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">3</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">4</span>),</span>
+<span id="cb160-4"><a href="populations.html#cb160-4"></a>  (<span class="dv">2</span><span class="op">/</span><span class="dv">5</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">4</span>))</span>
+<span id="cb160-5"><a href="populations.html#cb160-5"></a>ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</span>
+<span id="cb160-6"><a href="populations.html#cb160-6"></a>ex</span>
+<span id="cb160-7"><a href="populations.html#cb160-7"></a></span>
+<span id="cb160-8"><a href="populations.html#cb160-8"></a><span class="co">## </span></span></code></pre></div>
 <p>다음은 시뮬레이션 코드입니다. sapply 를 사용한 코드로 변환해 보시기 바랍니다.</p>
-<pre class="sourceCode r" id="cb161"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb161-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb161-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb161-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;&quot;</span>, n)</a>
-<a class="sourceLine" id="cb161-5" data-line-number="5">pocket &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>)</a>
-<a class="sourceLine" id="cb161-6" data-line-number="6"><span class="co">#x &lt;- sample(pocket, 2, replace=T) %&gt;% paste(collapse = &quot;&quot;)</span></a>
-<a class="sourceLine" id="cb161-7" data-line-number="7"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
-<a class="sourceLine" id="cb161-8" data-line-number="8">  x[i] &lt;-<span class="st"> </span><span class="kw">sample</span>(pocket, <span class="dv">2</span>, <span class="dt">replace=</span>T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb161-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb161-10" data-line-number="10">xtab &lt;-<span class="st"> </span><span class="kw">table</span>(x)</a>
-<a class="sourceLine" id="cb161-11" data-line-number="11"><span class="kw">sum</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)<span class="op">*</span>(xtab<span class="op">/</span><span class="kw">sum</span>(xtab)))</a></code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="populations.html#cb161-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb161-2"><a href="populations.html#cb161-2"></a></span>
+<span id="cb161-3"><a href="populations.html#cb161-3"></a>n &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb161-4"><a href="populations.html#cb161-4"></a>x &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;&quot;</span>, n)</span>
+<span id="cb161-5"><a href="populations.html#cb161-5"></a>pocket &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;R&quot;</span>)</span>
+<span id="cb161-6"><a href="populations.html#cb161-6"></a><span class="co">#x &lt;- sample(pocket, 2, replace=T) %&gt;% paste(collapse = &quot;&quot;)</span></span>
+<span id="cb161-7"><a href="populations.html#cb161-7"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb161-8"><a href="populations.html#cb161-8"></a>  x[i] &lt;-<span class="st"> </span><span class="kw">sample</span>(pocket, <span class="dv">2</span>, <span class="dt">replace=</span>T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb161-9"><a href="populations.html#cb161-9"></a>}</span>
+<span id="cb161-10"><a href="populations.html#cb161-10"></a>xtab &lt;-<span class="st"> </span><span class="kw">table</span>(x)</span>
+<span id="cb161-11"><a href="populations.html#cb161-11"></a><span class="kw">sum</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)<span class="op">*</span>(xtab<span class="op">/</span><span class="kw">sum</span>(xtab)))</span></code></pre></div>
 </div>
 <div id="sampling-distribution" class="section level2">
 <h2><span class="header-section-number">6.5</span> Sampling distribution</h2>
@@ -539,20 +572,20 @@ SD(\bar{X}) = \sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}
 \]</span>
 즉, 표본평균의 기댓값은 모평균과 같고 표본평균의 표준편차는 모평균의 표준편차와 관계가 있으나 더 작습니다. 이러한 특성 때문에 <span class="math inline">\(\bar{X}\)</span>를 모평균의 추정에 사용할 수 있습니다.</p>
 <p><strong>[EXERCISE]</strong> 1, 2, 3 세 개의 숫자가 각각 적힌 공이 주머니에 있다. 여기서 하나의 공을 뽑을 때 나오는 숫자를 확률변수 <span class="math inline">\(X\)</span>라 할 때 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오 (공식 이용, 코드 작성).</p>
-<pre class="sourceCode r" id="cb162"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb162-2" data-line-number="2">xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb162-3" data-line-number="3">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</a>
-<a class="sourceLine" id="cb162-4" data-line-number="4">vx &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span><span class="op">*</span>xp) <span class="op">-</span><span class="st"> </span>(<span class="kw">sum</span>(x<span class="op">*</span>xp))<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb162-5" data-line-number="5"><span class="kw">c</span>(ex, vx)</a></code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="populations.html#cb162-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></span>
+<span id="cb162-2"><a href="populations.html#cb162-2"></a>xp &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb162-3"><a href="populations.html#cb162-3"></a>ex &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">*</span>xp)</span>
+<span id="cb162-4"><a href="populations.html#cb162-4"></a>vx &lt;-<span class="st"> </span><span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span><span class="op">*</span>xp) <span class="op">-</span><span class="st"> </span>(<span class="kw">sum</span>(x<span class="op">*</span>xp))<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb162-5"><a href="populations.html#cb162-5"></a><span class="kw">c</span>(ex, vx)</span></code></pre></div>
 <p><strong>[EXERCISE]</strong> 위 예제에서 임의 복원 추출 방법으로 두 개의 표본을 추출하는 경우를 생각해보자. 이 경우 확률변수 <span class="math inline">\(X\)</span>를 두 수의 합을 나타낸다고 가정할 경우 기댓값과 분산을 구하는 코드를 작성하시오.</p>
-<pre class="sourceCode r" id="cb163"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">times=</span><span class="dv">3</span>), <span class="dt">x2=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each=</span><span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb163-2" data-line-number="2">px &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">rowSums</span>(x))<span class="op">/</span><span class="kw">length</span>(<span class="kw">rowSums</span>(x))</a>
-<a class="sourceLine" id="cb163-3" data-line-number="3">k &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">names</span>(px))</a>
-<a class="sourceLine" id="cb163-4" data-line-number="4">ex &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">*</span>px)</a>
-<a class="sourceLine" id="cb163-5" data-line-number="5">xp &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">^</span><span class="dv">2</span><span class="op">*</span>px) <span class="op">-</span><span class="st"> </span>ex<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb163-6" data-line-number="6"><span class="kw">c</span>(ex, vx)</a>
-<a class="sourceLine" id="cb163-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb163-8" data-line-number="8"><span class="kw">barplot</span>(px)</a></code></pre>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="populations.html#cb163-1"></a>x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">times=</span><span class="dv">3</span>), <span class="dt">x2=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each=</span><span class="dv">3</span>))</span>
+<span id="cb163-2"><a href="populations.html#cb163-2"></a>px &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">rowSums</span>(x))<span class="op">/</span><span class="kw">length</span>(<span class="kw">rowSums</span>(x))</span>
+<span id="cb163-3"><a href="populations.html#cb163-3"></a>k &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">names</span>(px))</span>
+<span id="cb163-4"><a href="populations.html#cb163-4"></a>ex &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">*</span>px)</span>
+<span id="cb163-5"><a href="populations.html#cb163-5"></a>xp &lt;-<span class="st"> </span><span class="kw">sum</span>(k<span class="op">^</span><span class="dv">2</span><span class="op">*</span>px) <span class="op">-</span><span class="st"> </span>ex<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb163-6"><a href="populations.html#cb163-6"></a><span class="kw">c</span>(ex, vx)</span>
+<span id="cb163-7"><a href="populations.html#cb163-7"></a></span>
+<span id="cb163-8"><a href="populations.html#cb163-8"></a><span class="kw">barplot</span>(px)</span></code></pre></div>
 <p>위 예제의 경우는 모집단을 알고 있는 경우입니다. 만약 주머니 안에 몇개의 공이 있는지 어떤 수가 써 있는지 모르는 경우를 생각하면 주머니에서 임의 복원 추출을 통해 모수 (모평균)를 추정해야 합니다. 즉 표본평균의 기댓값을 구해야 하므로 임의 복원추출 시행과 그 표본들의 평균을 구하는 여러번의 반복 작업으로 모평균을 추정할 수 있습니다.</p>
 <p><strong>[EXERCISE]</strong> 위 예제에서 주머니 안에 몇 개의 공이 있는지 모른다고 가정하자. 임의 복원 추출 방법으로 <span class="math inline">\(n\)</span>개의 표본을 추출하고 확률변수 <span class="math inline">\(X\)</span>의 기댓값과 분산을 구하시오</p>
 <p><img src="images/06/07.png" /></p>
@@ -610,66 +643,66 @@ P(X=k) = {n \choose k} p^k (1-p)^{n-k} \\
 \]</span></p>
 <p><strong>[EXERCISE]</strong> 동전을 10번 던질 경우 X를 앞면이 나오는 경우의 수라 하면 <span class="math inline">\(X=5\)</span> 일 경우의 확률 <span class="math inline">\(P(X=5)\)</span>와 <span class="math inline">\(P(X&lt;6)\)</span>의 값을 구하시오</p>
 <p><strong>[EXERCISE]</strong> 하나의 동전을 10번 던질 때 <span class="math inline">\(X\)</span>를 앞면이 나오는 경우의 개수라 하자. 만약 동전이 공평하다면 Binomial(10, 1/2) 분포를 따르게 된다. P(X=5) 값을 구하시오.</p>
-<pre class="sourceCode r" id="cb164"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="co"># from the pdf of binomial r.v.</span></a>
-<a class="sourceLine" id="cb164-2" data-line-number="2"><span class="kw">choose</span>(<span class="dv">10</span>, <span class="dv">5</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10-5</span>)</a>
-<a class="sourceLine" id="cb164-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb164-4" data-line-number="4"><span class="co"># using dbinom function</span></a>
-<a class="sourceLine" id="cb164-5" data-line-number="5"><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb164-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb164-7" data-line-number="7"><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb164-8" data-line-number="8"><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb164-9" data-line-number="9"><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb164-10" data-line-number="10"><span class="kw">dbinom</span>(<span class="dv">3</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb164-11" data-line-number="11"><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb164-12" data-line-number="12"><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb164-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb164-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb164-15" data-line-number="15"><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a></code></pre>
-<pre class="sourceCode r" id="cb165"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">## pdf </a>
-<a class="sourceLine" id="cb165-2" data-line-number="2">x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb165-3" data-line-number="3">x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</a>
-<a class="sourceLine" id="cb165-4" data-line-number="4">x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</a>
-<a class="sourceLine" id="cb165-5" data-line-number="5"><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a></code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="populations.html#cb164-1"></a><span class="co"># from the pdf of binomial r.v.</span></span>
+<span id="cb164-2"><a href="populations.html#cb164-2"></a><span class="kw">choose</span>(<span class="dv">10</span>, <span class="dv">5</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10-5</span>)</span>
+<span id="cb164-3"><a href="populations.html#cb164-3"></a></span>
+<span id="cb164-4"><a href="populations.html#cb164-4"></a><span class="co"># using dbinom function</span></span>
+<span id="cb164-5"><a href="populations.html#cb164-5"></a><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb164-6"><a href="populations.html#cb164-6"></a></span>
+<span id="cb164-7"><a href="populations.html#cb164-7"></a><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb164-8"><a href="populations.html#cb164-8"></a><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb164-9"><a href="populations.html#cb164-9"></a><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb164-10"><a href="populations.html#cb164-10"></a><span class="kw">dbinom</span>(<span class="dv">3</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb164-11"><a href="populations.html#cb164-11"></a><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb164-12"><a href="populations.html#cb164-12"></a><span class="kw">dbinom</span>(<span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb164-13"><a href="populations.html#cb164-13"></a></span>
+<span id="cb164-14"><a href="populations.html#cb164-14"></a></span>
+<span id="cb164-15"><a href="populations.html#cb164-15"></a><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="populations.html#cb165-1"></a><span class="co">## pdf </span></span>
+<span id="cb165-2"><a href="populations.html#cb165-2"></a>x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb165-3"><a href="populations.html#cb165-3"></a>x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</span>
+<span id="cb165-4"><a href="populations.html#cb165-4"></a>x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</span>
+<span id="cb165-5"><a href="populations.html#cb165-5"></a><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </span></code></pre></div>
 <p>ggplot을 이용해서 이항분포를 그려봅니다. 히스토그램의 y축은 빈도 수를 나타내지만 이를 확률로 나타낼수도 있고 이 경우 y값은 dbinom의 값과 같습니다.</p>
-<pre class="sourceCode r" id="cb166"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="kw">library</span>(reshape2)</a>
-<a class="sourceLine" id="cb166-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb166-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb166-5" data-line-number="5">## pdf </a>
-<a class="sourceLine" id="cb166-6" data-line-number="6">x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb166-7" data-line-number="7">x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</a>
-<a class="sourceLine" id="cb166-8" data-line-number="8">x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</a>
-<a class="sourceLine" id="cb166-9" data-line-number="9"><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </a>
-<a class="sourceLine" id="cb166-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb166-11" data-line-number="11">x_trials &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1000</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb166-12" data-line-number="12"><span class="kw">hist</span>(x_trials, <span class="dt">br=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb166-13" data-line-number="13">## distribution</a>
-<a class="sourceLine" id="cb166-14" data-line-number="14"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x_trials), <span class="kw">aes</span>(<span class="dt">x=</span>x_trials)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</a>
-<a class="sourceLine" id="cb166-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb166-16" data-line-number="16">x_tab &lt;-<span class="st"> </span><span class="kw">table</span>(x_trials)</a>
-<a class="sourceLine" id="cb166-17" data-line-number="17">x_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x_dist, x_tab<span class="op">/</span><span class="kw">sum</span>(x_tab))</a>
-<a class="sourceLine" id="cb166-18" data-line-number="18">x_df2 &lt;-<span class="st"> </span><span class="kw">melt</span>(x_df, <span class="dt">id.vars=</span><span class="st">&quot;x_trials&quot;</span>)</a>
-<a class="sourceLine" id="cb166-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb166-20" data-line-number="20"><span class="kw">ggplot</span>(x_df2, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>value, <span class="dt">fill=</span>variable)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb166-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) </a></code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="populations.html#cb166-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb166-2"><a href="populations.html#cb166-2"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb166-3"><a href="populations.html#cb166-3"></a></span>
+<span id="cb166-4"><a href="populations.html#cb166-4"></a></span>
+<span id="cb166-5"><a href="populations.html#cb166-5"></a><span class="co">## pdf </span></span>
+<span id="cb166-6"><a href="populations.html#cb166-6"></a>x&lt;-<span class="dv">0</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb166-7"><a href="populations.html#cb166-7"></a>x_dist &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="dv">10</span>, x) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>(<span class="dv">10</span><span class="op">-</span>x)</span>
+<span id="cb166-8"><a href="populations.html#cb166-8"></a>x_dist_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, x_dist)</span>
+<span id="cb166-9"><a href="populations.html#cb166-9"></a><span class="kw">ggplot</span>(x_dist_df, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </span>
+<span id="cb166-10"><a href="populations.html#cb166-10"></a></span>
+<span id="cb166-11"><a href="populations.html#cb166-11"></a>x_trials &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1000</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb166-12"><a href="populations.html#cb166-12"></a><span class="kw">hist</span>(x_trials, <span class="dt">br=</span><span class="dv">100</span>)</span>
+<span id="cb166-13"><a href="populations.html#cb166-13"></a><span class="co">## distribution</span></span>
+<span id="cb166-14"><a href="populations.html#cb166-14"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x_trials), <span class="kw">aes</span>(<span class="dt">x=</span>x_trials)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</span>
+<span id="cb166-15"><a href="populations.html#cb166-15"></a></span>
+<span id="cb166-16"><a href="populations.html#cb166-16"></a>x_tab &lt;-<span class="st"> </span><span class="kw">table</span>(x_trials)</span>
+<span id="cb166-17"><a href="populations.html#cb166-17"></a>x_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x_dist, x_tab<span class="op">/</span><span class="kw">sum</span>(x_tab))</span>
+<span id="cb166-18"><a href="populations.html#cb166-18"></a>x_df2 &lt;-<span class="st"> </span><span class="kw">melt</span>(x_df, <span class="dt">id.vars=</span><span class="st">&quot;x_trials&quot;</span>)</span>
+<span id="cb166-19"><a href="populations.html#cb166-19"></a></span>
+<span id="cb166-20"><a href="populations.html#cb166-20"></a><span class="kw">ggplot</span>(x_df2, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>value, <span class="dt">fill=</span>variable)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb166-21"><a href="populations.html#cb166-21"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) </span></code></pre></div>
 <p>위 그래프에서 Freq는 bar로 x_dist는 line으로 나타내 보겠습니다.</p>
-<pre class="sourceCode r" id="cb167"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">x_df</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2"><span class="kw">ggplot</span>(x_df, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb167-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb167-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.numeric</span>(x_trials), <span class="dt">y=</span>Freq), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb167-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>Freq), <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb167-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="op">~</span>., <span class="st">&quot;Freq&quot;</span>))</a></code></pre>
-<p>위 예제에서 앞면이 6번 이하로 나올 확률을 구하면 $ P(X 6) = _{k 6} P(X=k) $ 이므로 다음과 같습니다. 따라서 $ P(X 7) = 1- P(X 6)$ 입니다.</p>
-<pre class="sourceCode r" id="cb168"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb168-2" data-line-number="2"><span class="kw">pbinom</span>(<span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a></code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="populations.html#cb167-1"></a>x_df</span>
+<span id="cb167-2"><a href="populations.html#cb167-2"></a><span class="kw">ggplot</span>(x_df, <span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>x_dist)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb167-3"><a href="populations.html#cb167-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></span>
+<span id="cb167-4"><a href="populations.html#cb167-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.numeric</span>(x_trials), <span class="dt">y=</span>Freq), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb167-5"><a href="populations.html#cb167-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x_trials, <span class="dt">y=</span>Freq), <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb167-6"><a href="populations.html#cb167-6"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="op">~</span>., <span class="st">&quot;Freq&quot;</span>))</span></code></pre></div>
+<p>위 예제에서 앞면이 6번 이하로 나올 확률을 구하면 $ P(X ) = _{k } P(X=k) $ 이므로 다음과 같습니다. 따라서 $ P(X ) = 1- P(X )$ 입니다.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="populations.html#cb168-1"></a><span class="kw">sum</span>(<span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</span>
+<span id="cb168-2"><a href="populations.html#cb168-2"></a><span class="kw">pbinom</span>(<span class="dv">6</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span></code></pre></div>
 <p>즉, pbinom을 이용해서 누적함수 분포를 쉽게 그릴 수 있습니다.</p>
-<pre class="sourceCode r" id="cb169"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb169-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">pbinom</span>(x, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb169-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb169-4" data-line-number="4"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb169-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb169-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb169-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="populations.html#cb169-1"></a>x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb169-2"><a href="populations.html#cb169-2"></a>y &lt;-<span class="st"> </span><span class="kw">pbinom</span>(x, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb169-3"><a href="populations.html#cb169-3"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</span>
+<span id="cb169-4"><a href="populations.html#cb169-4"></a><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb169-5"><a href="populations.html#cb169-5"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb169-6"><a href="populations.html#cb169-6"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb169-7"><a href="populations.html#cb169-7"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 </div>
 <div id="normal-random-variables" class="section level3">
 <h3><span class="header-section-number">6.5.4</span> Normal random variables</h3>
@@ -681,114 +714,114 @@ P(X=k) = {n \choose k} p^k (1-p)^{n-k} \\
 f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^2} 
 \]</span>
 다음은 <code>rnorm</code>과 <code>dnorm</code>을 활용한 예제 입니다.</p>
-<pre class="sourceCode r" id="cb170"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb170-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb170-3" data-line-number="3">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb170-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb170-5" data-line-number="5">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb170-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
-<a class="sourceLine" id="cb170-7" data-line-number="7">xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</a>
-<a class="sourceLine" id="cb170-8" data-line-number="8"><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="populations.html#cb170-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb170-2"><a href="populations.html#cb170-2"></a></span>
+<span id="cb170-3"><a href="populations.html#cb170-3"></a>n &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb170-4"><a href="populations.html#cb170-4"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd=</span><span class="dv">2</span>)</span>
+<span id="cb170-5"><a href="populations.html#cb170-5"></a>xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</span>
+<span id="cb170-6"><a href="populations.html#cb170-6"></a>s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</span>
+<span id="cb170-7"><a href="populations.html#cb170-7"></a>xbarsd &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>s</span>
+<span id="cb170-8"><a href="populations.html#cb170-8"></a><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">30</span>, <span class="dt">probability =</span> T);<span class="kw">lines</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>);<span class="kw">abline</span>(<span class="dt">v=</span>xbarsd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
 <p>다음 두 개의 normal desities를 가정해서 그래프를 그려봅시다. 하나는 <span class="math inline">\(f(x|\mu=0, \sigma=1)\)</span>이고 다른 하나는 <span class="math inline">\(f(x|\mu=4, \sigma=1/2)\)</span> 입니다.</p>
-<pre class="sourceCode r" id="cb171"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb171-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="kw">plot</span>(x,y)</a>
-<a class="sourceLine" id="cb171-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb171-5" data-line-number="5">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb171-6" data-line-number="6">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dt">mean=</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb171-7" data-line-number="7"><span class="kw">plot</span>(x2, y2)</a></code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="populations.html#cb171-1"></a>x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</span>
+<span id="cb171-2"><a href="populations.html#cb171-2"></a>y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</span>
+<span id="cb171-3"><a href="populations.html#cb171-3"></a><span class="kw">plot</span>(x,y)</span>
+<span id="cb171-4"><a href="populations.html#cb171-4"></a></span>
+<span id="cb171-5"><a href="populations.html#cb171-5"></a>x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</span>
+<span id="cb171-6"><a href="populations.html#cb171-6"></a>y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dt">mean=</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="fl">0.5</span>)</span>
+<span id="cb171-7"><a href="populations.html#cb171-7"></a><span class="kw">plot</span>(x2, y2)</span></code></pre></div>
 <p>ggplot을 이용해서 두 그래프를 하나의 화면에 그려봅니다.</p>
-<pre class="sourceCode r" id="cb172"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y1, y2)</a>
-<a class="sourceLine" id="cb172-2" data-line-number="2">dat</a>
-<a class="sourceLine" id="cb172-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb172-4" data-line-number="4"><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
-<a class="sourceLine" id="cb172-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb172-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x2, y2)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb172-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)</a></code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="populations.html#cb172-1"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y1, y2)</span>
+<span id="cb172-2"><a href="populations.html#cb172-2"></a>dat</span>
+<span id="cb172-3"><a href="populations.html#cb172-3"></a></span>
+<span id="cb172-4"><a href="populations.html#cb172-4"></a><span class="kw">ggplot</span>(dat) <span class="op">+</span></span>
+<span id="cb172-5"><a href="populations.html#cb172-5"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></span>
+<span id="cb172-6"><a href="populations.html#cb172-6"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x2, y2)) <span class="op">+</span></span>
+<span id="cb172-7"><a href="populations.html#cb172-7"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p>연속형 확률분포에서 y 값은 특정 x 값에 대한 density라 했고 x의 범위에 대한 면적의 넓이가 확률 입니다. N(0, 1) 분포에서 누적확률 0.5인 곳은 x=0 이며 pnorm 함수로 다음과 같이 확인이 가능합니다. 즉 정규분포에서도 앞서 이항분포에서와 같이 pnorm 함수를 이용해서 누적확률을 구할 수 있습니다.</p>
-<pre class="sourceCode r" id="cb173"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="populations.html#cb173-1"></a><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p>qnorm은 pnorm의 역함수로 생각하면 되겠습니다. 즉, 정규분포 N(0, 1)에서 확률이 0.5가 되는 곳의 x값을 구하기 위해서는 다음과 같이 코드를 작성하면 되겠습니다.</p>
-<pre class="sourceCode r" id="cb174"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a></code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="populations.html#cb174-1"></a><span class="kw">qnorm</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p><strong>[EXERCISE]</strong> N(0, 1) 분포에서 (누적) 확률이 0.95가 되는 곳의 x값을 구하고 그래프를 그린 후 geom_polygon 함수를 이용하여 해당 영역을 색칠 하시오.</p>
 <p>다음은 수업시간에 진행했던 노트 입니다.</p>
-<pre class="sourceCode bash" id="cb175"><code class="sourceCode bash"><a class="sourceLine" id="cb175-1" data-line-number="1">표준정규분포 <span class="ex">N</span>(0, 1)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb175-3" data-line-number="3"><span class="ex">1.</span> x값 -4부터 4까지 0.1 간격으로 생성 (seq 함수)</a>
-<a class="sourceLine" id="cb175-4" data-line-number="4"><span class="ex">2.</span> y 값은 dnorm 으로 x값에 대한 y값 저장</a>
-<a class="sourceLine" id="cb175-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb175-6" data-line-number="6"><span class="ex">3.</span> x1에 저장 <span class="op">&lt;</span>- 확률 0.95인 x값? qnorm</a>
-<a class="sourceLine" id="cb175-7" data-line-number="7"><span class="ex">4.</span> y1 은 x1에 해당하는 density 값 (dnorm)</a>
-<a class="sourceLine" id="cb175-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb175-9" data-line-number="9"><span class="ex">5.</span> 색칠할 구간의 (테두리) 좌표 <span class="ex">x2</span>와 y2 </a>
-<a class="sourceLine" id="cb175-10" data-line-number="10"><span class="ex">x2</span>는 -4부터 x1까지 0.1간격으로 생성 seq()</a>
-<a class="sourceLine" id="cb175-11" data-line-number="11"><span class="ex">y2</span>는 x2의 density 값 dnorm으로 </a>
-<a class="sourceLine" id="cb175-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb175-13" data-line-number="13"><span class="ex">6.</span> 마지막 점 추가 </a>
-<a class="sourceLine" id="cb175-14" data-line-number="14"><span class="ex">x2</span> <span class="op">&lt;</span>- c(x2, x1)</a>
-<a class="sourceLine" id="cb175-15" data-line-number="15"><span class="ex">y2</span> <span class="op">&lt;</span>- c(y2, 0)</a>
-<a class="sourceLine" id="cb175-16" data-line-number="16"> </a>
-<a class="sourceLine" id="cb175-17" data-line-number="17"><span class="ex">7.</span> data.frame 만들기 </a>
-<a class="sourceLine" id="cb175-18" data-line-number="18"><span class="ex">dat1</span> <span class="op">&lt;</span>- data.frame(x, y)</a>
-<a class="sourceLine" id="cb175-19" data-line-number="19"><span class="ex">dat2</span> <span class="op">&lt;</span>- data.frame(x2, y2)</a>
-<a class="sourceLine" id="cb175-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb175-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb175-22" data-line-number="22"><span class="ex">8.</span> ggplot 분포 그리기</a>
-<a class="sourceLine" id="cb175-23" data-line-number="23"><span class="ex">ggplot</span>(dat1, aes(x=x, y=y)) <span class="ex">+</span></a>
-<a class="sourceLine" id="cb175-24" data-line-number="24">   <span class="fu">geom_line()</span> <span class="ex">+</span></a>
-<a class="sourceLine" id="cb175-25" data-line-number="25">   <span class="ex">geom_polygon</span>(data=dat2, aes(x=x2, y=y2)) </a></code></pre>
-<pre class="sourceCode r" id="cb176"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</a>
-<a class="sourceLine" id="cb176-2" data-line-number="2"><span class="kw">library</span>(reshape2, <span class="dt">quietly =</span> T, <span class="dt">warn.conflicts =</span> F)</a></code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb175-1"><a href="populations.html#cb175-1"></a>표준정규분포 <span class="ex">N</span>(0, 1)</span>
+<span id="cb175-2"><a href="populations.html#cb175-2"></a></span>
+<span id="cb175-3"><a href="populations.html#cb175-3"></a><span class="ex">1.</span> x값 -4부터 4까지 0.1 간격으로 생성 (seq 함수)</span>
+<span id="cb175-4"><a href="populations.html#cb175-4"></a><span class="ex">2.</span> y 값은 dnorm 으로 x값에 대한 y값 저장</span>
+<span id="cb175-5"><a href="populations.html#cb175-5"></a></span>
+<span id="cb175-6"><a href="populations.html#cb175-6"></a><span class="ex">3.</span> x1에 저장 <span class="op">&lt;</span>- 확률 0.95인 x값? qnorm</span>
+<span id="cb175-7"><a href="populations.html#cb175-7"></a><span class="ex">4.</span> y1 은 x1에 해당하는 density 값 (dnorm)</span>
+<span id="cb175-8"><a href="populations.html#cb175-8"></a></span>
+<span id="cb175-9"><a href="populations.html#cb175-9"></a><span class="ex">5.</span> 색칠할 구간의 (테두리) 좌표 <span class="ex">x2</span>와 y2 </span>
+<span id="cb175-10"><a href="populations.html#cb175-10"></a><span class="ex">x2</span>는 -4부터 x1까지 0.1간격으로 생성 seq()</span>
+<span id="cb175-11"><a href="populations.html#cb175-11"></a><span class="ex">y2</span>는 x2의 density 값 dnorm으로 </span>
+<span id="cb175-12"><a href="populations.html#cb175-12"></a></span>
+<span id="cb175-13"><a href="populations.html#cb175-13"></a><span class="ex">6.</span> 마지막 점 추가 </span>
+<span id="cb175-14"><a href="populations.html#cb175-14"></a><span class="ex">x2</span> <span class="op">&lt;</span>- c(x2, x1)</span>
+<span id="cb175-15"><a href="populations.html#cb175-15"></a><span class="ex">y2</span> <span class="op">&lt;</span>- c(y2, 0)</span>
+<span id="cb175-16"><a href="populations.html#cb175-16"></a> </span>
+<span id="cb175-17"><a href="populations.html#cb175-17"></a><span class="ex">7.</span> data.frame 만들기 </span>
+<span id="cb175-18"><a href="populations.html#cb175-18"></a><span class="ex">dat1</span> <span class="op">&lt;</span>- data.frame(x, y)</span>
+<span id="cb175-19"><a href="populations.html#cb175-19"></a><span class="ex">dat2</span> <span class="op">&lt;</span>- data.frame(x2, y2)</span>
+<span id="cb175-20"><a href="populations.html#cb175-20"></a></span>
+<span id="cb175-21"><a href="populations.html#cb175-21"></a></span>
+<span id="cb175-22"><a href="populations.html#cb175-22"></a><span class="ex">8.</span> ggplot 분포 그리기</span>
+<span id="cb175-23"><a href="populations.html#cb175-23"></a><span class="ex">ggplot</span>(dat1, aes(x=x, y=y)) <span class="ex">+</span></span>
+<span id="cb175-24"><a href="populations.html#cb175-24"></a>   <span class="fu">geom_line()</span> <span class="ex">+</span></span>
+<span id="cb175-25"><a href="populations.html#cb175-25"></a>   <span class="ex">geom_polygon</span>(data=dat2, aes(x=x2, y=y2)) </span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="populations.html#cb176-1"></a><span class="kw">library</span>(ggplot2, <span class="dt">quietly =</span> T)</span>
+<span id="cb176-2"><a href="populations.html#cb176-2"></a><span class="kw">library</span>(reshape2, <span class="dt">quietly =</span> T, <span class="dt">warn.conflicts =</span> F)</span></code></pre></div>
 <pre><code>## Warning: package &#39;reshape2&#39; was built under R version 3.5.3</code></pre>
-<pre class="sourceCode r" id="cb178"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb178-2" data-line-number="2">y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb178-3" data-line-number="3">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</a>
-<a class="sourceLine" id="cb178-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb178-5" data-line-number="5">x.val &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb178-6" data-line-number="6">x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, x.val, <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb178-7" data-line-number="7">y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb178-8" data-line-number="8">x2 &lt;-<span class="st"> </span><span class="kw">c</span>(x2, x.val)</a>
-<a class="sourceLine" id="cb178-9" data-line-number="9">y2 &lt;-<span class="st"> </span><span class="kw">c</span>(y2, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb178-10" data-line-number="10">dat2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x2, y2)</a>
-<a class="sourceLine" id="cb178-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb178-12" data-line-number="12">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>dat2, <span class="kw">aes</span>(<span class="dt">x=</span>x2, <span class="dt">y=</span>y2)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</a>
-<a class="sourceLine" id="cb178-17" data-line-number="17">p</a></code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="populations.html#cb178-1"></a>x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by=</span><span class="fl">0.1</span>)</span>
+<span id="cb178-2"><a href="populations.html#cb178-2"></a>y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</span>
+<span id="cb178-3"><a href="populations.html#cb178-3"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x1, y1)</span>
+<span id="cb178-4"><a href="populations.html#cb178-4"></a></span>
+<span id="cb178-5"><a href="populations.html#cb178-5"></a>x.val &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb178-6"><a href="populations.html#cb178-6"></a>x2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, x.val, <span class="dt">length.out=</span><span class="dv">100</span>)</span>
+<span id="cb178-7"><a href="populations.html#cb178-7"></a>y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb178-8"><a href="populations.html#cb178-8"></a>x2 &lt;-<span class="st"> </span><span class="kw">c</span>(x2, x.val)</span>
+<span id="cb178-9"><a href="populations.html#cb178-9"></a>y2 &lt;-<span class="st"> </span><span class="kw">c</span>(y2, <span class="dv">0</span>)</span>
+<span id="cb178-10"><a href="populations.html#cb178-10"></a>dat2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x2, y2)</span>
+<span id="cb178-11"><a href="populations.html#cb178-11"></a></span>
+<span id="cb178-12"><a href="populations.html#cb178-12"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat) <span class="op">+</span></span>
+<span id="cb178-13"><a href="populations.html#cb178-13"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(x1, y1)) <span class="op">+</span></span>
+<span id="cb178-14"><a href="populations.html#cb178-14"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb178-15"><a href="populations.html#cb178-15"></a><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>dat2, <span class="kw">aes</span>(<span class="dt">x=</span>x2, <span class="dt">y=</span>y2)) <span class="op">+</span></span>
+<span id="cb178-16"><a href="populations.html#cb178-16"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb178-17"><a href="populations.html#cb178-17"></a>p</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
 <p>몇 가지 옵션을 추가한 그래프 입니다.</p>
-<pre class="sourceCode r" id="cb179"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">onesd_x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb179-2" data-line-number="2">onesd_y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(onesd_x, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb179-3" data-line-number="3">onesd_dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>, onesd_x, onesd_x), <span class="dt">y=</span><span class="kw">c</span>(onesd_y, onesd_y, <span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb179-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb179-5" data-line-number="5">## dashed line </a>
-<a class="sourceLine" id="cb179-6" data-line-number="6">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>onesd_dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)</a>
-<a class="sourceLine" id="cb179-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb179-8" data-line-number="8">## text label</a>
-<a class="sourceLine" id="cb179-9" data-line-number="9">p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;sd=1&quot;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> onesd_y<span class="fl">+0.02</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb179-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb179-11" data-line-number="11">## arrow with text </a>
-<a class="sourceLine" id="cb179-12" data-line-number="12">p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Normal distribution with mean 0 and sd 1&quot;</span>, <span class="dt">x=</span><span class="st">&quot;X&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb179-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">face=</span><span class="st">&quot;bold.italic&quot;</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb179-14" data-line-number="14">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>),</a>
-<a class="sourceLine" id="cb179-15" data-line-number="15">        <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb179-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.2</span>, <span class="dt">xend =</span> x.val, <span class="dt">yend =</span> <span class="kw">dnorm</span>(x.val, <span class="dv">0</span>, <span class="dv">1</span>)), </a>
-<a class="sourceLine" id="cb179-17" data-line-number="17">          <span class="dt">arrow =</span> <span class="kw">arrow</span>(),</a>
-<a class="sourceLine" id="cb179-18" data-line-number="18">          <span class="dt">color=</span><span class="st">&#39;orange&#39;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb179-19" data-line-number="19"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;x=&quot;</span>, <span class="kw">round</span>(x.val, <span class="dv">3</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.22</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="populations.html#cb179-1"></a>onesd_x &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb179-2"><a href="populations.html#cb179-2"></a>onesd_y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(onesd_x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb179-3"><a href="populations.html#cb179-3"></a>onesd_dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>, onesd_x, onesd_x), <span class="dt">y=</span><span class="kw">c</span>(onesd_y, onesd_y, <span class="dv">0</span>))</span>
+<span id="cb179-4"><a href="populations.html#cb179-4"></a></span>
+<span id="cb179-5"><a href="populations.html#cb179-5"></a><span class="co">## dashed line </span></span>
+<span id="cb179-6"><a href="populations.html#cb179-6"></a>p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>onesd_dat, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb179-7"><a href="populations.html#cb179-7"></a></span>
+<span id="cb179-8"><a href="populations.html#cb179-8"></a><span class="co">## text label</span></span>
+<span id="cb179-9"><a href="populations.html#cb179-9"></a>p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;sd=1&quot;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> onesd_y<span class="fl">+0.02</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb179-10"><a href="populations.html#cb179-10"></a></span>
+<span id="cb179-11"><a href="populations.html#cb179-11"></a><span class="co">## arrow with text </span></span>
+<span id="cb179-12"><a href="populations.html#cb179-12"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Normal distribution with mean 0 and sd 1&quot;</span>, <span class="dt">x=</span><span class="st">&quot;X&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb179-13"><a href="populations.html#cb179-13"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">face=</span><span class="st">&quot;bold.italic&quot;</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb179-14"><a href="populations.html#cb179-14"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb179-15"><a href="populations.html#cb179-15"></a>        <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">15</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></span>
+<span id="cb179-16"><a href="populations.html#cb179-16"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.2</span>, <span class="dt">xend =</span> x.val, <span class="dt">yend =</span> <span class="kw">dnorm</span>(x.val, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
+<span id="cb179-17"><a href="populations.html#cb179-17"></a>          <span class="dt">arrow =</span> <span class="kw">arrow</span>(),</span>
+<span id="cb179-18"><a href="populations.html#cb179-18"></a>          <span class="dt">color=</span><span class="st">&#39;orange&#39;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb179-19"><a href="populations.html#cb179-19"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;x=&quot;</span>, <span class="kw">round</span>(x.val, <span class="dv">3</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="fl">0.22</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
 <p>다음은 간단히 표준정규분포에서 표본을 추출 한 후 히스토그램과 적합 곡선 (pdf 추정 곡선)을 표현한 그래프 입니다.</p>
-<pre class="sourceCode r" id="cb180"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">nsample &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb180-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample)</a>
-<a class="sourceLine" id="cb180-3" data-line-number="3">xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb180-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</a>
-<a class="sourceLine" id="cb180-5" data-line-number="5"><span class="kw">plot</span>(xx, y)</a></code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="populations.html#cb180-1"></a>nsample &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb180-2"><a href="populations.html#cb180-2"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsample)</span>
+<span id="cb180-3"><a href="populations.html#cb180-3"></a>xx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">length.out=</span><span class="dv">100</span>)</span>
+<span id="cb180-4"><a href="populations.html#cb180-4"></a>y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(xx, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x))</span>
+<span id="cb180-5"><a href="populations.html#cb180-5"></a><span class="kw">plot</span>(xx, y)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
-<pre class="sourceCode r" id="cb181"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</a>
-<a class="sourceLine" id="cb181-2" data-line-number="2"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb181-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb181-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</a></code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="populations.html#cb181-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)</span>
+<span id="cb181-2"><a href="populations.html#cb181-2"></a><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb181-3"><a href="populations.html#cb181-3"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></span>
+<span id="cb181-4"><a href="populations.html#cb181-4"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&quot;#FF6666&quot;</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-175-2.png" width="672" /></p>
 
@@ -806,11 +839,13 @@ f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2} (x-\mu)^
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -818,12 +853,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -835,6 +869,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

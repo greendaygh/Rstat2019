@@ -1,0 +1,6 @@
+
+# Confidence intervals
+
+## Confidence intervals for a population proportion, $p$
+
+1,021
