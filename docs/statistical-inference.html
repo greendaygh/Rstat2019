@@ -374,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="statistical-inference.html#cb185-1"></a><span class="kw">str</span>(dat_mean)</span></code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10 obs. of  2 variables:
 ##  $ g   : Factor w/ 10 levels &quot;0.1&quot;,&quot;0.2&quot;,&quot;0.3&quot;,..: 1 2 3 4 5 6 7 8 9 10
-##  $ mean: num  0.1122 0.5426 0.0401 0.0783 -0.1814 ...</code></pre>
+##  $ mean: num  -0.0304 -0.3432 -0.0713 0.3107 0.1572 ...</code></pre>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="statistical-inference.html#cb187-1"></a><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))</span></code></pre></div>
 <pre><code>##  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="statistical-inference.html#cb189-1"></a><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></span>
@@ -396,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 3.5</code></pre>
 <p>Randomization distribution 상태로 데이터를 다시 두 그룹으로 나누어 차이를 계산하고 이 과정을 반복해서 분포를 그려보겠습니다.</p>
 <p><strong>[EXERCISE]</strong> 두 그룹 데이터에서 임으로 10명을 두 번 뽑아 그 평균의 차이를 계산하시오</p>
-<pre><code>## [1] -1.2</code></pre>
+<pre><code>## [1] -0.6</code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제의 과정을 1000번 반복하고 각 차이값의 분포를 그리시오</p>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -418,29 +418,42 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <li><span class="math inline">\(E(s^2) = \sigma^2\)</span></li>
 </ul>
 <p>예를 들어 A poll asking a random sample of 1003 whether marriages between same-sex couples should be recognized by law as valid. 55% said yes, 이 경우 A randomly selected person would responding yes with p = 0.55 입니다. 여기서 어디에 대부분의 데이터가 모여있는가? 라는 질문을 할 수 있고 이는 데이터의 95%가 어느 범위에 있는가? 라는 질문과 같습니다. 이를 위해 다음 시뮬레이션을 수행할 수 있습니다.</p>
-<pre><code>## [1] 551.526</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="statistical-inference.html#cb195-1"></a>p &lt;-<span class="st"> </span><span class="fl">0.55</span></span>
+<span id="cb195-2"><a href="statistical-inference.html#cb195-2"></a>n &lt;-<span class="st"> </span><span class="dv">1003</span></span>
+<span id="cb195-3"><a href="statistical-inference.html#cb195-3"></a>x &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1000</span>, n, p)</span>
+<span id="cb195-4"><a href="statistical-inference.html#cb195-4"></a><span class="co">#mean(x)</span></span>
+<span id="cb195-5"><a href="statistical-inference.html#cb195-5"></a><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="statistical-inference.html#cb196-1"></a><span class="kw">quantile</span>(x, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
-## 519.975 582.000</code></pre>
+## 522.000 581.025</code></pre>
 <p>그러나 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 구간을 구해야 합니다.</p>
-<pre><code>## [1] 551</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="statistical-inference.html#cb198-1"></a><span class="co">## ===============</span></span>
+<span id="cb198-2"><a href="statistical-inference.html#cb198-2"></a>x &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">2</span>, n, p)</span>
+<span id="cb198-3"><a href="statistical-inference.html#cb198-3"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] 550</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="statistical-inference.html#cb200-1"></a><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
-<p>다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 <span class="math inline">\(\sqrt{n}\)</span>으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 <span class="math inline">\(\sigma\)</span> 대신 <span class="math inline">\(s\)</span>를 사용한 경우를 말합니다.</p>
-<p><img src="images/07/02.PNG" /></p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="statistical-inference.html#cb198-1"></a>mu &lt;-<span class="st"> </span><span class="dv">100</span></span>
-<span id="cb198-2"><a href="statistical-inference.html#cb198-2"></a>sigma &lt;-<span class="st"> </span><span class="dv">16</span></span>
-<span id="cb198-3"><a href="statistical-inference.html#cb198-3"></a>M &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb198-4"><a href="statistical-inference.html#cb198-4"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
-<span id="cb198-5"><a href="statistical-inference.html#cb198-5"></a>res &lt;-<span class="st"> </span><span class="kw">replicate</span>(M, {</span>
-<span id="cb198-6"><a href="statistical-inference.html#cb198-6"></a>    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mu, sigma)</span>
-<span id="cb198-7"><a href="statistical-inference.html#cb198-7"></a>    se &lt;-<span class="st"> </span>(<span class="kw">mean</span>(x)<span class="op">-</span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb198-8"><a href="statistical-inference.html#cb198-8"></a>    (<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>se</span>
-<span id="cb198-9"><a href="statistical-inference.html#cb198-9"></a>})</span>
-<span id="cb198-10"><a href="statistical-inference.html#cb198-10"></a></span>
-<span id="cb198-11"><a href="statistical-inference.html#cb198-11"></a><span class="kw">quantile</span>(res, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
-<pre><code>##      2.5%     97.5% 
-##  8.758342 58.313237</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="statistical-inference.html#cb200-1"></a><span class="kw">hist</span>(res, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
+<p>여기서 다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 <span class="math inline">\(\sqrt{n}\)</span>으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 <span class="math inline">\(\sigma\)</span> 대신 <span class="math inline">\(s\)</span>를 사용한 경우를 말합니다.</p>
+<p>$$
+{x} =  {x} - </p>
+<p>z =  ~ N(0,1)</p>
+<p>t =  ~ T</p>
+<p>$$</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="statistical-inference.html#cb201-1"></a>mu &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb201-2"><a href="statistical-inference.html#cb201-2"></a>sigma &lt;-<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb201-3"><a href="statistical-inference.html#cb201-3"></a>M &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb201-4"><a href="statistical-inference.html#cb201-4"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
+<span id="cb201-5"><a href="statistical-inference.html#cb201-5"></a>res &lt;-<span class="st"> </span><span class="kw">replicate</span>(M, {</span>
+<span id="cb201-6"><a href="statistical-inference.html#cb201-6"></a>    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mu, sigma)</span>
+<span id="cb201-7"><a href="statistical-inference.html#cb201-7"></a>    se &lt;-<span class="st"> </span>(<span class="kw">mean</span>(x)<span class="op">-</span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb201-8"><a href="statistical-inference.html#cb201-8"></a>    (<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>se</span>
+<span id="cb201-9"><a href="statistical-inference.html#cb201-9"></a>})</span>
+<span id="cb201-10"><a href="statistical-inference.html#cb201-10"></a></span>
+<span id="cb201-11"><a href="statistical-inference.html#cb201-11"></a><span class="kw">quantile</span>(res, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<pre><code>##     2.5%    97.5% 
+##  7.82122 56.94989</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="statistical-inference.html#cb203-1"></a><span class="kw">hist</span>(res, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
@@ -452,26 +465,26 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <p><img src="images/07/05.PNG" /></p>
 <p><img src="images/07/06.PNG" /></p>
 <p><img src="images/07/07.PNG" /></p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="statistical-inference.html#cb202-1"></a>obs &lt;-<span class="st"> </span><span class="kw">mean</span>(Medicare<span class="op">$</span>Average.Covered.Charges<span class="op">-</span>Medicare<span class="op">$</span>Average.Total.Payments)</span>
-<span id="cb202-2"><a href="statistical-inference.html#cb202-2"></a></span>
-<span id="cb202-3"><a href="statistical-inference.html#cb202-3"></a>dat &lt;-<span class="st"> </span><span class="kw">c</span>(Medicare<span class="op">$</span>Average.Covered.Charges, Medicare<span class="op">$</span>Average.Total.Payments)</span>
-<span id="cb202-4"><a href="statistical-inference.html#cb202-4"></a>n &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb202-5"><a href="statistical-inference.html#cb202-5"></a>dif &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</span>
-<span id="cb202-6"><a href="statistical-inference.html#cb202-6"></a>dif</span>
-<span id="cb202-7"><a href="statistical-inference.html#cb202-7"></a></span>
-<span id="cb202-8"><a href="statistical-inference.html#cb202-8"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
-<span id="cb202-9"><a href="statistical-inference.html#cb202-9"></a>  dif[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">sample</span>(dat, <span class="dv">10000</span>, T) <span class="op">-</span><span class="st"> </span><span class="kw">sample</span>(dat, <span class="dv">10000</span>, T))</span>
-<span id="cb202-10"><a href="statistical-inference.html#cb202-10"></a>}</span>
-<span id="cb202-11"><a href="statistical-inference.html#cb202-11"></a>dif</span>
-<span id="cb202-12"><a href="statistical-inference.html#cb202-12"></a><span class="kw">hist</span>(dif)</span>
-<span id="cb202-13"><a href="statistical-inference.html#cb202-13"></a>dat_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(dif)</span>
-<span id="cb202-14"><a href="statistical-inference.html#cb202-14"></a><span class="kw">head</span>(dat_df)</span>
-<span id="cb202-15"><a href="statistical-inference.html#cb202-15"></a><span class="kw">ggplot</span>(dat_df, <span class="kw">aes</span>(<span class="dt">x=</span>dif)) <span class="op">+</span></span>
-<span id="cb202-16"><a href="statistical-inference.html#cb202-16"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></span>
-<span id="cb202-17"><a href="statistical-inference.html#cb202-17"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label=</span>obs, <span class="dt">x=</span><span class="dv">1000</span>, <span class="dt">y=</span><span class="dv">75</span>, obs)</span>
-<span id="cb202-18"><a href="statistical-inference.html#cb202-18"></a></span>
-<span id="cb202-19"><a href="statistical-inference.html#cb202-19"></a><span class="kw">sum</span>(dif <span class="op">&gt;</span><span class="st"> </span>obs)</span>
-<span id="cb202-20"><a href="statistical-inference.html#cb202-20"></a><span class="kw">hist</span>(dif)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="statistical-inference.html#cb205-1"></a>obs &lt;-<span class="st"> </span><span class="kw">mean</span>(Medicare<span class="op">$</span>Average.Covered.Charges<span class="op">-</span>Medicare<span class="op">$</span>Average.Total.Payments)</span>
+<span id="cb205-2"><a href="statistical-inference.html#cb205-2"></a></span>
+<span id="cb205-3"><a href="statistical-inference.html#cb205-3"></a>dat &lt;-<span class="st"> </span><span class="kw">c</span>(Medicare<span class="op">$</span>Average.Covered.Charges, Medicare<span class="op">$</span>Average.Total.Payments)</span>
+<span id="cb205-4"><a href="statistical-inference.html#cb205-4"></a>n &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb205-5"><a href="statistical-inference.html#cb205-5"></a>dif &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</span>
+<span id="cb205-6"><a href="statistical-inference.html#cb205-6"></a>dif</span>
+<span id="cb205-7"><a href="statistical-inference.html#cb205-7"></a></span>
+<span id="cb205-8"><a href="statistical-inference.html#cb205-8"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb205-9"><a href="statistical-inference.html#cb205-9"></a>  dif[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">sample</span>(dat, <span class="dv">10000</span>, T) <span class="op">-</span><span class="st"> </span><span class="kw">sample</span>(dat, <span class="dv">10000</span>, T))</span>
+<span id="cb205-10"><a href="statistical-inference.html#cb205-10"></a>}</span>
+<span id="cb205-11"><a href="statistical-inference.html#cb205-11"></a>dif</span>
+<span id="cb205-12"><a href="statistical-inference.html#cb205-12"></a><span class="kw">hist</span>(dif)</span>
+<span id="cb205-13"><a href="statistical-inference.html#cb205-13"></a>dat_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(dif)</span>
+<span id="cb205-14"><a href="statistical-inference.html#cb205-14"></a><span class="kw">head</span>(dat_df)</span>
+<span id="cb205-15"><a href="statistical-inference.html#cb205-15"></a><span class="kw">ggplot</span>(dat_df, <span class="kw">aes</span>(<span class="dt">x=</span>dif)) <span class="op">+</span></span>
+<span id="cb205-16"><a href="statistical-inference.html#cb205-16"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></span>
+<span id="cb205-17"><a href="statistical-inference.html#cb205-17"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label=</span>obs, <span class="dt">x=</span><span class="dv">1000</span>, <span class="dt">y=</span><span class="dv">75</span>, obs)</span>
+<span id="cb205-18"><a href="statistical-inference.html#cb205-18"></a></span>
+<span id="cb205-19"><a href="statistical-inference.html#cb205-19"></a><span class="kw">sum</span>(dif <span class="op">&gt;</span><span class="st"> </span>obs)</span>
+<span id="cb205-20"><a href="statistical-inference.html#cb205-20"></a><span class="kw">hist</span>(dif)</span></code></pre></div>
 
 </div>
 </div>
