@@ -374,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="statistical-inference.html#cb185-1"></a><span class="kw">str</span>(dat_mean)</span></code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10 obs. of  2 variables:
 ##  $ g   : Factor w/ 10 levels &quot;0.1&quot;,&quot;0.2&quot;,&quot;0.3&quot;,..: 1 2 3 4 5 6 7 8 9 10
-##  $ mean: num  -0.00692 0.42863 0.30179 -0.07322 -0.02071 ...</code></pre>
+##  $ mean: num  0.251 -0.109 -0.583 -0.125 -0.372 ...</code></pre>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="statistical-inference.html#cb187-1"></a><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dat_mean<span class="op">$</span>g))</span></code></pre></div>
 <pre><code>##  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="statistical-inference.html#cb189-1"></a><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></span>
@@ -396,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 3.5</code></pre>
 <p>Randomization distribution 상태로 데이터를 다시 두 그룹으로 나누어 차이를 계산하고 이 과정을 반복해서 분포를 그려보겠습니다.</p>
 <p><strong>[EXERCISE]</strong> 두 그룹 데이터에서 임으로 10명을 두 번 뽑아 그 평균의 차이를 계산하시오</p>
-<pre><code>## [1] 0.4</code></pre>
+<pre><code>## [1] -0.4</code></pre>
 <p><strong>[EXERCISE]</strong> 위 예제의 과정을 1000번 반복하고 각 차이값의 분포를 그리시오</p>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -417,7 +417,8 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <li><span class="math inline">\(E(\bar{p}) = p\)</span></li>
 <li><span class="math inline">\(E(s^2) = \sigma^2\)</span></li>
 </ul>
-<p>예를 들어 A poll asking a random sample of 1003 whether marriages between same-sex couples should be recognized by law as valid. 55% said yes, 이 경우 A randomly selected person would responding yes with p = 0.55 입니다. 여기서 어디에 대부분의 데이터가 모여있는가? 라는 질문을 할 수 있고 이는 데이터의 95%가 어느 범위에 있는가? 라는 질문과 같습니다. 이를 위해 다음 시뮬레이션을 수행할 수 있습니다.</p>
+<p>예를 들어 A poll asking a random sample of 1003 whether marriages between same-sex couples should be recognized by law as valid. 55% said yes, 이 경우 A randomly selected person would responding yes with p = 0.55 입니다.</p>
+<p>여기서 이러한 투표를 100번 반복 했을 때 계산되는 찬성 비율 값들이 대부분 (또는 95%는) 어디에 모여 있는가? 라는 질문을 할 수 있고 이는 모집단에서의 찬성 비율 (모수, 진짜) 값의 95% 신뢰구간은 무엇인가? 라는 질문과 같습니다. 이를 위해 다음 시뮬레이션을 수행할 수 있습니다.</p>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="statistical-inference.html#cb195-1"></a>p &lt;-<span class="st"> </span><span class="fl">0.55</span></span>
 <span id="cb195-2"><a href="statistical-inference.html#cb195-2"></a>n &lt;-<span class="st"> </span><span class="dv">1003</span></span>
 <span id="cb195-3"><a href="statistical-inference.html#cb195-3"></a>x &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1000</span>, n, p)</span>
@@ -426,13 +427,14 @@ E((\hat{\theta} - \theta)^2) = VAR(\hat{\theta}) + (E(\hat{\theta}-\theta))^2 = 
 <p><img src="Rstat_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="statistical-inference.html#cb196-1"></a><span class="kw">quantile</span>(x, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
-## 522.000 581.025</code></pre>
-<p>그러나 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 구간을 구해야 합니다.</p>
+## 522.975 583.000</code></pre>
+<p>앞 뒤 0.025%를 제외한 구간은 위와 같으며 위 구간이 95% 신뢰구간이 됩니다. 뒤에서 설명이 나오지만 여기서 신뢰구간의 해석을 한 번 생각해 보면 좋습니다.</p>
+<p>그런데 현실에서는 1000번의 반복이 불가능하며 1번 또는 2번의 데이터로 95% 신뢰구간을 구해야 합니다.</p>
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="statistical-inference.html#cb198-1"></a>x &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">2</span>, n, p)</span>
 <span id="cb198-2"><a href="statistical-inference.html#cb198-2"></a><span class="co">## mean(x)</span></span>
 <span id="cb198-3"><a href="statistical-inference.html#cb198-3"></a><span class="kw">hist</span>(x, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
-<p>여기서 다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 <span class="math inline">\(\sqrt{n}\)</span>으로 나누어준 값이라는 것 입니다. 다음 장에서 좀 더 자세히 배울 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 <span class="math inline">\(\sigma\)</span> 대신 <span class="math inline">\(s\)</span>를 사용한 경우를 말합니다.</p>
+<p>여기서 다시 기억할 부분은 앞에서 배운 확률변수 표본평균의 표본 분포는 정규분포이며 그 표준편차는 모표준편차를 <span class="math inline">\(\sqrt{n}\)</span>으로 나누어준 값이라는 것 입니다. 후에 좀 더 학습할 예정이며 지금은 시뮬레이션으로 얼마든지 반복해서 샘플링이 가능한 것으로 생각하겠습니다. 위 분포의 형태는 대략적으로 정규분포 입니다. z-통계량은 다음과 같이 나타낼 수 있고 t-통계량은 <span class="math inline">\(\sigma\)</span> 대신 <span class="math inline">\(s\)</span>를 사용한 경우를 말합니다.</p>
 $$
 <span class="math display">\[\begin{split}
 \bar{x} &amp;= \mu \to \bar{x} - \mu =0 \\
@@ -442,24 +444,35 @@ z &amp;= \frac{\bar{x} - \mu}{\sigma / \sqrt{n}} \sim N(0,1) \\
 t &amp;= \frac{\bar{x} - \mu}{s/\sqrt{n}} \sim T
 \end{split}\]</span>
 <p>$$</p>
+<p>평균 100, 표준편차 16인 모분포에서 4개의 샘플을 랜덤하게 추출하여 그 평균을 구할 경우 그 값은 정규분포를 따르고 표준화 값인 z값은 정규분포 N(0, 1)을 따릅니다. 현실에서는 불가능하지만 다음과 같은 시뮬레이션으로 확인할 수 있습니다.</p>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="statistical-inference.html#cb199-1"></a>mu &lt;-<span class="st"> </span><span class="dv">100</span></span>
 <span id="cb199-2"><a href="statistical-inference.html#cb199-2"></a>sigma &lt;-<span class="st"> </span><span class="dv">16</span></span>
 <span id="cb199-3"><a href="statistical-inference.html#cb199-3"></a>M &lt;-<span class="st"> </span><span class="dv">1000</span></span>
 <span id="cb199-4"><a href="statistical-inference.html#cb199-4"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
 <span id="cb199-5"><a href="statistical-inference.html#cb199-5"></a>res &lt;-<span class="st"> </span><span class="kw">replicate</span>(M, {</span>
 <span id="cb199-6"><a href="statistical-inference.html#cb199-6"></a>    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mu, sigma)</span>
-<span id="cb199-7"><a href="statistical-inference.html#cb199-7"></a>    se &lt;-<span class="st"> </span>(<span class="kw">mean</span>(x)<span class="op">-</span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb199-7"><a href="statistical-inference.html#cb199-7"></a>    se &lt;-<span class="st"> </span><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
 <span id="cb199-8"><a href="statistical-inference.html#cb199-8"></a>    (<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>se</span>
 <span id="cb199-9"><a href="statistical-inference.html#cb199-9"></a>})</span>
 <span id="cb199-10"><a href="statistical-inference.html#cb199-10"></a></span>
 <span id="cb199-11"><a href="statistical-inference.html#cb199-11"></a><span class="kw">quantile</span>(res, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-##  7.911638 57.582480</code></pre>
+## -2.779348  3.310544</code></pre>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="statistical-inference.html#cb201-1"></a><span class="kw">hist</span>(res, <span class="dt">br=</span><span class="dv">100</span>)</span></code></pre></div>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="Rstat_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
+<p>참고로 다음은 오차 (error), 편차/잔차 (deviance/residual), 그리고 편향 (bias) 에대한 개념을 나타냅니다.</p>
 <p><img src="images/07/03.PNG" /></p>
+<p>이제 앞서 예제에서 95% 신뢰구간을 구해봅니다. 이는 앞서 언급한바와 같이 데이터의 95% 가 어디 있는가에 대한 질문과 같으며 이는 위와 같은 대칭형 분포에서 왼쪽 0.025% 와 오른쪽 0.025%를 제외한 가운데 부분의 데이터를 말합니다. 즉 아래 식처럼 T 값이 <code>quantile(res, 0.025)=-3.33</code> 와 <code>quantile(res, 0.975)=3.07</code> 값 사이에 있음을 의미합니다.</p>
+<p><span class="math display">\[
+\begin{split}
+-3.33 &lt;  \frac{\bar{x} - \mu}{s/\sqrt{n}} &amp;&lt; 3.07 \\
+\bar{x} -3.33 \times s/\sqrt{n}  &lt; \mu &amp;&lt; \bar{x} + 3.07 \times s/\sqrt{n}  \\
+-0.027 - 3.33 \times 1.56/\sqrt{1000} 
+\end{split}
+\]</span></p>
+<p>이를 다시 나타내면</p>
 <p><img src="images/07/04.PNG" /></p>
 </div>
 <div id="bootstrap" class="section level2">
