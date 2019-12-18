@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 R basics | R로 배우는 기초통계</title>
+  <title>Chapter 9 Significance test | R로 배우는 기초통계</title>
   <meta name="description" content="이 강의는 2019년 2학기 UST에서 진행하는 일반강의 입니다." />
   <meta name="generator" content="bookdown 0.16.5 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 R basics | R로 배우는 기초통계" />
+  <meta property="og:title" content="Chapter 9 Significance test | R로 배우는 기초통계" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 R basics | R로 배우는 기초통계" />
+  <meta name="twitter:title" content="Chapter 9 Significance test | R로 배우는 기초통계" />
   
   <meta name="twitter:description" content="이 강의는 2019년 2학기 UST에서 진행하는 일반강의 입니다." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="univariat-data.html"/>
+<link rel="prev" href="confidence-intervals.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -320,282 +320,204 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-basics" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> R basics</h1>
-<div id="what-is-r-rstudio" class="section level2">
-<h2><span class="header-section-number">2.1</span> What is R / Rstudio</h2>
-<center>
-<img src="images/r.jpg" />
-</center>
-<ul>
-<li>R is a programming language that runs computations (<a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>)</li>
-<li>RStudio is an integrated development environment (IDE) that provides an interface for the programming (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>)</li>
-</ul>
+<div id="significance-test" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Significance test</h1>
+<p>신뢰구간은 통계적 추론의 방법 중 하나이며 유의성검정은 가설을 검정하는 또 다른 추론의 방법입니다. 가설에서는 모수에 대한 특정 값을 가정한 후 이 가설에 기반한 분포로부터 확률을 계산하여 검정을 수행합니다.</p>
+<p>유의성검정을 다음 재판 과정의 검사 입장으로 생각하면 이해가 빠를 수 있습니다. 검사는 피의자가 유죄임을 주장하며 배심원들을 설득합니다. 배심원들은 피의자가 유죄라는 확정적 증거가 없는 한 무고하다는 가정을 하고 있으며 증거가 많아질수록 무죄의 가정이 맞을 확률은 점점 적어집니다. 즉, 확률이 작아질수록 검사가 주장하는 유죄일 확률이 커지게 됩니다.</p>
+<p>유의성검정에서 H0는 귀무가설(Null hypothesis)이고 H1을 대립가설(alternative hypothesis)이라 합니다. 일반적으로 H1이 우리가 관심있는 주장이고 유의성검정을 위해서 우리 주장의 반대인 H0를 가정합니다. 만약 H0 가정 하에서 만들어진 통계량의 관측될 확률이 작으면 H0 가정은 틀린 것으로 기각하고 우리가 주장하는 H1을 채택합니다. 여기서 통계량의 관측될 확률이 유의확률(p-value) 이며 유의성검정은 p-value를 계산하는 것과 같습니다.</p>
+<p><span class="math display">\[
+\text{p-value} = P(\text{test statistic is the observed value or is more extreme}|H_0)
+\]</span></p>
+<p>p-value의 크고 작음을 판단하는 대략적인 범위는 다음과 같습니다.</p>
+<p><img src="images/09/01.png" /></p>
+<p>유의성검정에서는 H0가 참인지 거짓인지 판별하기 보다는 유의수준(significance level, <span class="math inline">\(\alpha\)</span>)이라는 기준에 따라서 H0를 기각할지 안할지를 판단하게 됩니다. 일반적인 유의수준은 0.01, 0.05, 0.1 정도로 p-value가 이들 값보다 작게 나오면 H0를 기각합니다.</p>
+<p>그런데 <span class="math inline">\(\alpha\)</span>에 따라서 H0를 기각 할 경우 다음 두 가지오류, 제1종오류 (type-I error)와 제2종오류 (type-II error)가 발생할 수 있습니다.</p>
+<p><img src="images/09/02.png" /></p>
+<p>앞서 재판의 경우를 예로 들면 제1종오류는 죄가 없는 사람(H0가 참)을 죄가 있다고 판단 (H0기각) 하는 경우로 가능하면 일어나서는 안되는 상황입니다. 따라서 <span class="math inline">\(\alpha\)</span>는 보수적인 기준으로 정하게 되나 <span class="math inline">\(\alpha\)</span>가 작아지면 자동적으로 <span class="math inline">\(\beta\)</span>가 큰 값으로 결정되어 두 오류를 동시에 작게 만족시키는 유의수준은 정하기 어렵습니다. 따라서 가능한 제1종 오류를 작게 유지하면서 power (<span class="math inline">\(1-\beta\)</span>)를 가능한 높게 되도록 검정을 디자인할 필요가 있습니다.</p>
+<p><strong>[Example]</strong> 어떤 기계의 영점이 N(0,1)의 분포를 가지고 영점이 맞지 않을 경우 N(1,1)의 분포를 가진다고 한다. 기계로 부터 측정한 값이 0.7일 경우 기계의 영점이 맞춰져 있는지 아닌지를 판단하시오</p>
+<p><span class="math display">\[
+H_0: \mu = 0 \text{ vs } H_1: \mu = 1
+\]</span></p>
+<p><img src="images/09/03.png" /></p>
+<p>만약 영점이 맞춰진 상태에서 관측된 값이라면 <span class="math inline">\(Z = {0.7-\mu}/sd = 0.7\)</span> 이므로 p-value는 <code>1-pnorm(0.7, 0, 1)=0.2419</code> 이며 영점이 맞춰지지 않은 상태에서 구해진 값이라면 <span class="math inline">\(Z={0.7-1}/sd = -0.3\)</span> 이므로 p-value는 <code>pnorm(0.7, 1, 1)=0.382</code> 입니다. 결국 두 p-value 모두 충분히 작지 않으며 따라서 어느 귀무가설을 기각할지 모호한 상황입니다. 이럴 경우에 1 sd 대신 1/sqrt(n) 값을 사용하면 훨씬더 명확한 판단을 내릴 수 있습니다.</p>
+<p>단계별 p-value 계산하는 방법
+* 데이터에 맞는 분포를 정함
+* H0와 H1를 정함
+* 검정 통계량 정의
+* 데이터 수집
+* 검정 통계량 계산
+* p-value 계산</p>
+<div id="significance-test-for-a-population-proportion" class="section level2">
+<h2><span class="header-section-number">9.1</span> Significance test for a population proportion</h2>
+<p>실업률 고용률 오르는지, 빈곤율 떨어지는지 등 대부분의 경우 기준이 되는 값이 있고 그 값보다 더 높은지 낮은지를 비교하는 검정을 수행할 수 있습니다. 위 기준이 되는 값을 <span class="math inline">\(p_0\)</span>라 하고 우리의 관심을 <span class="math inline">\(p\)</span>라 하고 만약 <span class="math inline">\(n\)</span> 번 관찰 중 <span class="math inline">\(x\)</span>번을 성공 횟수라 한다면 <span class="math inline">\(\hat{p} = x/n\)</span> 입니다. 보통은 표준화한 값을 통계량으로 사용하고 <span class="math inline">\(Z\)</span>는 다음과 같습니다.</p>
+<p><span class="math display">\[
+\begin{split}
+H_0: p = p_0 \\
+H_1: p &gt; p_0, H_1: p &lt; p_0, H_1: p \neq p_0 \\
+Z = \frac{\hat{p} - E(\hat{p}|H_0)}{SD(\hat{p}|H_0)} = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}} 
+\end{split}
+\]</span></p>
+<div class="figure">
+<img src="images/09/04.png" alt="" />
+<p class="caption">page300 Figure 9.2</p>
 </div>
-<div id="r-rstudio-installation" class="section level2">
-<h2><span class="header-section-number">2.2</span> R / Rstudio installation</h2>
-<ul>
-<li><p>Install R first and then install RStudio second</p></li>
-<li><p>R
-<img src="images/01-01.PNG" /><br />
-<img src="images/01-02.PNG" /><br />
-<img src="images/01-03.PNG" /><br />
-<img src="images/01-04.PNG" /><br />
-<img src="images/01-05.PNG" /></p></li>
-<li><p>Rstudio
-<img src="images/01-06.PNG" /><br />
-<img src="images/01-07.PNG" /><br />
-<img src="images/01-08.PNG" /><br />
-<img src="images/01-09.PNG" /><br />
-<img src="images/01-10.PNG" /></p></li>
-</ul>
+<div class="figure">
+<img src="images/09/05.png" alt="" />
+<p class="caption">page300 Equation 9.1</p>
 </div>
-<div id="rstudio-interface" class="section level2">
-<h2><span class="header-section-number">2.3</span> Rstudio interface</h2>
-<p><img src="images/01-11.PNG" /></p>
+<p><strong>[Example]</strong> 2000년 빈곤율은 11.7% 였고 2010년 빈곤율은 15.0% 였다. 2011년 빈곤율이 15.13%으로 관측 되었을 때 빈곤율이 증가하는 것인지 검정하시오. n = 150,000.</p>
+<ul>
+<li>분포 - 비율 비교 (이항분포)</li>
+<li>H0: 15.0과 같다, H1: 15.0보다 크다</li>
+<li>통계량: Z</li>
+<li>통계량, pvalue계산</li>
+</ul>
+<p><span class="math display">\[
+\begin{split}
+&amp; H_0: p = 0.15 \\
+&amp; H_1: p &gt; 0.15 \\
+Z &amp;= \frac{0.1513 - 0.15}{\sqrt{0.1513 \times 0.8487 / 150000}} = 1.405 \sim N(0,1)
+\end{split}
+\]</span></p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="significance-test.html#cb209-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb209-2"><a href="significance-test.html#cb209-2"></a></span>
+<span id="cb209-3"><a href="significance-test.html#cb209-3"></a>phat &lt;-<span class="st"> </span><span class="fl">0.1513</span></span>
+<span id="cb209-4"><a href="significance-test.html#cb209-4"></a>p0 &lt;-<span class="st"> </span><span class="fl">0.15</span></span>
+<span id="cb209-5"><a href="significance-test.html#cb209-5"></a>n &lt;-<span class="st"> </span><span class="dv">150000</span></span>
+<span id="cb209-6"><a href="significance-test.html#cb209-6"></a>SD &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p0<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p0)<span class="op">/</span>n)</span>
+<span id="cb209-7"><a href="significance-test.html#cb209-7"></a>Z &lt;-<span class="st"> </span>(phat <span class="op">-</span><span class="st"> </span>p0)<span class="op">/</span>SD</span>
+<span id="cb209-8"><a href="significance-test.html#cb209-8"></a>pval &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(Z)</span>
+<span id="cb209-9"><a href="significance-test.html#cb209-9"></a></span>
+<span id="cb209-10"><a href="significance-test.html#cb209-10"></a><span class="co">## plot</span></span>
+<span id="cb209-11"><a href="significance-test.html#cb209-11"></a>x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dt">length=</span><span class="dv">100</span>)</span>
+<span id="cb209-12"><a href="significance-test.html#cb209-12"></a>y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x)</span>
+<span id="cb209-13"><a href="significance-test.html#cb209-13"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</span>
+<span id="cb209-14"><a href="significance-test.html#cb209-14"></a></span>
+<span id="cb209-15"><a href="significance-test.html#cb209-15"></a>x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(Z, <span class="dv">5</span>, <span class="dt">length=</span><span class="dv">50</span>)</span>
+<span id="cb209-16"><a href="significance-test.html#cb209-16"></a>y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x1)</span>
+<span id="cb209-17"><a href="significance-test.html#cb209-17"></a>dat2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(Z, x1, Z), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, y1, <span class="dv">0</span>))</span>
+<span id="cb209-18"><a href="significance-test.html#cb209-18"></a></span>
+<span id="cb209-19"><a href="significance-test.html#cb209-19"></a><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb209-20"><a href="significance-test.html#cb209-20"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb209-21"><a href="significance-test.html#cb209-21"></a><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">dat=</span>dat2, <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb209-22"><a href="significance-test.html#cb209-22"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">round</span>(pval,<span class="dv">3</span>), <span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">y =</span> <span class="fl">0.15</span>, <span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb209-23"><a href="significance-test.html#cb209-23"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="fl">2.5</span>, <span class="dt">y =</span> <span class="fl">0.12</span>, <span class="dt">xend =</span> <span class="fl">1.8</span>, <span class="dt">yend =</span> <span class="fl">0.05</span>),  <span class="dt">arrow =</span> <span class="kw">arrow</span>(), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>,<span class="dt">size=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><strong>[EXERCISE]</strong> 앞서 예제를 <code>prop.test</code> 를 사용해서 구현하시오</p>
 </div>
-<div id="keyboard-shortcuts" class="section level2">
-<h2><span class="header-section-number">2.4</span> Keyboard shortcuts</h2>
-<ul>
-<li><p>참고사이트</p>
-<ul>
-<li><a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts" class="uri">https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts</a></li>
-<li>Tools –&gt; Keyboard shortcut Quick Reference (Alt + Shift + K)</li>
-</ul></li>
-<li><p>코드편집창 이동 (Ctrl+1) 콘솔창 이동(Ctrl+2)</p></li>
-<li><p>한 줄 실행 (Ctrl+Enter)</p></li>
-<li><p>주석처리 (Ctrl + Shift + C)</p>
-<ul>
-<li>Starting with a hashmark (‘#’), everything to the end of the line is a comment</li>
-</ul></li>
-<li><p>실습</p>
-<ul>
-<li>코드편집창에서 다음 입력</li>
-<li><img src="images/01-14.PNG" /><br />
-</li>
-<li>단축키 Ctrl + enter로 코드 실행</li>
-<li>단축키 Ctrl + 2로 커서 콘솔창으로 이동</li>
-<li>x값 x+y값 확인</li>
-<li>단축키 Ctrl + 1로 코드편집창 이동</li>
-<li>단축키 Ctrl + Shift + C 사용</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-basics.html#cb1-1"></a><span class="co"># x &lt;- 10</span></span>
-<span id="cb1-2"><a href="r-basics.html#cb1-2"></a><span class="co"># y &lt;- 20</span></span></code></pre></div>
+<div id="significance-test-for-the-mean-t-test" class="section level2">
+<h2><span class="header-section-number">9.2</span> Significance test for the mean (t-test)</h2>
+<p>이번에는 미지의 모평균에 대한 검정을 수행하는 방법을 알아봅니다. 검정 방법은 앞서 배운 비율 검정 과정과 유사하며 통계량은 신뢰구간을 학습할 때 배웠던 계산식과 같습니다.</p>
+<p><span class="math display">\[
+\begin{split}
+H_0: \mu = \mu_0 \\
+H_1: \mu &gt; \mu_0, H_1: \mu &lt; \mu_0, H_1: \mu \neq \mu_0 \\
+T = \frac{\bar{x} - E(\bar{x}|H_0)}{SE(\bar{x}|H_0)} = \frac{\bar{x} - \mu_0}{s / \sqrt{n}} = \frac{\text{observed} - \text{expected}}{SE} 
+\end{split}
+\]</span></p>
+<p>이제 데이터 <span class="math inline">\(x_1, x_2, ..., x_n\)</span>을 얻고 이로부터 <span class="math inline">\(t = (\bar{x}-\mu_0)/(s/\sqrt{n})\)</span>을 구할 경우 p-value는 다음과 같습니다.</p>
+<div class="figure">
+<img src="images/09/06.png" alt="" />
+<p class="caption">page304</p>
 </div>
-<div id="r-programming-basics-and-terminology" class="section level2">
-<h2><span class="header-section-number">2.5</span> R programming basics and terminology</h2>
-<ul>
-<li>Console: 명령어 입력하는 창</li>
-<li>Code: R 프로그래밍 변수/제어문 모음<br />
-</li>
-<li>Objects (개체, variable): 값이 (데이터) 저장되는 장소</li>
-<li>Data types: Integers, doubles/numerics, logicals, and characters.</li>
-<li>Object (Variable) types:
-<ul>
-<li>Vectors: 값들의 모임 combine function c() EX: c(6, 11, 13, 31, 90, 92)</li>
-<li>Factors: 범주형 데이터 저장 장소</li>
-<li>Data frames: 2D matrix 형태 데이터 자장 장소</li>
-</ul></li>
-<li>Conditionals (조건, 제어):
-<ul>
-<li>if: ==, &amp; (AND), | (OR) Ex: (2 + 1 == 3) &amp; (2 + 1 == 4)</li>
-<li>for, while: 반복 수</li>
-</ul></li>
-<li>Functions (함수, commands): 특정 일 수행, 함수이름 - 입력값 (arguments) - 출력값 (output) 으로 구성</li>
-</ul>
+<p><strong>[Example]</strong> 새 SUV 자동차의 연비가 17miles / gallon 으로 알려져 있다. 소비자 그룹에서는 그러나 이보다 낮은 것으로 의심하고 있다. 다음 데이터들이 관측 되었을 때 해당 신차의 연비가 17mile 보다 작은지 검정하시오.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="significance-test.html#cb210-1"></a>mpg &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">11.4</span>, <span class="fl">13.1</span>, <span class="fl">14.7</span>, <span class="fl">14.7</span>, <span class="dv">15</span>, <span class="fl">15.5</span>, <span class="fl">15.6</span>, <span class="fl">15.9</span>, <span class="dv">16</span>, <span class="fl">16.8</span>)</span>
+<span id="cb210-2"><a href="significance-test.html#cb210-2"></a>xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(mpg)</span>
+<span id="cb210-3"><a href="significance-test.html#cb210-3"></a>s &lt;-<span class="st"> </span><span class="kw">sd</span>(mpg)</span>
+<span id="cb210-4"><a href="significance-test.html#cb210-4"></a>n &lt;-<span class="st"> </span><span class="kw">length</span>(mpg)</span>
+<span id="cb210-5"><a href="significance-test.html#cb210-5"></a>tstat &lt;-<span class="st"> </span>(xbar<span class="dv">-17</span>)<span class="op">/</span>(s<span class="op">/</span><span class="kw">sqrt</span>(n))</span></code></pre></div>
+<p><span class="math display">\[
+\begin{split}
+&amp;H_0: \mu = 17 \\
+&amp;H_1: \mu &lt; 17 \\
+T &amp;= \frac{14.87 - 17}{1.582 / 3.162} =  -4.284
+\end{split}
+\]</span></p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="significance-test.html#cb211-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb211-2"><a href="significance-test.html#cb211-2"></a>x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dt">length=</span><span class="dv">100</span>)</span>
+<span id="cb211-3"><a href="significance-test.html#cb211-3"></a>y &lt;-<span class="st"> </span><span class="kw">dt</span>(x, <span class="dt">df=</span>n<span class="dv">-1</span>)</span>
+<span id="cb211-4"><a href="significance-test.html#cb211-4"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</span>
+<span id="cb211-5"><a href="significance-test.html#cb211-5"></a><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb211-6"><a href="significance-test.html#cb211-6"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb211-7"><a href="significance-test.html#cb211-7"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> tstat)</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="significance-test.html#cb212-1"></a><span class="kw">pt</span>(tstat, <span class="dt">df=</span><span class="dv">9</span>, <span class="dt">lower.tail=</span>T)</span></code></pre></div>
+<p><strong>[EXERCISE]</strong> 위 예제를 <code>t.test</code> 를 사용해서 구현하시오</p>
 </div>
-<div id="set-working-directory" class="section level2">
-<h2><span class="header-section-number">2.6</span> Set working directory</h2>
-<ul>
-<li>시작 전 항상 작업 디렉토리 설정</li>
-<li>예를 들어 c: 아래 새로운 디렉토리 rstat01 을 만들고 작업공간으로 설정</li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="r-basics.html#cb2-1"></a><span class="kw">getwd</span>()</span>
-<span id="cb2-2"><a href="r-basics.html#cb2-2"></a><span class="kw">dir</span>()</span>
-<span id="cb2-3"><a href="r-basics.html#cb2-3"></a><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">rstat01&quot;</span>)</span>
-<span id="cb2-4"><a href="r-basics.html#cb2-4"></a><span class="kw">getwd</span>()</span>
-<span id="cb2-5"><a href="r-basics.html#cb2-5"></a><span class="kw">dir</span>()</span></code></pre></div>
-<ul>
-<li>또는 아래와 같이 RStudio 메뉴 에서 설정
-<img src="images/01-12.PNG" /></li>
-</ul>
+<div id="two-sample-test-of-proportion" class="section level2">
+<h2><span class="header-section-number">9.3</span> Two sample test of proportion</h2>
+<div class="figure">
+<img src="images/09/07.png" alt="" />
+<p class="caption">Two sample tests of proportion</p>
 </div>
-<div id="r-coding-practice" class="section level2">
-<h2><span class="header-section-number">2.7</span> R coding practice</h2>
+<p><strong>[Example]</strong> 2010년 빈곤율을 160000명에 대해 조사한 결과 15.0% 였다. 2011년 빈곤율은 150000명에 대해 조사해서 15.13%으로 관측 되었을 때 두 빈곤율이 유의한 차이가 있는 것인가?</p>
 <ul>
-<li>콘솔 계산기</li>
+<li>분포 - 비율 비교</li>
+<li>H0: 2010년과 2011년 빈곤율은 같다. H1: Not H0</li>
+<li>통계량: Z</li>
+<li>통계량, pvalue계산</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="r-basics.html#cb3-1"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span>
-<span id="cb3-2"><a href="r-basics.html#cb3-2"></a>((<span class="dv">2</span> – <span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> – <span class="dv">3</span>)<span class="op">^</span><span class="dv">2</span> )<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb3-3"><a href="r-basics.html#cb3-3"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>; <span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
-<ul>
-<li>이전 명령: 콘솔에서 위 아래 화살표</li>
-</ul>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="significance-test.html#cb213-1"></a>phat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.15</span>, <span class="fl">0.1513</span>)</span>
+<span id="cb213-2"><a href="significance-test.html#cb213-2"></a>n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">160000</span>, <span class="dv">150000</span>)</span>
+<span id="cb213-3"><a href="significance-test.html#cb213-3"></a>n<span class="op">*</span>phat</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="significance-test.html#cb214-1"></a><span class="kw">prop.test</span>(n<span class="op">*</span>phat, n, <span class="dt">alternative=</span><span class="st">&quot;less&quot;</span>)</span></code></pre></div>
 </div>
-<div id="variables-and-values" class="section level2">
-<h2><span class="header-section-number">2.8</span> Variables and values</h2>
-<ul>
-<li>R is a programming language</li>
-<li>Assignment operator ( <code>&lt;-</code> OR <code>=</code> )
-<ul>
-<li>Valid object name <code>&lt;-</code> value</li>
-<li>단축키: <code>Alt + -</code> (the minus sign)</li>
-</ul></li>
-<li>내장 변수 Built-in variables</li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="r-basics.html#cb4-1"></a>x &lt;-<span class="st"> </span><span class="dv">2</span></span>
-<span id="cb4-2"><a href="r-basics.html#cb4-2"></a>y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> – <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb4-3"><a href="r-basics.html#cb4-3"></a>y</span>
-<span id="cb4-4"><a href="r-basics.html#cb4-4"></a>x &lt;-<span class="st"> &quot;two&quot;</span>  </span>
-<span id="cb4-5"><a href="r-basics.html#cb4-5"></a>some_data &lt;-<span class="st"> </span><span class="fl">9.8</span></span>
-<span id="cb4-6"><a href="r-basics.html#cb4-6"></a>pi</span></code></pre></div>
-<ul>
-<li>변수이름 작명법
-<ul>
-<li>Characters (letters), numbers, “_”, “.”</li>
-<li>A and a are different symbols</li>
-<li>Names are effectively unlimited in length</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="r-basics.html#cb5-1"></a>i_use_snake_case &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb5-2"><a href="r-basics.html#cb5-2"></a>otherPeopleUseCamelCase &lt;-<span class="st"> </span><span class="dv">2</span></span>
-<span id="cb5-3"><a href="r-basics.html#cb5-3"></a>some.people.use.periods &lt;-<span class="st"> </span><span class="dv">3</span></span>
-<span id="cb5-4"><a href="r-basics.html#cb5-4"></a>And_aFew.People_RENOUNCEconvention &lt;-<span class="st"> </span><span class="dv">4</span></span></code></pre></div>
-<ul>
-<li>자동 완성 기능 (Tab completion) in RStudio</li>
-</ul>
+<div id="two-sample-test-of-center" class="section level2">
+<h2><span class="header-section-number">9.4</span> Two sample test of center</h2>
+<div class="figure">
+<img src="images/09/08.png" alt="" />
+<p class="caption">Two sample tests of center (t-test)</p>
 </div>
-<div id="variable-type-of-storage-mode" class="section level2">
-<h2><span class="header-section-number">2.9</span> Variable type of (storage) mode</h2>
-<p><img src="images/01-13.PNG" /></p>
+<p><strong>[Example]</strong> HIV의 항바이러스제 AZT는 하루 300mg 효과가 있고 그 이상은 부작용이 나타난다고 알려짐. 그러나 높은 농도에서 약효가 더 좋은지를 검정하고자 함. 측정값은 면역반응을 증가시키는 p24 농도를 측정한 값임.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="significance-test.html#cb215-1"></a>m300 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">284</span>, <span class="dv">279</span>, <span class="dv">289</span>, <span class="dv">292</span>, <span class="dv">287</span>, <span class="dv">295</span>, <span class="dv">285</span>, <span class="dv">279</span>, <span class="dv">306</span>, <span class="dv">298</span>)</span>
+<span id="cb215-2"><a href="significance-test.html#cb215-2"></a>m600 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">298</span>, <span class="dv">307</span>, <span class="dv">297</span>, <span class="dv">279</span>, <span class="dv">291</span>, <span class="dv">335</span>, <span class="dv">299</span>, <span class="dv">300</span>, <span class="dv">306</span>, <span class="dv">291</span>)</span>
+<span id="cb215-3"><a href="significance-test.html#cb215-3"></a><span class="kw">t.test</span>(m300, m600) </span>
+<span id="cb215-4"><a href="significance-test.html#cb215-4"></a><span class="kw">t.test</span>(m300, m600, <span class="dt">var.equal=</span>T) </span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="significance-test.html#cb216-1"></a><span class="kw">plot</span>(<span class="kw">density</span>(m300)); <span class="kw">lines</span>(<span class="kw">density</span>(m600), <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><strong>[Example]</strong> (Paired data) 특정 코스웍이 효과가 있는지를 검증하고자 하는 연구로서 한 학생에 대해서 강의를 듣기 전과 후의 효과를 측정하여 검정을 수행함</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="significance-test.html#cb217-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">4</span>,<span class="dv">3</span>)</span>
+<span id="cb217-2"><a href="significance-test.html#cb217-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>)</span>
+<span id="cb217-3"><a href="significance-test.html#cb217-3"></a><span class="kw">t.test</span>(x, y)</span>
+<span id="cb217-4"><a href="significance-test.html#cb217-4"></a>z &lt;-<span class="st"> </span>x<span class="op">-</span>y</span>
+<span id="cb217-5"><a href="significance-test.html#cb217-5"></a><span class="kw">t.test</span>(z)</span>
+<span id="cb217-6"><a href="significance-test.html#cb217-6"></a><span class="kw">t.test</span>(x, y, <span class="dt">paired =</span> T)</span></code></pre></div>
 </div>
-<div id="variable---vectors" class="section level2">
-<h2><span class="header-section-number">2.10</span> Variable - Vectors</h2>
-<ul>
-<li>Combine function <code>c()</code>: Concatenating elements end to end</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="r-basics.html#cb6-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.4</span>, <span class="fl">5.6</span>, <span class="fl">3.1</span>, <span class="fl">6.4</span>, <span class="fl">21.7</span>) </span>
-<span id="cb6-2"><a href="r-basics.html#cb6-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;X1&quot;</span>, <span class="st">&quot;Y2&quot;</span>,  <span class="st">&quot;X3&quot;</span>,  <span class="st">&quot;Y4&quot;</span>)</span></code></pre></div>
-<ul>
-<li>인덱싱: Subsets of the elements of a vector</li>
-</ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="r-basics.html#cb7-1"></a>x[<span class="dv">1</span>]</span>
-<span id="cb7-2"><a href="r-basics.html#cb7-2"></a>x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
-<span id="cb7-3"><a href="r-basics.html#cb7-3"></a>x[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]</span>
-<span id="cb7-4"><a href="r-basics.html#cb7-4"></a>y[<span class="dv">3</span>]</span></code></pre></div>
+<div id="association-for-categorical-data" class="section level2">
+<h2><span class="header-section-number">9.5</span> Association for categorical data</h2>
+<p>앞서 chapter 4에서 범주형 데이터와 함께 The chi-squared statistics의 간략한 설명이 있었습니다. The chi-squared statistics 는 가장 널리 쓰이는 범주형 자료의 연관성 척도로 다음과 같이 정의됩니다. 수식의 “o”와 “e”는 각각 관측값과 예측값을 나타내며 이 값이 클 경우 연관이 크다는 것 입니다.</p>
+<p><span class="math display">\[ \text{chi-squared statistic } = \sum \frac{(f_o - f_e)^2}{f_e} \]</span></p>
+<p><strong>[Example]</strong> 다음 seatbelt 데이터에서 만약 부모와 아이들의 안전벨트를 매는 두 사건 (변수)가 독립이라면 <span class="math inline">\(p(C, P) == p(C)p(P)\)</span> 즉, 결합확률이 각 확률을 곱한 것과 같고 기대값은 확률 x 전체 사건의 수(<span class="math inline">\(N\)</span>) 이므로 다시 적으면 <span class="math inline">\(N p(C,P) == N p(C)p(P)\)</span>임. 여기서 <span class="math inline">\(N p(C,P)\)</span>는 우리가 관측한 값으로 볼 수 있고 <span class="math inline">\(N p(C) p(P)\)</span>는 독립을 가정한 상태에서 기대값이라고 볼 수 있음.</p>
+<p><img src="images/03/15.png" /></p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="significance-test.html#cb218-1"></a>fo &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">56</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">16</span>), <span class="dt">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb218-2"><a href="significance-test.html#cb218-2"></a><span class="kw">rownames</span>(fo) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;buckled&quot;</span>,<span class="st">&quot;unbuckled&quot;</span>)</span>
+<span id="cb218-3"><a href="significance-test.html#cb218-3"></a><span class="kw">colnames</span>(fo) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;buckled&quot;</span>,<span class="st">&quot;unbuckled&quot;</span>)</span>
+<span id="cb218-4"><a href="significance-test.html#cb218-4"></a></span>
+<span id="cb218-5"><a href="significance-test.html#cb218-5"></a><span class="co">## marginal probability</span></span>
+<span id="cb218-6"><a href="significance-test.html#cb218-6"></a>margin_rows &lt;-<span class="st"> </span><span class="kw">rowSums</span>(fo)<span class="op">/</span><span class="kw">sum</span>(fo)</span>
+<span id="cb218-7"><a href="significance-test.html#cb218-7"></a>margin_cols &lt;-<span class="st"> </span><span class="kw">colSums</span>(fo)<span class="op">/</span><span class="kw">sum</span>(fo)</span>
+<span id="cb218-8"><a href="significance-test.html#cb218-8"></a></span>
+<span id="cb218-9"><a href="significance-test.html#cb218-9"></a><span class="co">## expected numbers</span></span>
+<span id="cb218-10"><a href="significance-test.html#cb218-10"></a>fe &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb218-11"><a href="significance-test.html#cb218-11"></a>fe[<span class="dv">1</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">sum</span>(fo)<span class="op">*</span>margin_rows[<span class="dv">1</span>]<span class="op">*</span>margin_cols[<span class="dv">1</span>]</span>
+<span id="cb218-12"><a href="significance-test.html#cb218-12"></a>fe[<span class="dv">1</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">sum</span>(fo)<span class="op">*</span>margin_rows[<span class="dv">1</span>]<span class="op">*</span>margin_cols[<span class="dv">2</span>]</span>
+<span id="cb218-13"><a href="significance-test.html#cb218-13"></a>fe[<span class="dv">2</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">sum</span>(fo)<span class="op">*</span>margin_rows[<span class="dv">2</span>]<span class="op">*</span>margin_cols[<span class="dv">1</span>]</span>
+<span id="cb218-14"><a href="significance-test.html#cb218-14"></a>fe[<span class="dv">2</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">sum</span>(fo)<span class="op">*</span>margin_rows[<span class="dv">2</span>]<span class="op">*</span>margin_cols[<span class="dv">2</span>]</span>
+<span id="cb218-15"><a href="significance-test.html#cb218-15"></a><span class="co">#fe</span></span>
+<span id="cb218-16"><a href="significance-test.html#cb218-16"></a></span>
+<span id="cb218-17"><a href="significance-test.html#cb218-17"></a><span class="co">## use chisq.test function</span></span>
+<span id="cb218-18"><a href="significance-test.html#cb218-18"></a><span class="co">#(fo-fe)^2 / fe</span></span>
+<span id="cb218-19"><a href="significance-test.html#cb218-19"></a>chistat &lt;-<span class="st"> </span><span class="kw">sum</span>((fo<span class="op">-</span>fe)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>fe)</span>
+<span id="cb218-20"><a href="significance-test.html#cb218-20"></a>df &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(fo)<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="kw">ncol</span>(fo)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb218-21"><a href="significance-test.html#cb218-21"></a><span class="dv">1</span><span class="op">-</span><span class="kw">pchisq</span>(chistat, df)</span>
+<span id="cb218-22"><a href="significance-test.html#cb218-22"></a></span>
+<span id="cb218-23"><a href="significance-test.html#cb218-23"></a></span>
+<span id="cb218-24"><a href="significance-test.html#cb218-24"></a>result &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(fo)</span></code></pre></div>
+<p><img src="images/09/09.png" /></p>
+<p><strong>[Example]</strong> 한 의학연구가에 의하면 흡연은 눈가에 주름이 지게 하는 요인이 된다고 한다. 이러한 주장이 타당한가를 알아보기 위해 30대 남자 1000명을 랜덤하게 추출하여 조사한 결과 다음과 같은 표를 얻었다. 30대 남자들을 대상으로 볼 때 연구가의 주장이 옳은지 판단하는 연관성을 나타내는 카이제곱 값을 구하라</p>
+<p><img src="images/09/10.png" /></p>
+<p>chistat = 74.9652, pvalue&lt;2.2E-16</p>
 </div>
-<div id="functions" class="section level2">
-<h2><span class="header-section-number">2.11</span> Functions</h2>
-<ul>
-<li>Function define</li>
-</ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="r-basics.html#cb8-1"></a>my_sine &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
-<span id="cb8-2"><a href="r-basics.html#cb8-2"></a>    y &lt;-<span class="st"> </span><span class="kw">sin</span>(x)</span>
-<span id="cb8-3"><a href="r-basics.html#cb8-3"></a>    <span class="kw">return</span>(y)</span>
-<span id="cb8-4"><a href="r-basics.html#cb8-4"></a>}</span></code></pre></div>
-<ul>
-<li>Usage</li>
-</ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="r-basics.html#cb9-1"></a><span class="kw">my_sine</span>(pi)</span></code></pre></div>
-<ul>
-<li>Terminology
-<ul>
-<li>function name: <code>my_sine</code></li>
-<li>parameter: <code>x</code></li>
-<li>argument: <code>pi</code></li>
-<li>return value: <code>y</code></li>
-</ul></li>
-<li>Built-in functions
-<ul>
-<li>Arguments separated by commas</li>
-<li>Tab completion</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-basics.html#cb10-1"></a>x &lt;-<span class="st"> </span>pi</span>
-<span id="cb10-2"><a href="r-basics.html#cb10-2"></a><span class="kw">sin</span>(x)</span>
-<span id="cb10-3"><a href="r-basics.html#cb10-3"></a><span class="kw">sqrt</span>(x)</span>
-<span id="cb10-4"><a href="r-basics.html#cb10-4"></a><span class="kw">log</span>(x)</span>
-<span id="cb10-5"><a href="r-basics.html#cb10-5"></a><span class="kw">log</span>(x, <span class="dv">10</span>)</span>
-<span id="cb10-6"><a href="r-basics.html#cb10-6"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
-<span id="cb10-7"><a href="r-basics.html#cb10-7"></a>x <span class="op">+</span><span class="st"> </span>x</span>
-<span id="cb10-8"><a href="r-basics.html#cb10-8"></a><span class="kw">mean</span>(x)</span>
-<span id="cb10-9"><a href="r-basics.html#cb10-9"></a><span class="kw">sum</span>(x)<span class="op">/</span><span class="kw">length</span>(x)</span></code></pre></div>
-</div>
-<div id="vectorized-functions" class="section level2">
-<h2><span class="header-section-number">2.12</span> Vectorized functions</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics.html#cb11-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
-<span id="cb11-2"><a href="r-basics.html#cb11-2"></a>x <span class="op">+</span><span class="st"> </span>x</span>
-<span id="cb11-3"><a href="r-basics.html#cb11-3"></a><span class="kw">sqrt</span>(x)</span>
-<span id="cb11-4"><a href="r-basics.html#cb11-4"></a><span class="kw">sin</span>(x)</span>
-<span id="cb11-5"><a href="r-basics.html#cb11-5"></a><span class="kw">log</span>(x)</span>
-<span id="cb11-6"><a href="r-basics.html#cb11-6"></a>x<span class="op">-</span><span class="kw">mean</span>(x)</span></code></pre></div>
-</div>
-<div id="help" class="section level2">
-<h2><span class="header-section-number">2.13</span> Help</h2>
-<ul>
-<li>R의 장점 중 하나 (예제 포함)</li>
-</ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="r-basics.html#cb12-1"></a>?</span>
-<span id="cb12-2"><a href="r-basics.html#cb12-2"></a>?mean</span>
-<span id="cb12-3"><a href="r-basics.html#cb12-3"></a><span class="kw">help</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb12-4"><a href="r-basics.html#cb12-4"></a><span class="kw">example</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb12-5"><a href="r-basics.html#cb12-5"></a><span class="kw">help.search</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb12-6"><a href="r-basics.html#cb12-6"></a><span class="kw">help</span>(<span class="dt">package=</span><span class="st">&quot;MASS&quot;</span>)</span></code></pre></div>
-</div>
-<div id="rstudio-workspace" class="section level2">
-<h2><span class="header-section-number">2.14</span> RStudio workspace</h2>
-<p><img src="images/01-17.PNG" />
-<img src="images/rstudio-ide-1.png" />
-<img src="images/rstudio-ide-2.png" /></p>
-</div>
-<div id="r-packages" class="section level2">
-<h2><span class="header-section-number">2.15</span> R packages</h2>
-<ul>
-<li>R comes ready loaded with various libraries of functions called packages</li>
-<li>ex) sum() is in the “base” package and sd() in the “stats” package</li>
-<li>The packages can be found in numerous server locations on the web called repositories</li>
-<li>The Comprehensive R Archive Network (CRAN) <a href="http://cran.r-project.org/web/views/" class="uri">http://cran.r-project.org/web/views/</a></li>
-<li>Bioconductor specialised in genomics <a href="http://www.bioconductor.org/packages/release/bioc/" class="uri">http://www.bioconductor.org/packages/release/bioc/</a></li>
-</ul>
-<p><img src="images/01-18.PNG" /></p>
-<ul>
-<li>UsingR package installation</li>
-</ul>
-<p><img src="images/01-19.PNG" /></p>
-<ul>
-<li>UsingR package loading</li>
-</ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="r-basics.html#cb13-1"></a><span class="kw">library</span>(UsingR)</span></code></pre></div>
-<ul>
-<li>R 설치 디렉토리</li>
-<li>R 패키지 설치 디렉토리</li>
-</ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="r-basics.html#cb14-1"></a><span class="kw">.libPaths</span>()</span>
-<span id="cb14-2"><a href="r-basics.html#cb14-2"></a><span class="kw">path.package</span>()</span></code></pre></div>
-<p><img src="images/01-20.PNG" /></p>
-</div>
-<div id="data-sets" class="section level2">
-<h2><span class="header-section-number">2.16</span> Data sets</h2>
-<ul>
-<li>Packages include accompanying data sets</li>
-<li>R has a datasets package that is loaded automatically</li>
-<li>The data function produces a copy of dataset in user’s workspace</li>
-</ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="r-basics.html#cb15-1"></a><span class="kw">head</span>(rivers)</span>
-<span id="cb15-2"><a href="r-basics.html#cb15-2"></a><span class="kw">length</span>(rivers)</span>
-<span id="cb15-3"><a href="r-basics.html#cb15-3"></a><span class="kw">class</span>(rivers)</span>
-<span id="cb15-4"><a href="r-basics.html#cb15-4"></a><span class="kw">data</span>(rivers)</span>
-<span id="cb15-5"><a href="r-basics.html#cb15-5"></a><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;UsingR&quot;</span>)</span>
-<span id="cb15-6"><a href="r-basics.html#cb15-6"></a><span class="kw">library</span>(HistData)</span>
-<span id="cb15-7"><a href="r-basics.html#cb15-7"></a><span class="kw">head</span>(Cavendish)</span>
-<span id="cb15-8"><a href="r-basics.html#cb15-8"></a><span class="kw">str</span>(Cavendish)</span>
-<span id="cb15-9"><a href="r-basics.html#cb15-9"></a><span class="kw">head</span>(Cavendish<span class="op">$</span>density2)</span></code></pre></div>
-</div>
-<div id="cheatsheet" class="section level2">
-<h2><span class="header-section-number">2.17</span> Cheatsheet</h2>
-<p><img src="images/base-r_1.png" />
-<img src="images/base-r_2.png" /></p>
+<div id="variable-type-and-testing-methods" class="section level2">
+<h2><span class="header-section-number">9.6</span> Variable type and testing methods</h2>
+<p><img src="images/09/11.png" /></p>
 
 </div>
 </div>
@@ -604,8 +526,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="univariat-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="confidence-intervals.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
